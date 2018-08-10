@@ -4,7 +4,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface SPThirdFunction : NSObject
+@interface YCThirdFunction : NSObject
 
 +(void)doThirdLoginWithThirdId:(NSString *)thirdId
                  andThirdPlate:(NSString *)thirdPlate

@@ -1,12 +1,10 @@
 
 
-#import "SPLoginFunction.h"
-//#import "SPRequestor.h"
-//#import "HelloUtils.h"
+#import "YCLoginFunction.h"
 #import "HelloHeader.h"
 
 
-@implementation SPLoginFunction (AccountLogin)
+@implementation YCLoginFunction (AccountLogin)
 
 +(void)doLoginWithAccount:(NSString * _Nonnull)userName
               andPassword:(NSString * _Nullable)password
@@ -27,7 +25,6 @@
              };
     
     NSString *mainDomain = [NSString stringWithFormat:@"%@/api/login",kPlatformDomain];
-//    @"https://center.play800.cn/api/login";
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil

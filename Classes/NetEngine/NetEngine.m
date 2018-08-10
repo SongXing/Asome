@@ -1,9 +1,4 @@
 //
-//  SPKrNetEngine.m
-//  SPSDK_iOS_KR
-//
-//  Created by Sunny on 16/4/26.
-//  Copyright © 2016年 SP. All rights reserved.
 //
 
 #import "NetEngine.h"
@@ -25,7 +20,7 @@ static NSInteger huhaMoreTime = 0;
                               email:(NSString *)email
                          completion:(void(^)())completion
 {
-    [SPLoginFunction doRegisterAccountWithUserName:username
+    [YCLoginFunction doRegisterAccountWithUserName:username
                                        andPassword:password
                                           andEmail:email
                                           andPhone:nil
@@ -40,7 +35,7 @@ static NSInteger huhaMoreTime = 0;
                    session:(NSString *_Nullable)sessionId
                 completion:(void(^)())completion
 {
-    [SPLoginFunction doLoginWithAccount:userName
+    [YCLoginFunction doLoginWithAccount:userName
                             andPassword:password
                                     uid:uid
                                 session:sessionId
@@ -50,7 +45,7 @@ static NSInteger huhaMoreTime = 0;
 
 + (void)resetPasswordWithUserName:(NSString *)userName oldPassword:(NSString *)oldPassword newPassword:(NSString *)newPassword completion:(void(^)())completion
 {
-    [SPLoginFunction doChangePasswordWithUserName:userName
+    [YCLoginFunction doChangePasswordWithUserName:userName
                                   andOldPassword:oldPassword
                                   andNewPassword:newPassword
                                    andDomainName:@""

@@ -19,7 +19,7 @@
 #import "SPUserInfoModel.h"
 #import "UIColor+HexColor.h"
 #import "SPRequestor.h"
-#import "SPLoginFunction.h"
+#import "YCLoginFunction.h"
 #import "YCIapFunction.h"
 #import "NetEngine.h"
 #import "YCUserModel.h"

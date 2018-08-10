@@ -3,7 +3,7 @@
 
 #import "YCFreeLogin.h"
 #import "SPCentreInfo.h"
-#import "SPThirdFunction.h"
+#import "YCThirdFunction.h"
 
 
 @implementation YCFreeLogin
@@ -12,7 +12,7 @@
 + (void)loginWithoutRegisterAndcompletion:(void (^)())block
 {
     NSString *loginId = [SPFunction getSpUUID];
-    [SPThirdFunction doThirdLoginWithThirdId:loginId
+    [YCThirdFunction doThirdLoginWithThirdId:loginId
                                andThirdPlate:@"mac"
                                andDomainName:SP_GET_INFO(@"thirdLoginProName")
                                andOtherBlock:block];
@@ -26,7 +26,7 @@
                         andThirdPlate:(NSString *)thirdPlate
                            completion:(void (^)())block
 {
-    [SPThirdFunction doAccountBindingWithUserName:userName
+    [YCThirdFunction doAccountBindingWithUserName:userName
                                       andPassword:password
                                          andEmail:email
                                        andLoginId:loginId

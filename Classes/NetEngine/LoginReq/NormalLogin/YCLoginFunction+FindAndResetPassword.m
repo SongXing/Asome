@@ -1,30 +1,26 @@
 
-#import "SPLoginFunction.h"
-//#import "SPRequestor.h"
-//#import "HelloUtils.h"
+
+#import "YCLoginFunction.h"
 #import "HelloHeader.h"
 
-@implementation SPLoginFunction (Password)
+@implementation YCLoginFunction (FindAndResetPassword)
 
-+(void)doChangePasswordWithUserName:(NSString *)userName
-                    andOldPassword:(NSString *)oldPassword
-                    andNewPassword:(NSString *)newPassword
-                     andDomainName:(NSString *)domainName
-                        completion:(void (^)())completion
+
++(void)doFindAndResetPasswordWithUserName:(NSString *)userName
+                                   newPwd:(NSString *)newPwd
+                                    phone:(NSString *)mobileNum
+                              vertifyCode:(NSString *)vertifyCode
+                               completion:(void(^)())completion
 {
-    
-//    void (^otherBlock)() = Block_copy(completion);
-    
     NSDictionary *dict = nil;
     dict = @{
-             @"account"             : userName,   // must
-             @"password"            : oldPassword,// must
-             @"new_password"        : newPassword,// must
-             @"confirm_password"    : newPassword,// must
+             @"account"     : userName,
+             @"mobile"      : mobileNum,
+             @"code"        : vertifyCode,
+             @"password"    : newPwd,
              };
     
-    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/modifypasswd",kPlatformDomain];
-//    @"https://center.play800.cn/api/modifypasswd";
+    NSString *mainDomain = @"https://center.play800.cn/api/newresetpasswd";
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -37,22 +33,21 @@
                    
                    if (!error && !jsonParseErr)
                    {
-                       
                        //获取code参数
                        NSString * codeStr= [NSString stringWithFormat:@"%@",resultJsonDic[@"result"]];
                        
                        if ( 0 == codeStr.intValue )// 成功
                        {
-                           completion(resultJsonDic);
+                           completion ? completion(resultJsonDic) :nil;
                        }
                        else {
                            [HelloUtils spToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
-                           completion(nil);
+                           completion ? completion(nil) : nil;
                        }
                    }
                    else // 请求出错
                    {
-                       completion(error);
+                       completion?completion(error):nil;
                    }
                    
                }];

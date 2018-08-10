@@ -1,25 +1,15 @@
 
 #import <Foundation/Foundation.h>
 
-@interface SPLoginFunction : NSObject
+@interface YCLoginFunction : NSObject
 
-/**
- *  保存SPPlatform需要的信息到plist中
- *  
- *  @param  loginType   SP
- *  @param  loginId     第三方登入时的id。不是第三方登入时填入@""
- *  @param  userId      登入的userId
- */
-+ (void)saveUiserInfoForThePlatformWith:(NSString *)loginType
-                             andLoginId:(NSString *)loginId
-                              andUserId:(NSString *)userId;
 @end
 
 
 /**
  修改密码
  */
-@interface SPLoginFunction (ChangePassword)
+@interface YCLoginFunction (ChangePassword)
 
 +(void)doChangePasswordWithUserName:(NSString *)userName
                     andOldPassword:(NSString *)oldPassword
@@ -33,7 +23,7 @@
 /**
  注册
  */
-@interface SPLoginFunction (RegisterAccount)
+@interface YCLoginFunction (RegisterAccount)
 
 +(void)doRegisterAccountWithUserName:(NSString *)userName
                          andPassword:(NSString *)password
@@ -60,7 +50,7 @@
 /**
  找回并重置密码
  */
-@interface SPLoginFunction (FindAndResetPassword)
+@interface YCLoginFunction (FindAndResetPassword)
 
 +(void)doFindAndResetPasswordWithUserName:(NSString *)userName
                                    newPwd:(NSString *)newPwd
@@ -73,7 +63,7 @@
 /**
  登录
  */
-@interface SPLoginFunction (AccountLogin)
+@interface YCLoginFunction (AccountLogin)
 
 +(void)doLoginWithAccount:(NSString * _Nonnull)userName
               andPassword:(NSString * _Nullable)password

@@ -1,9 +1,9 @@
 
 
-#import "SPThirdFunction.h"
+#import "YCThirdFunction.h"
 #import "HelloHeader.h"
 
-@implementation SPThirdFunction
+@implementation YCThirdFunction
 
 #pragma mark -第三方账号登录（新接口）
 +(void)doThirdLoginWithThirdId:(NSString *)thirdId

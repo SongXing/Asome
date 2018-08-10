@@ -1,11 +1,9 @@
 
 
-#import "SPLoginFunction.h"
-//#import "SPRequestor.h"
-//#import "HelloUtils.h"
+#import "YCLoginFunction.h"
 #import "HelloHeader.h"
 
-@implementation SPLoginFunction (RegisterAccount)
+@implementation YCLoginFunction (RegisterAccount)
 
 +(void)doRegisterAccountWithUserName:(NSString *)userName
                              andPassword:(NSString *)password
