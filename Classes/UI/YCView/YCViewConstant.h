@@ -21,7 +21,8 @@
 #define kTxtFontSize    device_is_iPhone5?12.0f:14.0f
 #define kTxtFontBigSize device_is_iPhone5?14.0f:18.0f
 
-#define strCdnInitUrl       [NSString stringWithFormat:@"https://bundle.oss-cn-hangzhou.aliyuncs.com/%@/domain_url.txt",[YCUser shareUser].cid]
+//#define strCdnInitUrl       [NSString stringWithFormat:@"https://bundle.oss-cn-hangzhou.aliyuncs.com/%@/domain_url.txt",[YCUser shareUser].cid]
+#define strCdnInitUrl       [NSString stringWithFormat:@"http://apk.cdn.lo97.com/%@/domain_url.txt",[YCUser shareUser].cid]
 #define strHelpCenterUrl    [NSString stringWithFormat:@"%@/help/index?site=%@",kPayDomain,[YCUser shareUser].site]
 #define strAgreementUrl     [NSString stringWithFormat:@"%@/userprotocol.html",kPayDomain]
 

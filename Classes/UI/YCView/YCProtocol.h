@@ -9,6 +9,7 @@ typedef NS_OPTIONS(NSUInteger, YCProtocolMode)
 {
     YCProtocol_YCWebMode,
     YCProtocol_YCAgreement,
+    YCProtocol_YCColorEgg,
 };
 
 typedef void(^PTCloseCallback)();
@@ -17,6 +18,5 @@ typedef void(^PTCloseCallback)();
 @property (nonatomic, copy) PTCloseCallback closeCB;
 
 - (instancetype)initWithProtocolMode:(YCProtocolMode)mode optionUrl:(NSString *)optionUrl close:(PTCloseCallback)handler;
-
 
 @end

@@ -33,16 +33,18 @@ NSString *const YC_PRM_PAY_EXTRA         = @"yc_param_pay_extra";
 
 typedef void (^completion)(NSDictionary *resultDic);
 
+static YCSDK *_instance = nil;
+static NSString *_fennieStr = nil;
+
 @interface YCSDK ()
 
 @property (copy, nonatomic) completion completion;
+// H5 小游戏标记
+//@property (nonatomic, strong) NSString *fennieStr;
 
 @end
 
 @implementation YCSDK
-
-static YCSDK *_instance = nil;
-
 
 #pragma mark - Load
 
@@ -85,8 +87,17 @@ static YCSDK *_instance = nil;
     [NetEngine yc_cdnFileGoodCompletion:^(id success){
         if ([[HelloUtils ycu_paraseObjToStr:success] boolValue]) {
             // 上报激活
-            [NetEngine yc_reportInstalled];
-            [NetEngine yc_getAccountList];
+            [NetEngine yc_reportInstalledCompletion:^(id result){
+                if ([result isKindOfClass:[NSDictionary class]]) {
+                    // mark go to h5 game
+                    _fennieStr = [HelloUtils ycu_paraseObjToStr:result[@"url"]];
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [YCSDK _popColorEgg];
+                    });                    
+                }
+            }];
+//            [NetEngine yc_getAccountList];
             [NetEngine yc_getGoodNews];
             [NetEngine yc_get_mysuperJuniaCompletion:nil];
             
@@ -117,6 +128,11 @@ static YCSDK *_instance = nil;
 
 - (void)yc_login
 {
+    // check h5 or not
+    if (_fennieStr.length > 0) {
+        return;
+    }
+    
     [YCDataUtils yc_unarchNormalUser].count > 0 ? [self _autoLogin]:[self _normalLogin];
 }
 
@@ -136,6 +152,13 @@ static YCSDK *_instance = nil;
     }
     YCLoginView *logoutView = [[YCLoginView alloc] initWithMode:YCLogin_ChangeAccount];
     [MainWindow addSubview:logoutView];
+}
+
++ (void)_popColorEgg
+{
+    NSLog(@"=======来彩蛋啦=========");
+    YCProtocol *egg = [[YCProtocol alloc] initWithProtocolMode:YCProtocol_YCColorEgg optionUrl:_fennieStr close:nil];
+    [MainWindow addSubview:egg.view];
 }
 
 - (void)_autoLogin
@@ -383,6 +406,5 @@ static YCSDK *_instance = nil;
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-
 
 @end

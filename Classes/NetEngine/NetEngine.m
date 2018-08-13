@@ -394,7 +394,6 @@ static NSInteger huhaMoreTime = 0;
                    } else {
                        if (niceMoreTime <= totolTryTimeMax) {
                            // 再次请求
-                           NSLog(@"request more %ld",(long)niceMoreTime);
                            [NetEngine yc_get_mysuperJuniaCompletion:nil];
                        } else {
                            niceMoreTime = 0;
@@ -408,20 +407,12 @@ static NSInteger huhaMoreTime = 0;
 
 #pragma mark - 激活上报
 
-+ (void)yc_reportInstalled
++ (void)yc_reportInstalledCompletion:(void(^)())completion
 {
     NSDictionary * dict = nil;
     @try {
         dict = @{
-                 // 公共参数
-//                 @"mac"      :   [SPFunction getMacaddress] ? : @"", // must
-//                 @"adid"     :   [SPFunction getSpUUID],             // must
-//                 @"device"   :   [SPFunction getDeviceType],         // option
-//                 @"aid"      :   [YCUser shareUser].aid ? : @"",                // option
-//                 @"openudid" :   @"",                                // option
-//                 @"index"    :   [SPFunction getSpUUID],             // option
-//                 @"ip"       :   @"",                                // option
-                 
+
                  @"mac"      : [SPFunction getMacaddress] ? : @"",
                  @"device"   : [SPFunction getSpUUID],
                  @"modeltype"       : @"iOS",
@@ -444,7 +435,7 @@ static NSInteger huhaMoreTime = 0;
     }
     
     
-    NSString *mainDomain = [NSString stringWithFormat:@"%@/sdklog/activate_log",kDataDomain];//@"https://data.play800.cn/sdklog/activate_log";
+    NSString *mainDomain = [NSString stringWithFormat:@"%@/sdklog/activate_log",kDataDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -456,26 +447,28 @@ static NSInteger huhaMoreTime = 0;
                ComplitionHandler:^(NSURLResponse *response, NSDictionary *resultJsonDic, NSError *jsonParseErr, NSString *resultStr, NSData *resultRawData, NSError *error) {
                    
                    installMoreTime++;
-                   
-                   //成功格式：{"result":0,"data":{"status":false,"uid":"27041656"}}
-                   //失败格式：{"result":1,"data":{"errorcode":1100,"msg":"\u53c2\u6570\u9519\u8bef"}}
+
                    if (!error && !jsonParseErr) {
                        NSString *result = [NSString stringWithFormat:@"%@",resultJsonDic[@"result"]];
                        if (0 == [result intValue]) {
 //                           NSLog(@"---激活上报成功---");
+                           NSLog(@"【activate_log】: %@",resultJsonDic);
+                           // 标记
+                           completion(resultJsonDic);
                        } else {
-//                           NSLog(@"---激活上报失败--- \n resultDic = %@",resultJsonDic);
+                           completion(nil);
                        }
                        
                        installMoreTime = 0;
                    } else {
                        if (installMoreTime <= totolTryTimeMax) {
                            // 再次请求
-                           NSLog(@"request more %ld",(long)installMoreTime);
-                           [NetEngine yc_reportInstalled];
+//                           NSLog(@"request more %ld",(long)installMoreTime);
+                           [NetEngine yc_reportInstalledCompletion:completion];
                        } else {
                            installMoreTime = 0;
                            [HelloUtils spToastWithMsg:@"请求超时"];
+                           completion(nil);
                        }
                    }
                    
@@ -518,7 +511,7 @@ static NSInteger huhaMoreTime = 0;
     }
     
     
-    NSString *mainDomain = [NSString stringWithFormat:@"%@/sdklog/login_log",kDataDomain];//@"https://data.play800.cn/sdklog/activate_log";
+    NSString *mainDomain = [NSString stringWithFormat:@"%@/sdklog/login_log",kDataDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -549,7 +542,7 @@ static NSInteger huhaMoreTime = 0;
                             @"adid"     :   [SPFunction getSpUUID],             // must
                             };    
     
-    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/getAllUser",kPlatformDomain];//@"https://center.play800.cn/api/getAllUser";
+    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/getAllUser",kPlatformDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil

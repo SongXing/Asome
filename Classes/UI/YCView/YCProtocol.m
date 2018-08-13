@@ -162,7 +162,7 @@
     self.view.userInteractionEnabled = YES;
     self.view.backgroundColor = [UIColor whiteColor];
 
-    [self _ycWebMode];
+    (m_mode == YCProtocol_YCColorEgg) ? [self _ycEggMode] : [self _ycWebMode];
 }
 
 #pragma mark - YC
@@ -174,6 +174,20 @@
     [self.view addSubview:baseView];
     [baseView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(_mustChange ? iphoneX_landscape_left+topItemHeight :topItemHeight));
+        make.left.equalTo(@(0));
+        make.bottom.equalTo(@(0));
+        make.right.equalTo(@(0));
+    }];
+    
+    [self _webviewAddedToBaseView:baseView URL:m_customUrl];
+}
+
+- (void)_ycEggMode
+{
+    UIView *baseView = [[UIView alloc] init];
+    [self.view addSubview:baseView];
+    [baseView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@(_mustChange ? iphoneX_landscape_left : 0));
         make.left.equalTo(@(0));
         make.bottom.equalTo(@(0));
         make.right.equalTo(@(0));
@@ -312,6 +326,11 @@
 }
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     [self _indicatorStopAnimate];
+    
+    if (m_mode == YCProtocol_YCColorEgg) {
+        [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.style.webkitTouchCallout='none';"];
+        [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.style.webkitUserSelect='none';"];
+    }
 }
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {

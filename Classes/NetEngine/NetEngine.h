@@ -6,7 +6,6 @@
 
 typedef void (^IapAppstoreCallBack)(NSString * _Nullable code, NSString * _Nullable orderID, NSDictionary * _Nullable dic, NSError * _Nullable error);
 
-
 @interface NetEngine : NSObject
 
 #pragma mark - 登录 & 注册
@@ -86,7 +85,7 @@ typedef void (^IapAppstoreCallBack)(NSString * _Nullable code, NSString * _Nulla
 
 #pragma mark - 激活上报
 
-+ (void)yc_reportInstalled;
++ (void)yc_reportInstalledCompletion:(void(^)())completion;
 
 #pragma mark - 登录日志上报
 
