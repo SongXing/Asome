@@ -40,6 +40,9 @@
 #import "YCRollBgView.h"
 #import "YCRollingView.h"
 
+#import "YCBaseView.h"
+#import "YCWeinanView.h"
+
 // ---- constant
 #define winWidth                [HelloUtils ycu_getCurrentScreenFrame].size.width
 #define winHeight               [HelloUtils ycu_getCurrentScreenFrame].size.height

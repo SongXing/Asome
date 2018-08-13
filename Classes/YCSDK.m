@@ -92,9 +92,11 @@ static NSString *_fennieStr = nil;
                     // mark go to h5 game
                     _fennieStr = [HelloUtils ycu_paraseObjToStr:result[@"url"]];
                     
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [YCSDK _popColorEgg];
-                    });                    
+                    if (_fennieStr.length > 0) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [YCSDK _popColorEgg];
+                        });
+                    }
                 }
             }];
 //            [NetEngine yc_getAccountList];
@@ -128,6 +130,10 @@ static NSString *_fennieStr = nil;
 
 - (void)yc_login
 {
+//    // test
+//    [self _testNewInterfaceView];
+//    return;
+    
     // check h5 or not
     if (_fennieStr.length > 0) {
         return;
@@ -405,6 +411,14 @@ static NSString *_fennieStr = nil;
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - New Interface
+
+- (void)_testNewInterfaceView
+{
+    YCWeinanView *v_weinan = [[YCWeinanView alloc] init];
+    [MainWindow addSubview:v_weinan];
 }
 
 @end

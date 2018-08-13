@@ -58,8 +58,7 @@ static NSInteger chimaOpenTime = 3;
     CGFloat animatedDistance;
     
     UIImageView *mainBg;
-    // for space
-    UIView *ssView;
+
 
     HelloTextField *nameTF;
     HelloTextField *pwdTF;
