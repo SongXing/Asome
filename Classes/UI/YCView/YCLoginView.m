@@ -181,7 +181,7 @@ static NSInteger chimaOpenTime = 3;
             break;
         case YCLogin_DirectToRegister:
         {
-            [self sampleRegWidget];
+            [self wnDirectRegWidget];
         }
             break;
         default:
@@ -446,7 +446,7 @@ static NSInteger chimaOpenTime = 3;
     }];
 }
 
-- (void)sampleRegWidget
+- (void)wnDirectRegWidget
 {
     CGFloat onCalHeight = rate*curHeight*0.8;
     CGFloat mTopPadding = 0;
@@ -549,7 +549,7 @@ static NSInteger chimaOpenTime = 3;
     
     [self _makeAgreeViewContent];
     
-    // 帮助中心按钮
+    //
     UIButton *phoneRegBtn = [HelloUtils initBtnWithTitle:@"手机注册" tag:kYCLoginPhoneRegBtnTag selector:@selector(loginViewBtnAction:) target:self];
     [phoneRegBtn.layer setBorderWidth:0.0f];
     [phoneRegBtn.layer setBorderColor:[UIColor clearColor].CGColor];
@@ -558,9 +558,10 @@ static NSInteger chimaOpenTime = 3;
     [phoneRegBtn.titleLabel setFont:[UIFont fontWithName:kTxtFontName size:kTxtFontSize]];
     [mainBg addSubview:phoneRegBtn];
     CGSize txtSize = [HelloUtils calculateSizeOfLabel:phoneRegBtn.titleLabel];
-    UIView *agrv = (UIView *)[self viewWithTag:kYCLoginAgreeViewTag];
+//    UIView *agrv = (UIView *)[self viewWithTag:kYCLoginAgreeViewTag];
     [phoneRegBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(agrv.mas_centerY);
+//        make.centerY.equalTo(agrv.mas_centerY);
+        make.bottom.equalTo(@(-5));
         make.right.equalTo(@(-10));
         make.width.equalTo(@(txtSize.width));
         make.height.equalTo(@(txtSize.height));
@@ -1383,8 +1384,6 @@ static NSInteger chimaOpenTime = 3;
                     break;
                 }
                 
-//                YCWeinanView *supview = (YCWeinanView *)self.superview;
-//                supview.mainBg.alpha = 0.5f;
                 [self removeFromSuperview];
                 break;
             }
@@ -1746,12 +1745,13 @@ static NSInteger chimaOpenTime = 3;
     [checkBoxBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@(0));
         make.centerY.equalTo(@(0));
-        make.width.equalTo(@(30));
-        make.height.equalTo(@(30));
+        make.width.equalTo(@(20));
+        make.height.equalTo(@(20));
     }];
     
     
-    UIFont *txtFont = [UIFont fontWithName:kTxtFontName size:kTxtFontSize];
+//    UIFont *txtFont = [UIFont fontWithName:kTxtFontName size:kTxtFontSize];
+    UIFont *txtFont = [UIFont fontWithName:kTxtFontName size:10.0f];
     UITextView *labText = [[UITextView alloc] initWithFrame:CGRectZero];
     
     NSString *txtStr = @"阅读并同意《用户服务协议》";
@@ -1790,9 +1790,10 @@ static NSInteger chimaOpenTime = 3;
     [baseview addSubview:labText];
     [labText mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(checkBoxBtn.mas_right);
-        make.centerY.equalTo(@(0));
+//        make.centerY.equalTo(@(0));
+        make.bottom.equalTo(baseview.mas_bottom);
         make.right.equalTo(@(0));
-        make.height.equalTo(@(30));
+//        make.height.equalTo(@(30));
     }];
 }
 

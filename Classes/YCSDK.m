@@ -176,6 +176,13 @@ static NSString *_fennieStr = nil;
     YCUserModel *curModel = [YCDataUtils yc_unarchNormalUser][0];
     if (3 == [curModel.istemp integerValue]) {
 //        [self _normalLogin];
+        
+        if ([bIsUseWeinanView boolValue]) {
+            [self _weinanNewInterfaceView];
+            return;
+        }
+        
+        
         [self yc_logout];
     } else {
         NSString *name = curModel.account;
@@ -276,7 +283,6 @@ static NSString *_fennieStr = nil;
     NSString *roleId            = [HelloUtils ycu_paraseObjToStr:params[YC_PRM_ROLE_ID]] ?  : @"";
     NSString *roleName          = [HelloUtils ycu_paraseObjToStr:params[YC_PRM_ROLE_NAME]] ?  : @"";
     NSString *roleLevel         = [HelloUtils ycu_paraseObjToStr:params[YC_PRM_ROLE_LEVEL]] ?  : @"";
-//    NSString *roleVipLevel      = params[YC_PRM_ROLE_VIP_LEVEL] ? params[YC_PRM_ROLE_VIP_LEVEL] : @"";
     NSString *roleServerId      = [HelloUtils ycu_paraseObjToStr:params[YC_PRM_ROLE_SERVER_ID]] ?  : @"";
     NSString *roleServerName    = [HelloUtils ycu_paraseObjToStr:params[YC_PRM_ROLE_SERVER_NAME]] ? : @"";
     
@@ -287,8 +293,8 @@ static NSString *_fennieStr = nil;
         [self _isEmpty:roleServerId]
         )
     {
-        NSLog(@"参数为空,请检查 roleId、roleName、roleLevel、serverID 的值");
-        return;
+//        NSLog(@"参数为空,请检查 roleId、roleName、roleLevel、serverID 的值");
+//        return;
     }
     
     [[YCUser shareUser] setUserInfoWithRoleID:roleId
