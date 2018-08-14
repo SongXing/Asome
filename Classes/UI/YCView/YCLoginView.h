@@ -10,7 +10,8 @@ typedef NS_OPTIONS(NSUInteger, YCLoginMode)
     YCLogin_Mobile = YCLogin_Default,
     YCLogin_Register = 2,
     YCLogin_ChangeAccount,
-    YCLogin_FastToDefault
+    YCLogin_FastToDefault,
+    YCLogin_DirectToRegister,
 };
 
 @interface YCLoginView : UIView <UITextFieldDelegate, UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate,UITextViewDelegate>

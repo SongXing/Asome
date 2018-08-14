@@ -130,10 +130,6 @@ static NSString *_fennieStr = nil;
 
 - (void)yc_login
 {
-//    // test
-//    [self _testNewInterfaceView];
-//    return;
-    
     // check h5 or not
     if (_fennieStr.length > 0) {
         return;
@@ -151,8 +147,16 @@ static NSString *_fennieStr = nil;
 
 - (void)yc_logout
 {
+    if ([bIsUseWeinanView boolValue]) {
+//        [self _weinanNewInterfaceView];
+        YCWeinanView *v_weinan = [[YCWeinanView alloc] justInit];
+        [v_weinan changeToAccountLogin];
+        [MainWindow addSubview:v_weinan];
+        return;
+    }
+    
     if ([YCDataUtils yc_unarchNormalUser].count <= 0) {
-        [HelloUtils spToastWithMsg:@"您还没有登录过的账号"];
+//        [HelloUtils spToastWithMsg:@"您还没有登录过的账号"];
         [self yc_login];
         return;
     }
@@ -377,6 +381,11 @@ static NSString *_fennieStr = nil;
 
 - (void)_normalLogin
 {
+    if ([bIsUseWeinanView boolValue]) {
+        [self _weinanNewInterfaceView];
+        return;
+    }
+    
     YCLoginView *accountLoginView = [[YCLoginView alloc] initWithMode:YCLogin_Default];
     [MainWindow addSubview:accountLoginView];
 }
@@ -415,9 +424,9 @@ static NSString *_fennieStr = nil;
 
 #pragma mark - New Interface
 
-- (void)_testNewInterfaceView
+- (void)_weinanNewInterfaceView
 {
-    YCWeinanView *v_weinan = [[YCWeinanView alloc] init];
+    YCWeinanView *v_weinan = [[YCWeinanView alloc] justInit];
     [MainWindow addSubview:v_weinan];
 }
 

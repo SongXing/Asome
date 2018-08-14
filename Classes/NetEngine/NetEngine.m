@@ -451,8 +451,7 @@ static NSInteger huhaMoreTime = 0;
                    if (!error && !jsonParseErr) {
                        NSString *result = [NSString stringWithFormat:@"%@",resultJsonDic[@"result"]];
                        if (0 == [result intValue]) {
-//                           NSLog(@"---激活上报成功---");
-                           NSLog(@"【activate_log】: %@",resultJsonDic);
+//                           NSLog(@"【activate_log】: %@",resultJsonDic);
                            // 标记
                            completion(resultJsonDic);
                        } else {

@@ -76,14 +76,14 @@
     // bg
     self.mainBg = [[UIImageView alloc] init];
     self.mainBg.userInteractionEnabled = YES;
-    self.mainBg.tag = kYCLoginMainBgViewTag;
+    self.mainBg.tag = kYCBaseMainBgViewTag;
     [self addSubview:self.mainBg];
-    [self.mainBg mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(@(0));
-        make.centerY.equalTo(@(0));
-        make.width.equalTo(@(self.rate*self.curWidth));
-        make.height.equalTo(@(self.rate*self.curHeight*0.8));
-    }];
+//    [self.mainBg mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerX.equalTo(@(0));
+//        make.centerY.equalTo(@(0));
+//        make.width.equalTo(@(self.rate*self.curWidth));
+//        make.height.equalTo(@(self.rate*self.curHeight*0.8));
+//    }];
     
     self.mainBg.backgroundColor = [UIColor colorWithHexString:kBgGrayHex];
     self.mainBg.layer.borderWidth = 1;

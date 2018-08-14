@@ -43,6 +43,9 @@
 #import "YCBaseView.h"
 #import "YCWeinanView.h"
 
+// interfaceview select
+#define bIsUseWeinanView        (@1)
+
 // ---- constant
 #define winWidth                [HelloUtils ycu_getCurrentScreenFrame].size.width
 #define winHeight               [HelloUtils ycu_getCurrentScreenFrame].size.height

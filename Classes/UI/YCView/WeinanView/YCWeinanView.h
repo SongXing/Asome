@@ -12,4 +12,6 @@
 
 - (instancetype)justInit;
 
+- (void)changeToAccountLogin;
+
 @end

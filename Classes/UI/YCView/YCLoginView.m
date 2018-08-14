@@ -24,6 +24,7 @@
 #define kYCLoginAgreeViewTag        121
 #define kYCLoginCheckBoxBtnTag      122
 #define kYCLoginWowBtnTag           123
+#define kYCLoginPhoneRegBtnTag           124
 
 #define kListCellIdentifier             @"cn_list_identifier"
 
@@ -176,6 +177,11 @@ static NSInteger chimaOpenTime = 3;
         {
             [self catchMyWidget];
             [self _changeToShowAccountLogin];
+        }
+            break;
+        case YCLogin_DirectToRegister:
+        {
+            [self sampleRegWidget];
         }
             break;
         default:
@@ -440,6 +446,127 @@ static NSInteger chimaOpenTime = 3;
     }];
 }
 
+- (void)sampleRegWidget
+{
+    CGFloat onCalHeight = rate*curHeight*0.8;
+    CGFloat mTopPadding = 0;
+    CGFloat firstGap = 26.0f/curWidth * onCalHeight;
+    CGFloat secondGap = 8.0f/curWidth * onCalHeight;
+    mTopPadding += firstGap;
+    
+    // title image
+    UIImageView *titleImage = [[UIImageView alloc] initWithImage:GetImage(@"logo.png")];
+    [mainBg addSubview:titleImage];
+    // 440x98
+    CGFloat widthOfImage    = 100*rate*curWidth/228.0f;
+    CGFloat heightOfImage   = 100*rate*curWidth/228.0f/440.0f*98.0f;
+    [titleImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@(mTopPadding));
+        make.centerX.equalTo(@(0));
+        make.width.equalTo(@(widthOfImage));
+        make.height.equalTo(@(heightOfImage));
+    }];
+    
+    // back btn
+    UIButton *backBtn = [HelloUtils initBtnWithNormalImage:backBtn_normal highlightedImage:backBtn_highlighted tag:kLoginDamnBackBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    [mainBg addSubview:backBtn];
+    [backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@(mTopPadding/2));
+        make.left.equalTo(@(leftPadding*rate*curWidth));
+        make.width.equalTo(@(backBtnWidthAndHeight*rate*curWidth));
+        make.height.equalTo(@(backBtnWidthAndHeight*rate*curWidth));
+    }];
+    
+    // ----------------------------
+    
+    mTopPadding += firstGap + heightOfImage;
+    
+    // text input
+    nameTF = [HelloUtils customTextfieldWidgetWithLeftView:nil
+                                                 rightView:userListBtn
+                                               placeholder:@"请输入登录账号"
+                                                  delegate:self];
+    [HelloUtils makeTextFieldPlaceHolderProperty:nameTF];
+    nameTF.returnKeyType = UIReturnKeyNext;
+    nameTF.tag = kYCLoginNameInputViewTag;
+    nameTF.backgroundColor = [UIColor whiteColor];
+    nameTF.layer.cornerRadius = 5.0f;
+    nameTF.layer.borderWidth = 1.0f;
+    nameTF.layer.borderColor = [UIColor colorWithHexString:kGrayHex].CGColor;
+    [mainBg addSubview:nameTF];
+    [nameTF mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@(mTopPadding));
+        make.centerX.equalTo(@(0));
+        make.width.equalTo(@(loginBtnWidthOfBgWidth*rate*curWidth));
+        make.height.equalTo(@(textFieldHeightOfBgHeight*rate*curWidth));
+    }];
+    
+    // ------------
+    mTopPadding += secondGap + textFieldHeightOfBgHeight*rate*curWidth;
+    
+    eyesBtn = [HelloUtils yc_rightViewWithImage:eyeBtn_off tag:kYCLoginEyeBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    [eyesBtn setFrame:CGRectMake(0, 0, eyesBtn.frame.size.width, eyesBtn.frame.size.height)];
+    
+    pwdTF = [HelloUtils customTextfieldWidgetWithLeftView:nil
+                                                rightView:eyesBtn
+                                              placeholder:@"请输入密码"
+                                                 delegate:self];
+    pwdTF.endEditDistance = eyesBtn.frame.size.width - 25;
+    [HelloUtils makeTextFieldPlaceHolderProperty:pwdTF];
+    pwdTF.returnKeyType = UIReturnKeyDone;
+    pwdTF.tag = kYCLoginPwdInputViewTag;
+    pwdTF.secureTextEntry = pwdEntity;
+    pwdTF.backgroundColor = [UIColor whiteColor];
+    pwdTF.layer.cornerRadius = 5.0f;
+    pwdTF.layer.borderWidth = 1.0f;
+    pwdTF.layer.borderColor = [UIColor colorWithHexString:kGrayHex].CGColor;
+    [mainBg addSubview:pwdTF];
+    [pwdTF mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@(mTopPadding));
+        make.centerX.equalTo(@(0));
+        make.width.equalTo(@(loginBtnWidthOfBgWidth*rate*curWidth));
+        make.height.equalTo(@(textFieldHeightOfBgHeight*rate*curWidth));
+    }];
+    
+    // --------------
+    mTopPadding += secondGap + textFieldHeightOfBgHeight*rate*curWidth;
+    
+    // login btn
+    loginComfirmBtn = [HelloUtils yc_initBtnWithTitle:@"进入游戏" tag:kYCLoginMobileFastLoginBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    [mainBg addSubview:loginComfirmBtn];
+    [loginComfirmBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@(mTopPadding));
+        make.left.equalTo(@(anotherLeftPadding*rate*curWidth));
+        make.width.equalTo(@(loginBtnWidthOfBgWidth*rate*curWidth));
+        make.height.equalTo(@(textFieldHeightOfBgHeight*rate*curWidth));
+    }];
+    loginComfirmBtn.layer.cornerRadius = 5.0f;
+    loginComfirmBtn.backgroundColor = [UIColor colorWithHexString:kGreenHex];
+    loginComfirmBtn.titleLabel.textColor = [UIColor colorWithHexString:kWhiteHex];
+    loginComfirmBtn.layer.borderWidth = 1.0f;
+    loginComfirmBtn.layer.borderColor = [UIColor colorWithHexString:kGrayHex].CGColor;
+    [loginComfirmBtn.titleLabel setFont:[UIFont fontWithName:kTxtFontName size:kTxtFontBigSize]];
+    
+    [self _makeAgreeViewContent];
+    
+    // 帮助中心按钮
+    UIButton *phoneRegBtn = [HelloUtils initBtnWithTitle:@"手机注册" tag:kYCLoginPhoneRegBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    [phoneRegBtn.layer setBorderWidth:0.0f];
+    [phoneRegBtn.layer setBorderColor:[UIColor clearColor].CGColor];
+    [phoneRegBtn.layer setCornerRadius:0.0f];
+    [phoneRegBtn setTitleColor:[UIColor colorWithHexString:kGreenHex] forState:0];
+    [phoneRegBtn.titleLabel setFont:[UIFont fontWithName:kTxtFontName size:kTxtFontSize]];
+    [mainBg addSubview:phoneRegBtn];
+    CGSize txtSize = [HelloUtils calculateSizeOfLabel:phoneRegBtn.titleLabel];
+    UIView *agrv = (UIView *)[self viewWithTag:kYCLoginAgreeViewTag];
+    [phoneRegBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(agrv.mas_centerY);
+        make.right.equalTo(@(-10));
+        make.width.equalTo(@(txtSize.width));
+        make.height.equalTo(@(txtSize.height));
+    }];
+}
+
 #pragma mark - Change Account Mode
 
 - (void)_curLoginUserInit
@@ -531,7 +658,7 @@ static NSInteger chimaOpenTime = 3;
     
     
     CGSize txtSize = CGSizeZero;
-    // 游客登录按钮
+    // btn
     UIButton *guestBtn = [HelloUtils initBtnWithTitle:@"更换登录方式" tag:kYCLoginChangeAccountBtnTag selector:@selector(loginViewBtnAction:) target:self];
     [guestBtn.layer setBorderWidth:0.0f];
     [guestBtn.layer setBorderColor:[UIColor clearColor].CGColor];
@@ -549,7 +676,141 @@ static NSInteger chimaOpenTime = 3;
     
 }
 
-#pragma makr - 切换模式
+
+#pragma mark - weinan 模式下的手机注册账号并登陆
+
+- (void)_justHiddenGeneratedPhoneRegElements
+{
+    [[self viewWithTag:kYCLoginPhoneRegBtnTag] setHidden:NO];
+    
+    [[self viewWithTag:kYCLoginPhoneInputViewTag] setHidden:YES];
+    [[self viewWithTag:kYCLoginGetVertifyCodeTag] setHidden:YES];
+    phoneInput.hidden = YES;
+    codeInput.hidden = YES;
+}
+
+- (void)_justShowGeneratedPhoneRegElements
+{
+    [[self viewWithTag:kYCLoginPhoneInputViewTag] setHidden:NO];
+    [[self viewWithTag:kYCLoginGetVertifyCodeTag] setHidden:NO];
+    phoneInput.hidden = NO;
+    codeInput.hidden = NO;
+}
+
+- (void)_weinanPhoneRegMode
+{
+    [[self viewWithTag:kYCLoginPhoneRegBtnTag] setHidden:YES];
+ 
+    [self _clearTextfield];
+    
+    if ([self viewWithTag:kYCLoginPhoneInputViewTag]) {
+        [self _justShowGeneratedPhoneRegElements];
+        return;
+    }
+    
+    CGFloat onCalHeight = rate*curHeight*0.8;
+    CGFloat mTopPadding = 0;
+    CGFloat firstGap = 26.0f/curWidth * onCalHeight;
+    CGFloat secondGap = 8.0f/curWidth * onCalHeight;
+    mTopPadding += firstGap;
+    
+    // 440x98
+//    CGFloat widthOfImage    = 100*rate*curWidth/228.0f;
+    CGFloat heightOfImage   = 100*rate*curWidth/228.0f/440.0f*98.0f;
+    // ----------------------------
+    
+    mTopPadding += firstGap + heightOfImage;
+    
+    // text input
+    UIView *phoneView = [[UIView alloc] initWithFrame:CGRectZero];
+    phoneView.tag = kYCLoginPhoneInputViewTag;
+    phoneView.backgroundColor = [UIColor whiteColor];
+    phoneView.layer.cornerRadius = 5.0f;
+    phoneView.layer.borderWidth = 1.0f;
+    phoneView.layer.borderColor = [UIColor colorWithHexString:kGrayHex].CGColor;
+    [mainBg addSubview:phoneView];
+    [phoneView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@(mTopPadding));
+        make.centerX.equalTo(@(0));
+        make.width.equalTo(@(loginBtnWidthOfBgWidth*rate*curWidth));
+        make.height.equalTo(@(textFieldHeightOfBgHeight*rate*curWidth));
+    }];
+    
+    // pick btn
+    NSInteger pickBtnTag = 10098;
+    UIButton * pickBtn = [HelloUtils initBtnWithTitle:@"+86" tag:pickBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    [pickBtn.layer setCornerRadius:0.0f];
+    [pickBtn.layer setBorderWidth:0.0f];
+    [pickBtn.layer setBorderColor:[UIColor clearColor].CGColor];
+    [pickBtn setTitleColor:[UIColor colorWithHexString:kBlackHex] forState:0];
+    pickBtn.userInteractionEnabled = NO;
+    [phoneView addSubview:pickBtn];
+    [pickBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@(0));
+        make.left.equalTo(@(0));
+        make.bottom.equalTo(@(0));
+        make.right.equalTo(@(-loginBtnWidthOfBgWidth*rate*curWidth*0.8));
+    }];
+    // seperate line
+    UILabel *seperateLine = [self _createSeperateLine];
+    [phoneView addSubview:seperateLine];
+    [seperateLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(@(0));
+        make.left.equalTo(pickBtn.mas_right);
+        make.width.equalTo(@(1.0f));
+        make.height.equalTo(@(30-10));
+    }];
+    
+    phoneInput = [HelloUtils customTextfieldWidgetWithLeftView:nil rightView:nil placeholder:@"请输入您的手机号码" delegate:self];
+    [HelloUtils makeTextFieldPlaceHolderProperty:phoneInput];
+    phoneInput.returnKeyType = UIReturnKeyNext;
+    [phoneView addSubview:phoneInput];
+    [phoneInput mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@(0));
+        make.left.equalTo(@(loginBtnWidthOfBgWidth*rate*curWidth*0.2+5));
+        make.bottom.equalTo(@(0));
+        make.right.equalTo(@(0));
+    }];
+    
+    // ------------
+    mTopPadding += secondGap + textFieldHeightOfBgHeight*rate*curWidth;
+    
+    
+    // send vertify btn
+    NSString *strFetchVertifyCode = @"获取验证码";
+    NSInteger sendVertifyBtnTag = kYCLoginGetVertifyCodeTag;
+    UIButton *sendVertifyBtn = [HelloUtils initBtnWithType:UIButtonTypeCustom title:strFetchVertifyCode tag:sendVertifyBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    [sendVertifyBtn setTitle:strFetchVertifyCode forState:0];
+    [sendVertifyBtn.layer setCornerRadius:0.0f];
+    [sendVertifyBtn.layer setBorderWidth:0.0f];
+    [sendVertifyBtn.layer setBorderColor:[UIColor colorWithHexString:kGrayHex].CGColor];
+    [sendVertifyBtn setTitleColor:[UIColor colorWithHexString:kBlackHex] forState:0];
+    [sendVertifyBtn.titleLabel setFont:[UIFont fontWithName:kTxtFontName size:kTxtFontSize]];
+    CGSize sendVertifyCodeBtnSize = [HelloUtils calculateSizeOfLabel:sendVertifyBtn.titleLabel andWidth:1000];
+    [sendVertifyBtn setFrame:CGRectMake(0, 0, sendVertifyCodeBtnSize.width, textFieldHeightOfBgHeight*rate*curWidth
+                                        )];
+    
+    // input
+    
+    codeInput = [HelloUtils customTextfieldWidgetWithLeftView:nil rightView:sendVertifyBtn placeholder:@"请输入验证码" delegate:self];
+    codeInput.endEditDistance = sendVertifyCodeBtnSize.width - 25 + 10.0f;
+    codeInput.rightViewDistance = 10.0f;
+    [HelloUtils makeTextFieldPlaceHolderProperty:codeInput];
+    codeInput.returnKeyType = UIReturnKeyDone;
+    [mainBg addSubview:codeInput];
+    [codeInput mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@(mTopPadding));
+        make.centerX.equalTo(@(0));
+        make.width.equalTo(@(loginBtnWidthOfBgWidth*rate*curWidth));
+        make.height.equalTo(@(textFieldHeightOfBgHeight*rate*curWidth));
+    }];
+    codeInput.backgroundColor = [UIColor whiteColor];
+    codeInput.layer.cornerRadius = 5.0f;
+    codeInput.layer.borderWidth = 1.0f;
+    codeInput.layer.borderColor = [UIColor colorWithHexString:kGrayHex].CGColor;
+}
+
+#pragma mark - 切换模式
 
 - (void)_doSomeMagicToFastLogin
 {
@@ -835,9 +1096,102 @@ static NSInteger chimaOpenTime = 3;
 
 #pragma mark - Btn Actions
 
+- (void)usePhoneAndCodeLogin {
+    NSString *mobileNum = phoneInput.text;
+    NSString *code = [HelloUtils triString:codeInput.text];
+    if (![HelloUtils validCnMobileNumber:mobileNum]) {
+        [HelloUtils invalidPhoneToast];
+        return;
+    }
+    if (code.length <= 0) {
+        [HelloUtils invalidVertifyCodeToast];
+        return;
+    }
+    
+    [NetEngine loginUsingMobileNum:mobileNum
+                       vertifyCode:code
+                        completion:^(id result){
+                            if ([result isKindOfClass:[NSDictionary class]]) {
+                                // 保存账号信息
+                                [YCDataUtils yc_handelNormalUser:(NSDictionary *)result];
+                                [HelloUtils yc_postNoteWithName:NOTE_YC_LOGIN_SUCCESS userInfo:(NSDictionary *)result];
+                                [self removeFromSuperview];
+                            }
+                        }];
+}
+
+- (void)useAccountAndPwdLogin {
+    NSString *name = nameTF.text;
+    NSString *pass = pwdTF.text;
+    name = [HelloUtils triString:name];
+    pass = [HelloUtils triString:pass];
+    if (![HelloUtils validUserName:name]) {
+        [HelloUtils invalidNameToast];
+        return;
+    }
+    if (![HelloUtils validPassWord:pass]) {
+        [HelloUtils invalidPwdToast];
+        return;
+    }
+    [HelloUtils spStarLoadingAtView:nil];
+    [NetEngine loginUsingUsername:name
+                         password:pass
+                              uid:nil
+                          session:nil
+                       completion:^(id result){
+                           [HelloUtils spStopLoadingAtView:nil];
+                           if ([result isKindOfClass:[NSDictionary class]]) {
+                               // 保存账号信息
+                               [YCDataUtils yc_handelNormalUser:(NSDictionary *)result];
+                               [HelloUtils yc_postNoteWithName:NOTE_YC_LOGIN_SUCCESS userInfo:(NSDictionary *)result];
+                               [self removeFromSuperview];
+                           }
+                       }];
+}
+
+- (void)useAccounAndPwdRegister {
+    NSString *name = nameTF.text;
+    NSString *pass = pwdTF.text;
+    if (![HelloUtils validUserName:name]) {
+        [HelloUtils invalidNameToast];
+        return;
+    }
+    if (![HelloUtils validPassWord:pass]) {
+        [HelloUtils invalidPwdToast];
+        return;
+    }
+    if (!checkboxStatus) {
+        [HelloUtils disagreeAgreeementToast];
+        return;
+    }
+    
+    [HelloUtils spStarLoadingAtView:nil];
+    [NetEngine registerAccountWithUserName:name
+                                  password:pass
+                                     email:@""
+                                completion:^(id result){
+                                    [HelloUtils spStopLoadingAtView:nil];
+                                    if ([result isKindOfClass:[NSDictionary class]]) {
+                                        
+                                        // save a photo to user
+                                        pwdTF.secureTextEntry = NO;
+                                        [HelloUtils ycu_saveNewRegAccountToPhoto:self];
+                                        
+                                        [YCDataUtils yc_handelNormalUser:(NSDictionary *)result];
+                                        [HelloUtils yc_postNoteWithName:NOTE_YC_LOGIN_SUCCESS userInfo:(NSDictionary *)result];
+                                        [self removeFromSuperview];
+                                    }
+                                }];
+}
+
 - (void)loginViewBtnAction:(UIButton *)sender
 {
     switch (sender.tag) {
+        case kYCLoginPhoneRegBtnTag:
+        {
+            [self _weinanPhoneRegMode];
+        }
+            break;
         case kYCLoginHelpCenterBtnTag:
         {
             [HelloUtils yc_showSomeSenceOnSafari:strHelpCenterUrl];
@@ -849,94 +1203,18 @@ static NSInteger chimaOpenTime = 3;
                 case YCLogin_FastToDefault:
                 case YCLogin_Default:
                 {
-                    NSString *mobileNum = phoneInput.text;
-                    NSString *code = [HelloUtils triString:codeInput.text];
-                    if (![HelloUtils validCnMobileNumber:mobileNum]) {
-                        [HelloUtils invalidPhoneToast];
-                        return;
-                    }
-                    if (code.length <= 0) {
-                        [HelloUtils invalidVertifyCodeToast];
-                        return;
-                    }
-                    
-                    [NetEngine loginUsingMobileNum:mobileNum
-                                       vertifyCode:code
-                                        completion:^(id result){
-                                            if ([result isKindOfClass:[NSDictionary class]]) {
-                                                // 保存账号信息
-                                                [YCDataUtils yc_handelNormalUser:(NSDictionary *)result];
-                                                [HelloUtils yc_postNoteWithName:NOTE_YC_LOGIN_SUCCESS userInfo:(NSDictionary *)result];
-                                                [self removeFromSuperview];
-                                            }
-                                        }];
+                    [self usePhoneAndCodeLogin];
                 }
                     break;
                 case YCLogin_Account:
                 {
-                    NSString *name = nameTF.text;
-                    NSString *pass = pwdTF.text;
-                    name = [HelloUtils triString:name];
-                    pass = [HelloUtils triString:pass];
-                    if (![HelloUtils validUserName:name]) {
-                        [HelloUtils invalidNameToast];
-                        return;
-                    }
-                    if (![HelloUtils validPassWord:pass]) {
-                        [HelloUtils invalidPwdToast];
-                        return;
-                    }
-                    [HelloUtils spStarLoadingAtView:nil];
-                    [NetEngine loginUsingUsername:name
-                                         password:pass
-                                              uid:nil
-                                          session:nil
-                                       completion:^(id result){
-                                           [HelloUtils spStopLoadingAtView:nil];
-                                           if ([result isKindOfClass:[NSDictionary class]]) {
-                                               // 保存账号信息
-                                               [YCDataUtils yc_handelNormalUser:(NSDictionary *)result];
-                                               [HelloUtils yc_postNoteWithName:NOTE_YC_LOGIN_SUCCESS userInfo:(NSDictionary *)result];
-                                               [self removeFromSuperview];
-                                           }
-                                       }];
+                    [self useAccountAndPwdLogin];
                 }
                     break;
+                case YCLogin_DirectToRegister:
                 case YCLogin_Register:
                 {
-                    NSString *name = nameTF.text;
-                    NSString *pass = pwdTF.text;
-                    if (![HelloUtils validUserName:name]) {
-                        [HelloUtils invalidNameToast];
-                        return;
-                    }
-                    if (![HelloUtils validPassWord:pass]) {
-                        [HelloUtils invalidPwdToast];
-                        return;
-                    }
-                    if (!checkboxStatus) {
-                        [HelloUtils disagreeAgreeementToast];
-                        return;
-                    }
-                    
-                    [HelloUtils spStarLoadingAtView:nil];
-                    [NetEngine registerAccountWithUserName:name
-                                                  password:pass
-                                                     email:@""
-                                                completion:^(id result){
-                                                    [HelloUtils spStopLoadingAtView:nil];
-                                                    if ([result isKindOfClass:[NSDictionary class]]) {
-                                                        
-                                                        // save a photo to user
-                                                        pwdTF.secureTextEntry = NO;
-                                                        [HelloUtils ycu_saveNewRegAccountToPhoto:self];
-                                                        
-                                                        [YCDataUtils yc_handelNormalUser:(NSDictionary *)result];
-                                                        [HelloUtils yc_postNoteWithName:NOTE_YC_LOGIN_SUCCESS userInfo:(NSDictionary *)result];
-                                                        [self removeFromSuperview];
-                                                    }
-                                                }];
-                    
+                    [self viewWithTag:kYCLoginPhoneRegBtnTag].hidden?[self usePhoneAndCodeLogin]:[self useAccounAndPwdRegister];
                 }
                     break;
                 case YCLogin_ChangeAccount:
@@ -1002,8 +1280,6 @@ static NSInteger chimaOpenTime = 3;
                     
                     // 先判定是否要显示绑定警告框，如果要，则显示警告框，如果不要，则直接游客登录
 //                    NSLog(@"===%@",result);
-                    
-                    // 有些设备会导致 crash
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
                         
@@ -1077,11 +1353,20 @@ static NSInteger chimaOpenTime = 3;
             
             switch (m_mode) {
                 case YCLogin_Account:
+                {
+                    if ([self.superview isKindOfClass:[YCWeinanView class]]) {
+                        [self removeFromSuperview];
+                        break;
+                    }
                     [self _doSomeMagicToMobileLogin];
+                }
+                    
                     break;
                 case YCLogin_Register:
                     [self _doSomeMagicToAccountLogin];
                     break;
+                    
+                    
                 default:
                     break;
             }
@@ -1089,6 +1374,20 @@ static NSInteger chimaOpenTime = 3;
             break;
         case kLoginDamnBackBtnTag:
         {
+            NSLog(@"dddaaaammmmnnn");
+            if ([self.superview isKindOfClass:[YCWeinanView class]]) {
+                
+                // 通过“手机注册”按钮是否显示作为判断返回
+                if ([self viewWithTag:kYCLoginPhoneRegBtnTag].hidden) {
+                    [self _justHiddenGeneratedPhoneRegElements];
+                    break;
+                }
+                
+//                YCWeinanView *supview = (YCWeinanView *)self.superview;
+//                supview.mainBg.alpha = 0.5f;
+                [self removeFromSuperview];
+                break;
+            }
             [self _doSomeMagicToFastLogin];
         }
             break;

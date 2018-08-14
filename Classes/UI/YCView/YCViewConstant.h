@@ -39,6 +39,7 @@
 
 // tags
 
+#define kYCBaseMainBgViewTag        1169
 #define kYCLoginMainBgViewTag       1170
 
 #define kMainGameCenterBtnTag       9000
