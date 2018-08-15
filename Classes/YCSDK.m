@@ -286,17 +286,6 @@ static NSString *_fennieStr = nil;
     NSString *roleServerId      = [HelloUtils ycu_paraseObjToStr:params[YC_PRM_ROLE_SERVER_ID]] ?  : @"";
     NSString *roleServerName    = [HelloUtils ycu_paraseObjToStr:params[YC_PRM_ROLE_SERVER_NAME]] ? : @"";
     
-    // 对必要参数进行检查
-    if ([self _isEmpty:roleId] ||
-        [self _isEmpty:roleName] ||
-        [self _isEmpty:roleLevel] ||
-        [self _isEmpty:roleServerId]
-        )
-    {
-//        NSLog(@"参数为空,请检查 roleId、roleName、roleLevel、serverID 的值");
-//        return;
-    }
-    
     [[YCUser shareUser] setUserInfoWithRoleID:roleId
                                     roleLevel:roleLevel
                                      roleName:roleName

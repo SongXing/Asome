@@ -1790,8 +1790,8 @@ static NSInteger chimaOpenTime = 3;
     [baseview addSubview:labText];
     [labText mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(checkBoxBtn.mas_right);
-//        make.centerY.equalTo(@(0));
-        make.bottom.equalTo(baseview.mas_bottom);
+        make.centerY.equalTo(@(0));
+//        make.bottom.equalTo(baseview.mas_bottom);
         make.right.equalTo(@(0));
 //        make.height.equalTo(@(30));
     }];

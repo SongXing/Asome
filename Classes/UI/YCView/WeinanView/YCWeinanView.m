@@ -42,7 +42,7 @@
     CGFloat mbgH = self.rate*self.curHeight*0.35f;
     
     // resize
-    self.mainBg.backgroundColor = [UIColor whiteColor];
+    self.mainBg.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.8f];//[UIColor whiteColor];
     [self.mainBg mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(@(0));
         make.centerY.equalTo(@(0));
