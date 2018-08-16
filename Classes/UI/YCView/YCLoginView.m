@@ -1642,7 +1642,16 @@ static NSInteger chimaOpenTime = 3;
                 }
             }
                 break;
-            
+            case YCLogin_DirectToRegister:
+            {
+                if ([textField isEqual:phoneInput]) {
+                    [codeInput becomeFirstResponder];
+                }
+                if ([textField isEqual:nameTF]) {
+                    [pwdTF becomeFirstResponder];
+                }
+            }
+                break;
                 
             default:
                 break;
