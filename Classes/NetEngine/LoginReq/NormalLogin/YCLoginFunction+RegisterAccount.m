@@ -58,7 +58,6 @@
              };
     
     NSString *mainDomain = [NSString stringWithFormat:@"%@/api/regist",kPlatformDomain];
-//    @"https://center.play800.cn/api/regist";
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -89,9 +88,6 @@
                    }
                    
                }];
-    
-    
-
 }
 
 @end

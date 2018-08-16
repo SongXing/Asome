@@ -21,7 +21,7 @@
              
              };
   
-    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/defaultaccount",kPlatformDomain];;//@"https://center.play800.cn/api/defaultaccount?";
+    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/defaultaccount",kPlatformDomain];;
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -72,7 +72,7 @@
              };
     
     
-    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/defaultaccount",kPlatformDomain];;//@"https://center.play800.cn/api/defaultaccount?";
+    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/defaultaccount",kPlatformDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil

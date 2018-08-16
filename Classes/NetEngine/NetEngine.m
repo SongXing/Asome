@@ -69,7 +69,7 @@ static NSInteger huhaMoreTime = 0;
              @"sendtype"          : situation,//固定字段
              };
     
-    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/sendmobilecode",kPlatformDomain];//@"https://center.play800.cn/api/sendmobilecode";
+    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/sendmobilecode",kPlatformDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -117,7 +117,7 @@ static NSInteger huhaMoreTime = 0;
              @"adid"              : [SPFunction getSpUUID],
              };
     
-    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/phoneLogin",kPlatformDomain];//@"https://center.play800.cn/api/mobilelogin";
+    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/phoneLogin",kPlatformDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -164,7 +164,7 @@ static NSInteger huhaMoreTime = 0;
              @"password"          : newPwd,
              };
     
-    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/newresetpasswd",kPlatformDomain];//@"https://center.play800.cn/api/mobilelogin";
+    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/newresetpasswd",kPlatformDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -215,7 +215,7 @@ static NSInteger huhaMoreTime = 0;
              @"adid"              : [SPFunction getSpUUID],
              };
     
-    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/mobilelogin",kPlatformDomain];//@"https://center.play800.cn/api/mobilelogin";
+    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/mobilelogin",kPlatformDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -258,7 +258,7 @@ static NSInteger huhaMoreTime = 0;
              @"account"            : mobileNum,
              };
     
-    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/getMobilePhone",kPlatformDomain];//@"https://center.play800.cn/api/checkbind";
+    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/getMobilePhone",kPlatformDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -310,7 +310,7 @@ static NSInteger huhaMoreTime = 0;
              @"code"              : vertifyCode,
              };
     
-    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/newbindmobile",kPlatformDomain];//@"https://center.play800.cn/api/mobilelogin";
+    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/newbindmobile",kPlatformDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -666,7 +666,7 @@ static NSInteger huhaMoreTime = 0;
 + (void)yc_getPPPLinkWithParams:(NSDictionary *)dict
                      completion:(void(^)())completion
 {
-    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/getPayUrl",kPayDomain];//@"https://recharge.play800.cn/api/getPayUrl";
+    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/getPayUrl",kPayDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil

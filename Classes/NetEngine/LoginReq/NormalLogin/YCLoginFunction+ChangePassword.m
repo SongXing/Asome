@@ -22,7 +22,6 @@
              };
     
     NSString *mainDomain = [NSString stringWithFormat:@"%@/api/modifypasswd",kPlatformDomain];
-//    @"https://center.play800.cn/api/modifypasswd";
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil

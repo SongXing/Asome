@@ -19,8 +19,8 @@
              @"code"        : vertifyCode,
              @"password"    : newPwd,
              };
-    
-    NSString *mainDomain = @"https://center.play800.cn/api/newresetpasswd";
+
+    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/newresetpasswd",kPlatformDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
