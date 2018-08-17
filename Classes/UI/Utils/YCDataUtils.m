@@ -8,19 +8,7 @@
 #import "YCDataUtils.h"
 #import "HelloHeader.h"
 
-#define kYCCnUsersKey                       @"YC_CN_USER_KEY"
-#define kYCCnLatestUserKey                  @"YC_CN_LATEST_USER_KEY"
 #define kYCListMaxCount                     10
-
-#define kYCReqUserListKey                   @"YC_Req_User_List_Key"
-#define kYCGuestUserKey                     @"YC_Guest_User_Key"
-#define kYCNormalUserListKey                @"YC_Normal_User_List_Key"
-#define kYCPPPModelKey                      @"YC_PPP_Model_Key"
-
-#define kYCCDNDomains                       @"YC_CDN_Domains"
-
-#define kYCGoodNewsKey                      @"YC_Good_News_Key"
-
 
 @implementation YCDataUtils
 
@@ -311,7 +299,7 @@
 #pragma mark - 处理 CDN 信息
 
 + (void)yc_handleCDNGoods:(NSDictionary *)dict
-{    
+{
     [HelloUtils yc_userdefault_setObj:dict key:kYCCDNDomains];
 }
 

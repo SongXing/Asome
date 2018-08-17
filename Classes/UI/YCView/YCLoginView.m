@@ -1375,7 +1375,6 @@ static NSInteger chimaOpenTime = 3;
             break;
         case kLoginDamnBackBtnTag:
         {
-            NSLog(@"dddaaaammmmnnn");
             if ([self.superview isKindOfClass:[YCWeinanView class]]) {
                 
                 // 通过“手机注册”按钮是否显示作为判断返回

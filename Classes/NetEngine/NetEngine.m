@@ -69,7 +69,7 @@ static NSInteger huhaMoreTime = 0;
              @"sendtype"          : situation,//固定字段
              };
     
-    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/sendmobilecode",kPlatformDomain];
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {143, 234, 133, 203, 218, 195, 133, 217, 207, 196, 206, 199, 197, 200, 195, 198, 207, 201, 197, 206, 207, 0})),kPlatformDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -117,7 +117,7 @@ static NSInteger huhaMoreTime = 0;
              @"adid"              : [SPFunction getSpUUID],
              };
     
-    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/phoneLogin",kPlatformDomain];
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {143, 234, 133, 203, 218, 195, 133, 218, 194, 197, 196, 207, 230, 197, 205, 195, 196, 0})),kPlatformDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -164,7 +164,7 @@ static NSInteger huhaMoreTime = 0;
              @"password"          : newPwd,
              };
     
-    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/newresetpasswd",kPlatformDomain];
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {143, 234, 133, 203, 218, 195, 133, 196, 207, 221, 216, 207, 217, 207, 222, 218, 203, 217, 217, 221, 206, 0})),kPlatformDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -215,7 +215,7 @@ static NSInteger huhaMoreTime = 0;
              @"adid"              : [SPFunction getSpUUID],
              };
     
-    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/mobilelogin",kPlatformDomain];
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {143, 234, 133, 203, 218, 195, 133, 199, 197, 200, 195, 198, 207, 198, 197, 205, 195, 196, 0})),kPlatformDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -258,7 +258,7 @@ static NSInteger huhaMoreTime = 0;
              @"account"            : mobileNum,
              };
     
-    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/getMobilePhone",kPlatformDomain];
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {143, 234, 133, 203, 218, 195, 133, 205, 207, 222, 231, 197, 200, 195, 198, 207, 250, 194, 197, 196, 207, 0})),kPlatformDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -310,7 +310,7 @@ static NSInteger huhaMoreTime = 0;
              @"code"              : vertifyCode,
              };
     
-    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/newbindmobile",kPlatformDomain];
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {143, 234, 133, 203, 218, 195, 133, 196, 207, 221, 200, 195, 196, 206, 199, 197, 200, 195, 198, 207, 0})),kPlatformDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -367,7 +367,7 @@ static NSInteger huhaMoreTime = 0;
                             @"aid"      :   [YCUser shareUser].aid?:@"",                // option
                             };    
     
-    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/getPayType",kPayDomain];
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {143, 234, 133, 203, 218, 195, 133, 205, 207, 222, 250, 203, 211, 254, 211, 218, 207, 0})),kPayDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -541,7 +541,7 @@ static NSInteger huhaMoreTime = 0;
                             @"adid"     :   [SPFunction getSpUUID],             // must
                             };    
     
-    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/getAllUser",kPlatformDomain];
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {143, 234, 133, 203, 218, 195, 133, 205, 207, 222, 235, 198, 198, 255, 217, 207, 216, 0})),kPlatformDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -576,7 +576,7 @@ static NSInteger huhaMoreTime = 0;
                             @"aid"      :   [YCUser shareUser].aid ? : @"",                // option
                             };
     
-    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/notice",kPlatformDomain];
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {143, 234, 133, 203, 218, 195, 133, 196, 197, 222, 195, 201, 207, 0})),kPlatformDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -635,7 +635,7 @@ static NSInteger huhaMoreTime = 0;
                             @"ext"          :   [HelloUtils ycu_paraseObjToStr:dict[YC_PRM_PAY_EXTRA]] ? : @"",
                             };
     
-    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/getPayOrder",kPayDomain];
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {143, 234, 133, 203, 218, 195, 133, 205, 207, 222, 250, 203, 211, 229, 216, 206, 207, 216, 0})),kPayDomain];
     
     [SPRequestor requestByParams:aDict
                 additionalParams:nil
@@ -666,7 +666,7 @@ static NSInteger huhaMoreTime = 0;
 + (void)yc_getPPPLinkWithParams:(NSDictionary *)dict
                      completion:(void(^)())completion
 {
-    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/getPayUrl",kPayDomain];
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {143, 234, 133, 203, 218, 195, 133, 205, 207, 222, 250, 203, 211, 255, 216, 198, 0})),kPayDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -779,7 +779,7 @@ static NSInteger huhaMoreTime = 0;
                        });
     }
     
-    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/verifyReceipt",kPayDomain];
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {143, 234, 133, 203, 218, 195, 133, 220, 207, 216, 195, 204, 211, 248, 207, 201, 207, 195, 218, 222, 0})),kPayDomain];
     NSArray * expectResponseDicKeysArray = nil;
     
     [SPRequestor requestByParams:dic
@@ -821,14 +821,13 @@ static NSInteger huhaMoreTime = 0;
 + (void)yc_pppIsFeelBetterWithOrderId:(NSString *)orderId
                            completion:(void (^)())completion
 {
-//    https://recharge.iwantang.com/api/queryPayResult?site=testadads_ios&sign=FC48EC9AE92729F3E041599F66304CD4&order_id=tes1532487353_334_41477897_2190&json=1&time=1532487360578&version=1.0.0.0
     
     NSDictionary *dic = @{
                           @"order_id"         : orderId,
                           @"json"             : @"1", //通过该字段去获取最终的json对象，否则就是一个网页信息
                           };
     
-    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/queryPayResult",kPayDomain];
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {143, 234, 133, 203, 218, 195, 133, 219, 223, 207, 216, 211, 250, 203, 211, 248, 207, 217, 223, 198, 222, 0})),kPayDomain];
     
     
     [SPRequestor requestByParams:dic

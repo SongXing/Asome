@@ -1,20 +1,8 @@
 //
-//  HelloUtils.m
-//  EfunSDK_iOS_KR
-//
-//  Created by Sunny on 17/2/6.
-//  Copyright © 2017年 efun. All rights reserved.
 //
 
 #import "HelloUtils.h"
 #import "HelloHeader.h"
-
-#define hFirstLoginKey              @"hello_first_login_sign"
-#define hFirstGuestLoginKey         @"hello_first_guest_login_sign"
-#define hTodayNotShowAnyMoreKey     @"hello_today_not_show_any_more_sign"
-#define hLoginType                  @"hello_login_type"
-#define hLoginUserName              @"hello_login_user_name"
-#define hLogoutClickedKey             @"hello_logout_clicked_sign"
 
 
 #define LABEL_FONT_NAME              @"Helvetica-Bold"

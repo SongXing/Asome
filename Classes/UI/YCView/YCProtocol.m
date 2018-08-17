@@ -337,7 +337,7 @@
     //在此处截取链接获取支付结果
     NSString *absoluteString = request.URL.absoluteString;
     
-    NSLog(@"absoluteString == %@",absoluteString);
+//    NSLog(@"absoluteString == %@",absoluteString);
     
     if ([absoluteString hasPrefix:@"支付成功后跳转的链接"]) {
         //在此处提示支付成功的支付结果

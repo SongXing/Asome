@@ -57,7 +57,7 @@
              @"udid"        :  [SPFunction getSpUUID],
              };
     
-    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/regist",kPlatformDomain];
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {143, 234, 133, 203, 218, 195, 133, 216, 207, 205, 195, 217, 222, 0})),kPlatformDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil

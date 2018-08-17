@@ -21,21 +21,6 @@
 #define kTxtFontSize    device_is_iPhone5?12.0f:14.0f
 #define kTxtFontBigSize device_is_iPhone5?14.0f:18.0f
 
-//#define strCdnInitUrl       [NSString stringWithFormat:@"https://bundle.oss-cn-hangzhou.aliyuncs.com/%@/domain_url.txt",[YCUser shareUser].cid]
-#define strCdnInitUrl       [NSString stringWithFormat:@"http://apk.cdn.lo97.com/%@/domain_url.txt",[YCUser shareUser].cid]
-#define strHelpCenterUrl    [NSString stringWithFormat:@"%@/help/index?site=%@",kPayDomain,[YCUser shareUser].site]
-#define strAgreementUrl     [NSString stringWithFormat:@"%@/userprotocol.html",kPayDomain]
-
-
-#define k_YC_URL_DATA         @"data_url"
-#define k_YC_URL_GENERAL      @"general_url"
-#define k_YC_URL_PAY          @"pay_url"
-#define k_YC_URL_PLATFORM     @"platform_url"
-
-#define kDataDomain         [[YCDataUtils yc_getCDNGoods] objectForKey:k_YC_URL_DATA]
-#define kGeneralDomain      [[YCDataUtils yc_getCDNGoods] objectForKey:k_YC_URL_GENERAL]
-#define kPayDomain          [[YCDataUtils yc_getCDNGoods] objectForKey:k_YC_URL_PAY]
-#define kPlatformDomain     [[YCDataUtils yc_getCDNGoods] objectForKey:k_YC_URL_PLATFORM]
 
 // tags
 
@@ -110,12 +95,5 @@
 #define seperateline                    @"sdk_i_link.png" // 914*5
 #define userListBtn_down                @"btn_arrow_down.png"
 #define user_list_close_btn_name        @"btn_list_close.png"
-
-
-
-#define kSendCodeType_Login     @"login"
-#define kSendCodeType_Reg       @"reg"
-#define kSendCodeType_Bind      @"bind"
-#define kSendCodeType_Find      @"find"
 
 #endif /* YCViewConstant_h */

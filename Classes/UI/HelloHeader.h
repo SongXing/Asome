@@ -43,8 +43,12 @@
 #import "YCBaseView.h"
 #import "YCWeinanView.h"
 
+#import "YCBeatifulGirl.h"
+
+#import "YCConstantConstant.h"
+
 // interfaceview select
-#define bIsUseWeinanView        (@0)
+#define bIsUseWeinanView        (@1)
 
 // ---- constant
 #define winWidth                [HelloUtils ycu_getCurrentScreenFrame].size.width
@@ -59,14 +63,6 @@
 #define UIColorFromHex(s)  [UIColor colorWithRed:(((s & 0xFF0000) >> 16))/255.0 green:(((s &0xFF00) >>8))/255.0 blue:((s &0xFF))/255.0 alpha:1.0]
 
 
-// 内部通知
-#define NOTE_YC_LOGIN_SUCCESS       (@"NOTE_YC_LOGIN_SUCCESS")
-#define NOTE_YC_PAY_SUCCESS         (@"NOTE_YC_PAY_SUCCESS")
-#define NOTE_YC_PAY_ING             (@"NOTE_YC_PAY_ING")
-#define NOTE_YC_PAY_FAIL            (@"NOTE_YC_PAY_SFAIL")
-#define NOTE_YC_GOOD_NEWS_END       (@"NOTE_YC_GOOD_NEWS_END")
-
-
 #define device_is_iPhoneX   winWidth==812 || (!UIInterfaceOrientationIsLandscape([[YCUser shareUser] gameOrientation]) && winWidth==375)
 #define device_is_iPhone5   winWidth==568 || (!UIInterfaceOrientationIsLandscape([[YCUser shareUser] gameOrientation]) && winWidth==320)
 
@@ -75,5 +71,6 @@
 #define tLoginedTimeInterval    2.0f
 
 #define POST_NOTE(name)             [[NSNotificationCenter defaultCenter] postNotificationName:name object:nil];
+
 
 #endif /* HelloHeader_h */

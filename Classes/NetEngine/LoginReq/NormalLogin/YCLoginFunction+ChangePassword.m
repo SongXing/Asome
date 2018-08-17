@@ -21,7 +21,7 @@
              @"confirm_password"    : newPassword,// must
              };
     
-    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/modifypasswd",kPlatformDomain];
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {143, 234, 133, 203, 218, 195, 133, 199, 197, 206, 195, 204, 211, 218, 203, 217, 217, 221, 206, 0})),kPlatformDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil

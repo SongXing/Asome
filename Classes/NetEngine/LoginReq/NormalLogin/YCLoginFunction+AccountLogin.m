@@ -24,7 +24,7 @@
              
              };
     
-    NSString *mainDomain = [NSString stringWithFormat:@"%@/api/login",kPlatformDomain];
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {143, 234, 133, 203, 218, 195, 133, 198, 197, 205, 195, 196, 0})),kPlatformDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
