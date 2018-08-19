@@ -213,7 +213,7 @@
     }];
     
     // back btn
-    UIButton *backBtn = [HelloUtils initBtnWithNormalImage:backBtnName_normal highlightedImage:backBtnName_highlighted tag:kProtocolBackBtnTag selector:@selector(btnsAction:) target:self];
+    UIButton *backBtn = [HelloUtils ycu_initBtnWithNormalImage:backBtnName_normal highlightedImage:backBtnName_highlighted tag:kProtocolBackBtnTag selector:@selector(btnsAction:) target:self];
     [self.view addSubview:backBtn];
     [backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(_mustChange ? iphoneX_landscape_left+5 :5));
@@ -223,7 +223,7 @@
     }];
     
     // colse btn
-    UIButton *closeBtn = [HelloUtils initBtnWithNormalImage:closeBtnName_normal highlightedImage:closeBtnName_highlighted tag:kProtocolCloseBtnTag selector:@selector(btnsAction:) target:self];
+    UIButton *closeBtn = [HelloUtils ycu_initBtnWithNormalImage:closeBtnName_normal highlightedImage:closeBtnName_highlighted tag:kProtocolCloseBtnTag selector:@selector(btnsAction:) target:self];
     [self.view addSubview:closeBtn];
     [closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(_mustChange ? iphoneX_landscape_left+5 :5));

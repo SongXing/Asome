@@ -24,7 +24,7 @@
              
              };
     
-    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {143, 234, 133, 203, 218, 195, 133, 198, 197, 205, 195, 196, 0})),kPlatformDomain];
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 199, 196, 204, 194, 197, 0})),kPlatformDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -45,7 +45,7 @@
                            completion?completion(resultJsonDic):nil;
                        }
                        else {
-                           [HelloUtils spToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
+                           [HelloUtils ycu_sToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
                            // 1110 认证过期
                            if (1110 == codeStr.intValue) {
                                completion?completion(@"SessionTimeIsOver"):nil;
@@ -56,7 +56,7 @@
                    }
                    else // 请求出错
                    {
-                       [HelloUtils spToastWithMsg:@"请求超时"];
+                       [HelloUtils ycu_sToastWithMsg:@"请求超时"];
                        completion?completion(error):nil;
                    }
                    

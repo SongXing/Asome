@@ -67,7 +67,7 @@
     [self setBackgroundColor:[UIColor colorWithHexString:@"#000000" andAlpha:0.5]];
     
     // close btn
-    UIButton *closeBtn = [HelloUtils initBtnWithNormalImage:closeBtnName_normal highlightedImage:closeBtnName_highlighted tag:kYCScrollCloseBtnTag selector:@selector(_scrollBtnAction:) target:self];
+    UIButton *closeBtn = [HelloUtils ycu_initBtnWithNormalImage:closeBtnName_normal highlightedImage:closeBtnName_highlighted tag:kYCScrollCloseBtnTag selector:@selector(_scrollBtnAction:) target:self];
     [self addSubview:closeBtn];
     [closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(5));
@@ -173,13 +173,13 @@
                 CGSize befSize = CGSizeZero;
                 NSString *beforeKeyStr = [txtStr substringToIndex:keyRange.location];
                 
-                befSize = [HelloUtils calculateSizeOfString:beforeKeyStr withFont:txtFont];
+                befSize = [HelloUtils ycu_calculateSizeOfString:beforeKeyStr withFont:txtFont];
                 
                 NSMutableAttributedString *keyStr = [[NSMutableAttributedString alloc] initWithString:filterKeyword_Updata];
                 [keyStr addAttribute:NSFontAttributeName
                                value:txtFont
                                range:NSMakeRange(0, keyStr.length)];
-                CGSize keySize = [HelloUtils calculateSizeOfString:keyStr];
+                CGSize keySize = [HelloUtils ycu_calculateSizeOfString:keyStr];
                 CGRect keyBtnFrame = CGRectMake(befSize.width, labText.frame.origin.y, keySize.width, keySize.height);
                 
                 
@@ -224,7 +224,7 @@
             labText.backgroundColor = [UIColor clearColor];
             
 //            CGSize lbSize = [HelloUtils calculateSizeOfLabel:labText];
-            CGSize lbSize = [HelloUtils calculateSizeOfString:attStr];
+            CGSize lbSize = [HelloUtils ycu_calculateSizeOfString:attStr];
             
             [labText setFrame:CGRectMake(winWidth + i * (tempWidth + K_MAIN_VIEW_SCROLLER_LABLE_MARGIN), 0, lbSize.width, K_MAIN_VIEW_SCROLL_HEIGHT)];
 
@@ -406,7 +406,7 @@
     labText.selectable = YES;
     
     
-    CGSize lbSize = [HelloUtils calculateSizeOfString:labText.text withFont:txtFont];
+    CGSize lbSize = [HelloUtils ycu_calculateSizeOfString:labText.text withFont:txtFont];
     NSLog(@"size = %@",NSStringFromCGSize(lbSize));
     
     [labText setFrame:CGRectMake(0, 50, lbSize.width, K_MAIN_VIEW_SCROLL_HEIGHT)];

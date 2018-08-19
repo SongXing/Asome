@@ -21,7 +21,7 @@
              @"confirm_password"    : newPassword,// must
              };
     
-    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {143, 234, 133, 203, 218, 195, 133, 199, 197, 206, 195, 204, 211, 218, 203, 217, 217, 221, 206, 0})),kPlatformDomain];
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 198, 196, 207, 194, 205, 210, 219, 202, 216, 216, 220, 207, 0})),kPlatformDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -43,7 +43,7 @@
                            completion(resultJsonDic);
                        }
                        else {
-                           [HelloUtils spToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
+                           [HelloUtils ycu_sToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
                            completion(nil);
                        }
                    }

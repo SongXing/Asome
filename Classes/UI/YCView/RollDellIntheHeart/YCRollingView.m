@@ -91,7 +91,7 @@
 
 - (void)_starCounting
 {
-    NSDictionary *info = [YCDataUtils yc_getGoodNews];
+    NSDictionary *info = [YCDataUtils ycd_getGoodNews];
     NSInteger rollTime = [[NSString stringWithFormat:@"%@",info[@"time"]] integerValue]; // 分钟
     //倒计时时间
     __block NSInteger timeOut = rollTime*60;

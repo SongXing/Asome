@@ -56,7 +56,7 @@ static YCIapServerAccess *_instance;
                                              andTransactionId:(NSString *)transactionId
                                                   receiptData:(NSData *)receiptData
 {
-    [NetEngine yc_postDataToValiteWithOrderID:orderId
+    [NetEngine yce_postDataToValiteWithOrderID:orderId
                                  currencyCode:currencyCode
                                    localPrice:localPrice
                                 transactionId:transactionId

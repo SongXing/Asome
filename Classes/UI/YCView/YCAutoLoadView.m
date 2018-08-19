@@ -117,7 +117,7 @@
     loadingLabel.textAlignment = NSTextAlignmentCenter;
     loadingLabel.textColor = [UIColor whiteColor];
     [loadingLabel setFont:[UIFont fontWithName:kTxtFontName size:_isPortrait ? kTxtFontSize : kTxtFontBigSize]];
-    CGSize txtSize = [HelloUtils calculateSizeOfLabel:loadingLabel];
+    CGSize txtSize = [HelloUtils ycu_calculateSizeOfLabel:loadingLabel];
     [mainBg addSubview:loadingLabel];
     [loadingLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(@( _isPortrait ? -60 : -30));
@@ -144,14 +144,14 @@
     
     // 切換賬號按鈕
 //    UIButton *changeBtn = [HelloUtils initBtnWithTitle:SP_GET_LOCALIZED(@"BTN_TITLE_CHANGE_LOGIN_TYPE") tag:kYCAutoChangeBtnTag selector:@selector(_btnActions:) target:self];
-    UIButton *changeBtn = [HelloUtils initBtnWithTitle:@"切换账号" tag:kYCAutoChangeBtnTag selector:@selector(_btnActions:) target:self];
+    UIButton *changeBtn = [HelloUtils ycu_initBtnWithTitle:@"切换账号" tag:kYCAutoChangeBtnTag selector:@selector(_btnActions:) target:self];
     [changeBtn.layer setBorderWidth:0.0f];
     [changeBtn.layer setBorderColor:[UIColor clearColor].CGColor];
     [changeBtn.layer setCornerRadius:0.0f];
     [changeBtn setTitleColor:[UIColor colorWithHexString:kGreenHex] forState:0];
     [changeBtn.titleLabel setFont:[UIFont fontWithName:kTxtFontName size:_isPortrait ? kTxtFontSize : kTxtFontBigSize]];
     [mainBg addSubview:changeBtn];
-    CGSize titleSize = [HelloUtils calculateSizeOfLabel:changeBtn.titleLabel];
+    CGSize titleSize = [HelloUtils ycu_calculateSizeOfLabel:changeBtn.titleLabel];
     [changeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(@(-30));
         make.centerY.equalTo(@(0));
@@ -162,7 +162,7 @@
 
 - (void)randerLoginedContent
 {
-    YCUserModel *curModel = [YCDataUtils yc_unarchNormalUser][0];
+    YCUserModel *curModel = [YCDataUtils ycd_unarchNormalUser][0];
 //    NSString *hintText = [NSString stringWithFormat:SP_GET_LOCALIZED(@"TXT_ACCOUNT_XXX_WELCOMEBACK"),[self _handleLongName:curModel.account]];
     NSString *hintText = [NSString stringWithFormat:@"%@ 欢迎回来",[self _handleLongName:curModel.account]];
     UILabel *loadingLabel = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -170,7 +170,7 @@
     loadingLabel.textAlignment = NSTextAlignmentCenter;
     loadingLabel.textColor = [UIColor whiteColor];
     [loadingLabel setFont:[UIFont fontWithName:kTxtFontName size:_isPortrait ? kTxtFontSize : kTxtFontBigSize]];
-    CGSize txtSize = [HelloUtils calculateSizeOfLabel:loadingLabel];
+    CGSize txtSize = [HelloUtils ycu_calculateSizeOfLabel:loadingLabel];
     [mainBg addSubview:loadingLabel];
     [loadingLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(@(0));//正式登录后文本居中

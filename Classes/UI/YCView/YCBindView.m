@@ -172,7 +172,7 @@
         onCalWidth = onCalHeight / originBgWidthOfHeight ;
     }
     
-    listModelArr = [[YCDataUtils yc_unarchNormalUser] copy];
+    listModelArr = [[YCDataUtils ycd_unarchNormalUser] copy];
     m_tmpUser = listModelArr.count > 0 ? listModelArr[0] : nil;
 }
 
@@ -274,7 +274,7 @@
     CGFloat heightOfImage   = 100*rate*curWidth/228.0f/440.0f*98.0f;
     
     // back btn
-    UIButton *backBtn = [HelloUtils initBtnWithNormalImage:backBtn_normal highlightedImage:backBtn_highlighted tag:kYCBindBackBtnTag selector:@selector(bindViewBtnAction:) target:self];
+    UIButton *backBtn = [HelloUtils ycu_initBtnWithNormalImage:backBtn_normal highlightedImage:backBtn_highlighted tag:kYCBindBackBtnTag selector:@selector(bindViewBtnAction:) target:self];
     [mainBg addSubview:backBtn];
     [backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding/2));
@@ -289,11 +289,11 @@
     CGFloat txtFieldWidth = loginBtnWidthOfBgWidth*rate*curWidth;
     CGFloat txtFieldHeight = textFieldHeightOfBgHeight*rate*curWidth;
     
-    userListBtn = [HelloUtils yc_rightViewWithImage:userListBtn_down tag:kYCBindRightUserListBtnTag selector:@selector(bindViewBtnAction:) target:self];
+    userListBtn = [HelloUtils ycu_rightViewWithImage:userListBtn_down tag:kYCBindRightUserListBtnTag selector:@selector(bindViewBtnAction:) target:self];
     [userListBtn setFrame:CGRectMake(-10, 0, userListBtn.frame.size.width, userListBtn.frame.size.height)];
     
-    nameTF = [HelloUtils customTextfieldWidgetWithLeftView:nil rightView:userListBtn placeholder:@"请输入登录账号" delegate:self];
-    [HelloUtils makeTextFieldPlaceHolderProperty:nameTF];
+    nameTF = [HelloUtils ycu_customTextfieldWidgetWithLeftView:nil rightView:userListBtn placeholder:@"请输入登录账号" delegate:self];
+    [HelloUtils ycu_makeTextFieldPlaceHolderProperty:nameTF];
     nameTF.returnKeyType = UIReturnKeyNext;
     nameTF.tag = kYCLoginAccountLoginBtnTag;
     nameTF.backgroundColor = [UIColor whiteColor];
@@ -313,11 +313,11 @@
     // ------------
     mTopPadding += secondGap + txtFieldHeight;
     
-    eyesBtn = [HelloUtils yc_rightViewWithImage:eyeBtn_off tag:kYCBindEyeBtnTag selector:@selector(bindViewBtnAction:) target:self];
+    eyesBtn = [HelloUtils ycu_rightViewWithImage:eyeBtn_off tag:kYCBindEyeBtnTag selector:@selector(bindViewBtnAction:) target:self];
     [eyesBtn setFrame:CGRectMake(0, 0, eyesBtn.frame.size.width, eyesBtn.frame.size.height)];
     
-    pwdTF = [HelloUtils customTextfieldWidgetWithLeftView:nil rightView:nil placeholder:@"请输入密码" delegate:self];
-    [HelloUtils makeTextFieldPlaceHolderProperty:pwdTF];
+    pwdTF = [HelloUtils ycu_customTextfieldWidgetWithLeftView:nil rightView:nil placeholder:@"请输入密码" delegate:self];
+    [HelloUtils ycu_makeTextFieldPlaceHolderProperty:pwdTF];
     pwdTF.returnKeyType = UIReturnKeyNext;
     pwdTF.tag = kYCBindPwdInputViewTag;
     pwdTF.secureTextEntry = pwdEntity;
@@ -345,8 +345,8 @@
     
     mTopPadding += secondGap + txtFieldHeight;
     
-    phoneInput = [HelloUtils customTextfieldWidgetWithLeftView:nil rightView:nil placeholder:@"请输入您的手机号码" delegate:self];
-    [HelloUtils makeTextFieldPlaceHolderProperty:phoneInput];
+    phoneInput = [HelloUtils ycu_customTextfieldWidgetWithLeftView:nil rightView:nil placeholder:@"请输入您的手机号码" delegate:self];
+    [HelloUtils ycu_makeTextFieldPlaceHolderProperty:phoneInput];
     phoneInput.returnKeyType = UIReturnKeyNext;
     phoneInput.tag = kYCBindPhoneInputViewTag;
     phoneInput.backgroundColor = [UIColor whiteColor];
@@ -367,20 +367,20 @@
     // send vertify btn
     NSString *strFetchVertifyCode = @"获取验证码";
     NSInteger sendVertifyBtnTag = kYCBindGetVertifyBtnTag;
-    UIButton *sendVertifyBtn = [HelloUtils initBtnWithType:UIButtonTypeCustom title:strFetchVertifyCode tag:sendVertifyBtnTag selector:@selector(bindViewBtnAction:) target:self];
+    UIButton *sendVertifyBtn = [HelloUtils ycu_initBtnWithType:UIButtonTypeCustom title:strFetchVertifyCode tag:sendVertifyBtnTag selector:@selector(bindViewBtnAction:) target:self];
     [sendVertifyBtn setTitle:strFetchVertifyCode forState:0];
     [sendVertifyBtn.layer setCornerRadius:0.0f];
     [sendVertifyBtn.layer setBorderWidth:0.0f];
     [sendVertifyBtn.layer setBorderColor:[UIColor colorWithHexString:kGrayHex].CGColor];
     [sendVertifyBtn setTitleColor:[UIColor colorWithHexString:kBlackHex] forState:0];
-    CGSize sendVertifyCodeBtnSize = [HelloUtils calculateSizeOfLabel:sendVertifyBtn.titleLabel andWidth:1000];
+    CGSize sendVertifyCodeBtnSize = [HelloUtils ycu_calculateSizeOfLabel:sendVertifyBtn.titleLabel andWidth:1000];
     [sendVertifyBtn setFrame:CGRectMake(0, 0, sendVertifyCodeBtnSize.width, textFieldHeightOfBgHeight*rate*curWidth
                                         )];
     // input
-    codeInput = [HelloUtils customTextfieldWidgetWithLeftView:nil rightView:sendVertifyBtn placeholder:@"请输入验证码" delegate:self];
+    codeInput = [HelloUtils ycu_customTextfieldWidgetWithLeftView:nil rightView:sendVertifyBtn placeholder:@"请输入验证码" delegate:self];
     codeInput.endEditDistance = sendVertifyCodeBtnSize.width - 25 + 10.0f;
     codeInput.rightViewDistance = 10.0f;
-    [HelloUtils makeTextFieldPlaceHolderProperty:codeInput];
+    [HelloUtils ycu_makeTextFieldPlaceHolderProperty:codeInput];
     codeInput.tag = kYCBindCodeInputViewTag;
     codeInput.returnKeyType = UIReturnKeyDone;
     [mainBg addSubview:codeInput];
@@ -439,7 +439,7 @@
     }];
     
     // back btn
-    UIButton *backBtn = [HelloUtils initBtnWithNormalImage:backBtn_normal highlightedImage:backBtn_highlighted tag:kYCBindBackBtnTag selector:@selector(bindViewBtnAction:) target:self];
+    UIButton *backBtn = [HelloUtils ycu_initBtnWithNormalImage:backBtn_normal highlightedImage:backBtn_highlighted tag:kYCBindBackBtnTag selector:@selector(bindViewBtnAction:) target:self];
     [mainBg addSubview:backBtn];
     [backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding/2));
@@ -454,8 +454,8 @@
     CGFloat txtFieldWidth = loginBtnWidthOfBgWidth*rate*curWidth;
     CGFloat txtFieldHeight = textFieldHeightOfBgHeight*rate*curWidth;
     
-    realNameInput = [HelloUtils customTextfieldWidgetWithLeftView:nil rightView:nil placeholder:@"请输入真实名字" delegate:self];
-    [HelloUtils makeTextFieldPlaceHolderProperty:realNameInput];
+    realNameInput = [HelloUtils ycu_customTextfieldWidgetWithLeftView:nil rightView:nil placeholder:@"请输入真实名字" delegate:self];
+    [HelloUtils ycu_makeTextFieldPlaceHolderProperty:realNameInput];
     realNameInput.returnKeyType = UIReturnKeyNext;
     realNameInput.backgroundColor = [UIColor whiteColor];
     realNameInput.layer.cornerRadius = 5.0f;
@@ -473,9 +473,9 @@
     mTopPadding += secondGap + txtFieldHeight;
     
     
-    IDCardNumInput = [HelloUtils customTextfieldWidgetWithLeftView:nil rightView:nil placeholder:nil delegate:self];
+    IDCardNumInput = [HelloUtils ycu_customTextfieldWidgetWithLeftView:nil rightView:nil placeholder:nil delegate:self];
     IDCardNumInput.placeholder = @"请输入身份证号码";
-    [HelloUtils makeTextFieldPlaceHolderProperty:IDCardNumInput];
+    [HelloUtils ycu_makeTextFieldPlaceHolderProperty:IDCardNumInput];
     IDCardNumInput.returnKeyType = UIReturnKeyDone;
     IDCardNumInput.backgroundColor = [UIColor whiteColor];
     IDCardNumInput.layer.cornerRadius = 5.0f;
@@ -535,7 +535,7 @@
     }];
     
     // back btn
-    UIButton *backBtn = [HelloUtils initBtnWithNormalImage:backBtn_normal highlightedImage:backBtn_highlighted tag:kYCBindWarningBackBtnTag selector:@selector(bindViewBtnAction:) target:self];
+    UIButton *backBtn = [HelloUtils ycu_initBtnWithNormalImage:backBtn_normal highlightedImage:backBtn_highlighted tag:kYCBindWarningBackBtnTag selector:@selector(bindViewBtnAction:) target:self];
     [mainBg addSubview:backBtn];
     [backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding/2));
@@ -559,7 +559,7 @@
     contentLB.numberOfLines = 0;
     contentLB.tag = kYCBindWarningContentTag;
     [mainBg addSubview:contentLB];
-    CGSize txtSize = [HelloUtils calculateSizeOfLabel:contentLB andWidth:txtFieldWidth];
+    CGSize txtSize = [HelloUtils ycu_calculateSizeOfLabel:contentLB andWidth:txtFieldWidth];
     [contentLB mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding));
         make.centerX.equalTo(@(0));
@@ -587,14 +587,14 @@
     [loginComfirmBtn.titleLabel setFont:[UIFont fontWithName:kTxtFontName size:kTxtFontBigSize]];
     
     // ---
-    UIButton *keepplayingBtn = [HelloUtils initBtnWithTitle:@"不，我要试玩" tag:kYCBindWarningKeepPlayBtnTag selector:@selector(bindViewBtnAction:) target:self];
+    UIButton *keepplayingBtn = [HelloUtils ycu_initBtnWithTitle:@"不，我要试玩" tag:kYCBindWarningKeepPlayBtnTag selector:@selector(bindViewBtnAction:) target:self];
     [keepplayingBtn.layer setBorderWidth:0.0f];
     [keepplayingBtn.layer setBorderColor:[UIColor clearColor].CGColor];
     [keepplayingBtn.layer setCornerRadius:0.0f];
     [keepplayingBtn setTitleColor:[UIColor colorWithHexString:kGreenHex] forState:0];
     [keepplayingBtn.titleLabel setFont:[UIFont fontWithName:kTxtFontName size:kTxtFontSize]];
     [mainBg addSubview:keepplayingBtn];
-    CGSize keepplayingBtnSize = [HelloUtils calculateSizeOfLabel:keepplayingBtn.titleLabel andWidth:1000];
+    CGSize keepplayingBtnSize = [HelloUtils ycu_calculateSizeOfLabel:keepplayingBtn.titleLabel andWidth:1000];
     [keepplayingBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(@(-textFieldHeightOfBgHeight/3*rate*curWidth));
         make.right.equalTo(loginComfirmBtn.mas_right);
@@ -632,7 +632,7 @@
     }];
     
     // back btn
-    UIButton *backBtn = [HelloUtils initBtnWithNormalImage:backBtn_normal highlightedImage:backBtn_highlighted tag:kYCBindBackBtnTag selector:@selector(bindViewBtnAction:) target:self];
+    UIButton *backBtn = [HelloUtils ycu_initBtnWithNormalImage:backBtn_normal highlightedImage:backBtn_highlighted tag:kYCBindBackBtnTag selector:@selector(bindViewBtnAction:) target:self];
     [mainBg addSubview:backBtn];
     [backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding/2));
@@ -643,10 +643,10 @@
     
     mTopPadding += firstGap + heightOfImage;
     
-    nameTF = [HelloUtils customTextfieldWidgetWithLeftView:nil rightView:nil placeholder:nil delegate:self];
+    nameTF = [HelloUtils ycu_customTextfieldWidgetWithLeftView:nil rightView:nil placeholder:nil delegate:self];
     nameTF.tag = kYCBindNameInputViewTag;
     nameTF.placeholder = @"请输入登录账号或手机号";
-    [HelloUtils makeTextFieldPlaceHolderProperty:nameTF];
+    [HelloUtils ycu_makeTextFieldPlaceHolderProperty:nameTF];
     nameTF.returnKeyType = UIReturnKeyDone;
     nameTF.backgroundColor = [UIColor whiteColor];
     nameTF.layer.cornerRadius = 5.0f;
@@ -680,14 +680,14 @@
     [loginComfirmBtn.titleLabel setFont:[UIFont fontWithName:kTxtFontName size:kTxtFontBigSize]];
     
     // 帮助中心按钮
-    UIButton *helpCenterBtn = [HelloUtils initBtnWithTitle:@"帮助中心" tag:kYCLoginHelpCenterBtnTag selector:@selector(bindViewBtnAction:) target:self];
+    UIButton *helpCenterBtn = [HelloUtils ycu_initBtnWithTitle:@"帮助中心" tag:kYCLoginHelpCenterBtnTag selector:@selector(bindViewBtnAction:) target:self];
     [helpCenterBtn.layer setBorderWidth:0.0f];
     [helpCenterBtn.layer setBorderColor:[UIColor clearColor].CGColor];
     [helpCenterBtn.layer setCornerRadius:0.0f];
     [helpCenterBtn setTitleColor:[UIColor colorWithHexString:kGreenHex] forState:0];
     [helpCenterBtn.titleLabel setFont:[UIFont fontWithName:kTxtFontName size:kTxtFontSize]];
     [mainBg addSubview:helpCenterBtn];
-    CGSize txtSize = [HelloUtils calculateSizeOfLabel:helpCenterBtn.titleLabel];
+    CGSize txtSize = [HelloUtils ycu_calculateSizeOfLabel:helpCenterBtn.titleLabel];
     [helpCenterBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(@(-textFieldHeightOfBgHeight/2*rate*curWidth));
         make.centerX.equalTo(@(0));
@@ -743,7 +743,7 @@
     contentLB.textAlignment = NSTextAlignmentLeft;
     [contentLB setFont:[UIFont fontWithName:kTxtFontName size:10.0f]];
     [mainBg addSubview:contentLB];
-    CGSize txtSize = [HelloUtils calculateSizeOfLabel:contentLB andWidth:txtFieldWidth];
+    CGSize txtSize = [HelloUtils ycu_calculateSizeOfLabel:contentLB andWidth:txtFieldWidth];
     [contentLB mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding));
         make.centerX.equalTo(@(0));
@@ -755,9 +755,9 @@
     // ------
     mTopPadding += secondGap + txtSize.height;
     
-    pwdTF = [HelloUtils customTextfieldWidgetWithLeftView:nil rightView:nil placeholder:nil delegate:self];
+    pwdTF = [HelloUtils ycu_customTextfieldWidgetWithLeftView:nil rightView:nil placeholder:nil delegate:self];
     pwdTF.placeholder = @"请输入新密码";
-    [HelloUtils makeTextFieldPlaceHolderProperty:pwdTF];
+    [HelloUtils ycu_makeTextFieldPlaceHolderProperty:pwdTF];
     pwdTF.returnKeyType = UIReturnKeyNext;
     pwdTF.tag = kYCBindPwdInputViewTag;
     pwdTF.secureTextEntry = pwdEntity;
@@ -778,22 +778,22 @@
     // send vertify btn
     NSString *strFetchVertifyCode = @"获取验证码";
     NSInteger sendVertifyBtnTag = kYCBindGetVertifyBtnTag;
-    UIButton *sendVertifyBtn = [HelloUtils initBtnWithType:UIButtonTypeCustom title:strFetchVertifyCode tag:sendVertifyBtnTag selector:@selector(bindViewBtnAction:) target:self];
+    UIButton *sendVertifyBtn = [HelloUtils ycu_initBtnWithType:UIButtonTypeCustom title:strFetchVertifyCode tag:sendVertifyBtnTag selector:@selector(bindViewBtnAction:) target:self];
     [sendVertifyBtn setTitle:strFetchVertifyCode forState:0];
     [sendVertifyBtn.layer setCornerRadius:0.0f];
     [sendVertifyBtn.layer setBorderWidth:0.0f];
     [sendVertifyBtn.layer setBorderColor:[UIColor colorWithHexString:kGrayHex].CGColor];
     [sendVertifyBtn setTitleColor:[UIColor colorWithHexString:kBlackHex] forState:0];
     [sendVertifyBtn.titleLabel setFont:[UIFont fontWithName:kTxtFontName size:kTxtFontSize]];
-    CGSize sendVertifyCodeBtnSize = [HelloUtils calculateSizeOfLabel:sendVertifyBtn.titleLabel andWidth:1000];
+    CGSize sendVertifyCodeBtnSize = [HelloUtils ycu_calculateSizeOfLabel:sendVertifyBtn.titleLabel andWidth:1000];
     [sendVertifyBtn setFrame:CGRectMake(0, 0, sendVertifyCodeBtnSize.width, textFieldHeightOfBgHeight*rate*curWidth
                                         )];
     
     // input
-    codeInput = [HelloUtils customTextfieldWidgetWithLeftView:nil rightView:sendVertifyBtn placeholder:@"请输入验证码" delegate:self];
+    codeInput = [HelloUtils ycu_customTextfieldWidgetWithLeftView:nil rightView:sendVertifyBtn placeholder:@"请输入验证码" delegate:self];
     codeInput.endEditDistance = sendVertifyCodeBtnSize.width - 25 + 10.0f;
     codeInput.rightViewDistance = 10.0f;
-    [HelloUtils makeTextFieldPlaceHolderProperty:codeInput];
+    [HelloUtils ycu_makeTextFieldPlaceHolderProperty:codeInput];
     codeInput.tag = kYCBindCodeInputViewTag;
     codeInput.returnKeyType = UIReturnKeyDone;
     [mainBg addSubview:codeInput];
@@ -851,7 +851,7 @@
     }];
 
     // back btn
-    UIButton *backBtn = [HelloUtils initBtnWithNormalImage:backBtn_normal highlightedImage:backBtn_highlighted tag:kYCBindBackBtnTag selector:@selector(bindViewBtnAction:) target:self];
+    UIButton *backBtn = [HelloUtils ycu_initBtnWithNormalImage:backBtn_normal highlightedImage:backBtn_highlighted tag:kYCBindBackBtnTag selector:@selector(bindViewBtnAction:) target:self];
     [mainBg addSubview:backBtn];
     [backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding/2));
@@ -1038,9 +1038,9 @@
         {
             
             NSString *mobilePhoneNum = phoneInput.text;
-            mobilePhoneNum = [HelloUtils triString:mobilePhoneNum];
+            mobilePhoneNum = [HelloUtils ycu_triString:mobilePhoneNum];
             if (![HelloUtils validCnMobileNumber:mobilePhoneNum]) {
-                [HelloUtils invalidPhoneToast];
+                [HelloUtils ycu_invalidPhoneToast];
                 return;
             }
             NSString *codeSendType = @"";
@@ -1057,7 +1057,7 @@
                                      situation:codeSendType
                                     completion:^(id reslut){
                                         if ([reslut isKindOfClass:[NSDictionary class]]) {
-                                            [HelloUtils counttingButton:sender
+                                            [HelloUtils ycu_counttingButton:sender
                                                               startTime:59.0f
                                                                   title:@""
                                                          countDownTitle:@"s"
@@ -1078,14 +1078,14 @@
                     NSString *mobile = phoneInput.text;
                     NSString *code = codeInput.text;
                     if (![HelloUtils validUserName:name]) {
-                        [HelloUtils invalidNameToast];
+                        [HelloUtils ycu_invalidNameToast];
                         return;
                     }
                     if (![HelloUtils validPassWord:pwd]) {
-                        [HelloUtils invalidPwdToast];return;
+                        [HelloUtils ycu_invalidPwdToast];return;
                     }
                     if (![HelloUtils validCnMobileNumber:mobile]) {
-                        [HelloUtils invalidPhoneToast];return;
+                        [HelloUtils ycu_invalidPhoneToast];return;
                     }
                     [NetEngine allAccountBindMobilePhone:mobile
                                                 password:pwd
@@ -1097,8 +1097,8 @@
                                                       
                                                       [self.superview removeFromSuperview];
                                                       // 绑定成功后算登录成功，记住账号发送登录成功通知
-                                                      [YCDataUtils yc_handelNormalUser:(NSDictionary *)result];
-                                                      [HelloUtils yc_postNoteWithName:NOTE_YC_LOGIN_SUCCESS userInfo:(NSDictionary *)result];
+                                                      [YCDataUtils ycd_handelNormalUser:(NSDictionary *)result];
+                                                      [HelloUtils ycu_postNoteWithName:NOTE_YC_LOGIN_SUCCESS userInfo:(NSDictionary *)result];
                                                   }
                                               }];
                 }
@@ -1124,7 +1124,7 @@
                 {
                     NSString *name = nameTF.text;// 或账号，或手机号
                     if (![HelloUtils validUserName:name]) {
-                        [HelloUtils invalidNameToast];
+                        [HelloUtils ycu_invalidNameToast];
                         return;
                     }
                     [NetEngine checkMobileBindStatusWithNun:name
@@ -1144,11 +1144,11 @@
                     NSString *newPwd = pwdTF.text;
                     NSString *code   = codeInput.text;
                     if (![HelloUtils validPassWord:newPwd]) {
-                        [HelloUtils invalidPwdToast];
+                        [HelloUtils ycu_invalidPwdToast];
                         return;
                     }
                     if (![HelloUtils validUserName:code]) {
-                        [HelloUtils invalidVertifyCodeToast];
+                        [HelloUtils ycu_invalidVertifyCodeToast];
                         return;
                     }
                     NSString *name      = m_curAccount;
@@ -1177,11 +1177,11 @@
             NSString *newPwd = pwdTF.text;
             NSString *code   = codeInput.text;
             if (![HelloUtils validPassWord:newPwd]) {
-                [HelloUtils invalidPwdToast];
+                [HelloUtils ycu_invalidPwdToast];
                 return;
             }
             if (![HelloUtils validUserName:code]) {
-                [HelloUtils invalidVertifyCodeToast];
+                [HelloUtils ycu_invalidVertifyCodeToast];
                 return;
             }
             NSString *name      = m_curAccount;
@@ -1203,7 +1203,7 @@
             break;
         case kYCLoginHelpCenterBtnTag:
         {
-            [HelloUtils yc_showSomeSenceOnSafari:strHelpCenterUrl];
+            [HelloUtils ycu_showSomeSenceOnSafari:strHelpCenterUrl];
         }
             break;
         case kYCBindWarningMobileBtnTag:
@@ -1224,7 +1224,7 @@
         case kYCBindRightUserListBtnTag:
         {
             if ([listModelArr count] < 1) {
-                [HelloUtils spToastWithMsg:@"没有已保存的账号"];
+                [HelloUtils ycu_sToastWithMsg:@"没有已保存的账号"];
                 return;
             }
             
@@ -1369,7 +1369,7 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier] ;
         
-        UIButton *delBtn = [HelloUtils initBtnWithNormalImage:user_list_close_btn_name highlightedImage:nil tag:kYCBindUserListDelBtnTag selector:@selector(bindViewBtnAction:) target:self];
+        UIButton *delBtn = [HelloUtils ycu_initBtnWithNormalImage:user_list_close_btn_name highlightedImage:nil tag:kYCBindUserListDelBtnTag selector:@selector(bindViewBtnAction:) target:self];
         [delBtn setFrame:CGRectMake(loginBtnWidthOfBgWidth*rate*curWidth-40, 0, uList.rowHeight, uList.rowHeight)];
         [cell addSubview:delBtn];
         
@@ -1408,9 +1408,9 @@
 - (void)_removeUserWithIndex:(NSInteger)index
 {
     // remove in userdefault
-    [YCDataUtils yc_removeNormalUserWithIndex:index];
+    [YCDataUtils ycd_removeNormalUserWithIndex:index];
     // refresh list
-    listModelArr =  [YCDataUtils yc_unarchUserList].copy;
+    listModelArr =  [YCDataUtils ycd_unarchUserList].copy;
     [uList reloadData];
     
     if (listModelArr.count <= 0) {

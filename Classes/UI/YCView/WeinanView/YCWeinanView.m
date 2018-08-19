@@ -65,7 +65,7 @@
             make.height.equalTo(@(mbgH));
         }];
         
-        UIButton *btn = [HelloUtils initBtnWithNormalImage:imgNames[i]
+        UIButton *btn = [HelloUtils ycu_initBtnWithNormalImage:imgNames[i]
                                           highlightedImage:imgNames[i]
                                                        tag:[tags[i] integerValue]
                                                   selector:@selector(_weinanBtnAction:)
@@ -118,9 +118,9 @@
 
 - (void)_guestLogin
 {
-    [HelloUtils spStarLoadingAtView:nil];
+    [HelloUtils ycu_sStarLoadingAtView:nil];
     [NetEngine guestLoginAndCompletion:^(id result){
-        [HelloUtils spStopLoadingAtView:nil];
+        [HelloUtils ycu_sStopLoadingAtView:nil];
         if ([result isKindOfClass:[NSDictionary class]]) {
             
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -128,8 +128,8 @@
                 BOOL showWarning = [[NSString stringWithFormat:@"%@",result[@"data"][@"remind"]] boolValue];
                 if (showWarning) {
                     YCBindView *warnView = [[YCBindView alloc] initWithMode:YCBind_GuestToMobileWarning data:(NSDictionary *)result[@"data"] handler:^{
-                        [YCDataUtils yc_handelNormalUser:(NSDictionary *)result];
-                        [HelloUtils yc_postNoteWithName:NOTE_YC_LOGIN_SUCCESS userInfo:(NSDictionary *)result];
+                        [YCDataUtils ycd_handelNormalUser:(NSDictionary *)result];
+                        [HelloUtils ycu_postNoteWithName:NOTE_YC_LOGIN_SUCCESS userInfo:(NSDictionary *)result];
 //                        [self removeFromSuperview];
                     }];
                     
@@ -140,8 +140,8 @@
                                      }];
                     return;
                 } else {
-                    [YCDataUtils yc_handelNormalUser:(NSDictionary *)result];
-                    [HelloUtils yc_postNoteWithName:NOTE_YC_LOGIN_SUCCESS userInfo:(NSDictionary *)result];
+                    [YCDataUtils ycd_handelNormalUser:(NSDictionary *)result];
+                    [HelloUtils ycu_postNoteWithName:NOTE_YC_LOGIN_SUCCESS userInfo:(NSDictionary *)result];
 //                    [self removeFromSuperview];
                 }
                 

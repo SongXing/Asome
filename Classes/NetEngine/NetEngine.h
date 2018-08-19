@@ -81,11 +81,11 @@ typedef void (^IapAppstoreCallBack)(NSString * _Nullable code, NSString * _Nulla
 
 #pragma mark - 获取支付方式和商品
 
-+ (void)yc_get_mysuperJuniaCompletion:(void(^)())completion;
++ (void)yce_mysuperJuniaCompletion:(void(^)())completion;
 
 #pragma mark - 激活上报
 
-+ (void)yc_reportInstalledCompletion:(void(^)())completion;
++ (void)yce_reportInstalledCompletion:(void(^)())completion;
 
 #pragma mark - 登录日志上报
 
@@ -93,31 +93,31 @@ typedef void (^IapAppstoreCallBack)(NSString * _Nullable code, NSString * _Nulla
 
 #pragma mark - 获取账号列表
 
-+ (void)yc_getAccountList;
++ (void)yce_getAccountList;
 
 #pragma mark - 获取公告信息
 
-+ (void)yc_getGoodNews;
++ (void)yce_getGoodNews;
 
 #pragma mark - 获取第三方支付链接
 
-+ (void)yc_getPPPOrderIdWithParams:(NSDictionary *)dict
++ (void)yce_getPPPOrderIdWithParams:(NSDictionary *)dict
                         completion:(void(^)())completion;
 
-+ (void)yc_getPPPLinkWithParams:(NSDictionary *)dict
++ (void)yce_getPPPLinkWithParams:(NSDictionary *)dict
                      completion:(void(^)())completion;
 
 #pragma mark - IAP
 
-+ (void)yc_gotoHell:(NSDictionary *)dict;
++ (void)yce_gotoHell:(NSDictionary *)dict;
 
 #pragma mark - CDN
 
-+ (void)yc_cdnFileGoodCompletion:(void(^)())completion;
++ (void)yce_cdnFileGoodCompletion:(void(^)())completion;
 
 #pragma mark - 发货
 
-+ (void)yc_postDataToValiteWithOrderID:(NSString * _Nonnull)orderID
++ (void)yce_postDataToValiteWithOrderID:(NSString * _Nonnull)orderID
                           currencyCode:(NSString * _Nonnull)currencyCode
                             localPrice:(NSString * _Nonnull)localPrice
                          transactionId:(NSString * _Nonnull)transactionId
@@ -128,7 +128,7 @@ typedef void (^IapAppstoreCallBack)(NSString * _Nullable code, NSString * _Nulla
 
 #pragma mark - 充值是否成功
 
-+ (void)yc_pppIsFeelBetterWithOrderId:(NSString * _Nonnull)orderId
++ (void)yce_pppIsFeelBetterWithOrderId:(NSString * _Nonnull)orderId
                            completion:(void(^)())completion;
 
 @end

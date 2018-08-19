@@ -11,7 +11,8 @@ extern char* ycDecryptConstString(char* string)
 {
     char* origin_string = string;
     while(*string) {
-        *string ^= 0xAA;
+//        *string ^= 0xAA;
+        *string ^= 0xAB;
         string++;
     }
     return origin_string;

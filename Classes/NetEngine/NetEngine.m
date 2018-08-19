@@ -69,7 +69,7 @@ static NSInteger huhaMoreTime = 0;
              @"sendtype"          : situation,//固定字段
              };
     
-    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {143, 234, 133, 203, 218, 195, 133, 217, 207, 196, 206, 199, 197, 200, 195, 198, 207, 201, 197, 206, 207, 0})),kPlatformDomain];
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 216, 206, 197, 207, 198, 196, 201, 194, 199, 206, 200, 196, 207, 206, 0})),kPlatformDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -90,7 +90,7 @@ static NSInteger huhaMoreTime = 0;
                            completion ? completion(resultJsonDic) : nil;
                        }
                        else {
-                           [HelloUtils spToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
+                           [HelloUtils ycu_sToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
                            completion ? completion(nil) : nil;
                        }
                    }
@@ -117,7 +117,7 @@ static NSInteger huhaMoreTime = 0;
              @"adid"              : [SPFunction getSpUUID],
              };
     
-    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {143, 234, 133, 203, 218, 195, 133, 218, 194, 197, 196, 207, 230, 197, 205, 195, 196, 0})),kPlatformDomain];
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 219, 195, 196, 197, 206, 231, 196, 204, 194, 197, 0})),kPlatformDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -138,7 +138,7 @@ static NSInteger huhaMoreTime = 0;
                            completion ? completion(resultJsonDic) : nil;
                        }
                        else {
-                           [NSClassFromString(@"HelloUtils") spToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
+                           [NSClassFromString(@"HelloUtils") ycu_sToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
                            completion ? completion(nil) : nil;
                        }
                    }
@@ -164,7 +164,7 @@ static NSInteger huhaMoreTime = 0;
              @"password"          : newPwd,
              };
     
-    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {143, 234, 133, 203, 218, 195, 133, 196, 207, 221, 216, 207, 217, 207, 222, 218, 203, 217, 217, 221, 206, 0})),kPlatformDomain];
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 197, 206, 220, 217, 206, 216, 206, 223, 219, 202, 216, 216, 220, 207, 0})),kPlatformDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -185,7 +185,7 @@ static NSInteger huhaMoreTime = 0;
                            completion ? completion(resultJsonDic) : nil;
                        }
                        else {
-                           [NSClassFromString(@"HelloUtils") spToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
+                           [NSClassFromString(@"HelloUtils") ycu_sToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
                            completion ? completion(nil) : nil;
                        }
                    }
@@ -215,7 +215,7 @@ static NSInteger huhaMoreTime = 0;
              @"adid"              : [SPFunction getSpUUID],
              };
     
-    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {143, 234, 133, 203, 218, 195, 133, 199, 197, 200, 195, 198, 207, 198, 197, 205, 195, 196, 0})),kPlatformDomain];
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 198, 196, 201, 194, 199, 206, 199, 196, 204, 194, 197, 0})),kPlatformDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -236,7 +236,7 @@ static NSInteger huhaMoreTime = 0;
                            completion ? completion(resultJsonDic) : nil;
                        }
                        else {
-                           [NSClassFromString(@"HelloUtils") spToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
+                           [NSClassFromString(@"HelloUtils") ycu_sToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
                            completion ? completion(nil) : nil;
                        }
                    }
@@ -258,7 +258,7 @@ static NSInteger huhaMoreTime = 0;
              @"account"            : mobileNum,
              };
     
-    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {143, 234, 133, 203, 218, 195, 133, 205, 207, 222, 231, 197, 200, 195, 198, 207, 250, 194, 197, 196, 207, 0})),kPlatformDomain];
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 204, 206, 223, 230, 196, 201, 194, 199, 206, 251, 195, 196, 197, 206, 0})),kPlatformDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -277,12 +277,12 @@ static NSInteger huhaMoreTime = 0;
                        if ( 0 == codeStr.intValue )// 成功
                        {
 //                           NSLog(@"---result = %@", resultJsonDic);
-                           [HelloUtils spToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
+                           [HelloUtils ycu_sToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
                            completion(resultJsonDic);
                            
                        }
                        else {
-                           [HelloUtils spToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
+                           [HelloUtils ycu_sToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
                            completion(nil);
                        }
                    }
@@ -310,7 +310,7 @@ static NSInteger huhaMoreTime = 0;
              @"code"              : vertifyCode,
              };
     
-    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {143, 234, 133, 203, 218, 195, 133, 196, 207, 221, 200, 195, 196, 206, 199, 197, 200, 195, 198, 207, 0})),kPlatformDomain];
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 197, 206, 220, 201, 194, 197, 207, 198, 196, 201, 194, 199, 206, 0})),kPlatformDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -331,7 +331,7 @@ static NSInteger huhaMoreTime = 0;
                            completion(resultJsonDic);
                        }
                        else {
-                           [HelloUtils spToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
+                           [HelloUtils ycu_sToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
                            completion(nil);
                        }
                    }
@@ -361,13 +361,13 @@ static NSInteger huhaMoreTime = 0;
 
 #pragma mark - 获取支付方式
 
-+ (void)yc_get_mysuperJuniaCompletion:(void (^)())completion
++ (void)yce_mysuperJuniaCompletion:(void (^)())completion
 {
     NSDictionary * dict = @{
                             @"aid"      :   [YCUser shareUser].aid?:@"",                // option
                             };    
     
-    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {143, 234, 133, 203, 218, 195, 133, 205, 207, 222, 250, 203, 211, 254, 211, 218, 207, 0})),kPayDomain];
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 204, 206, 223, 251, 202, 210, 255, 210, 219, 206, 0})),kPayDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -386,7 +386,7 @@ static NSInteger huhaMoreTime = 0;
                        NSString *result = [NSString stringWithFormat:@"%@",resultJsonDic[@"result"]];
                        if (0 == [result intValue]) {
 //                           NSLog(@"---调起支付成功--- \n %@",resultJsonDic);
-                           [YCDataUtils yc_handlePPP:resultJsonDic[@"data"]];
+                           [YCDataUtils ycd_handlePPP:resultJsonDic[@"data"]];
                        } else {
 //                           NSLog(@"---调起支付失败--- \n resultDic = %@",resultJsonDic);
                        }
@@ -394,10 +394,10 @@ static NSInteger huhaMoreTime = 0;
                    } else {
                        if (niceMoreTime <= totolTryTimeMax) {
                            // 再次请求
-                           [NetEngine yc_get_mysuperJuniaCompletion:nil];
+                           [NetEngine yce_mysuperJuniaCompletion:nil];
                        } else {
                            niceMoreTime = 0;
-                           [HelloUtils spToastWithMsg:@"请求超时"];
+                           [HelloUtils ycu_sToastWithMsg:@"请求超时"];
                        }
                    }
                    
@@ -407,7 +407,7 @@ static NSInteger huhaMoreTime = 0;
 
 #pragma mark - 激活上报
 
-+ (void)yc_reportInstalledCompletion:(void(^)())completion
++ (void)yce_reportInstalledCompletion:(void(^)())completion
 {
     NSDictionary * dict = nil;
     @try {
@@ -435,7 +435,7 @@ static NSInteger huhaMoreTime = 0;
     }
     
     
-    NSString *mainDomain = [NSString stringWithFormat:@"%@/sdklog/activate_log",kDataDomain];
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 216, 207, 192, 199, 196, 204, 132, 202, 200, 223, 194, 221, 202, 223, 206, 244, 199, 196, 204, 0})),kDataDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -463,10 +463,10 @@ static NSInteger huhaMoreTime = 0;
                        if (installMoreTime <= totolTryTimeMax) {
                            // 再次请求
 //                           NSLog(@"request more %ld",(long)installMoreTime);
-                           [NetEngine yc_reportInstalledCompletion:completion];
+                           [NetEngine yce_reportInstalledCompletion:completion];
                        } else {
                            installMoreTime = 0;
-                           [HelloUtils spToastWithMsg:@"请求超时"];
+                           [HelloUtils ycu_sToastWithMsg:@"请求超时"];
                            completion(nil);
                        }
                    }
@@ -510,7 +510,7 @@ static NSInteger huhaMoreTime = 0;
     }
     
     
-    NSString *mainDomain = [NSString stringWithFormat:@"%@/sdklog/login_log",kDataDomain];
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 216, 207, 192, 199, 196, 204, 132, 199, 196, 204, 194, 197, 244, 199, 196, 204, 0})),kDataDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -535,13 +535,13 @@ static NSInteger huhaMoreTime = 0;
 
 #pragma mark - 获取账号列表
 
-+ (void)yc_getAccountList
++ (void)yce_getAccountList
 {
     NSDictionary * dict = @{
                             @"adid"     :   [SPFunction getSpUUID],             // must
                             };    
     
-    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {143, 234, 133, 203, 218, 195, 133, 205, 207, 222, 235, 198, 198, 255, 217, 207, 216, 0})),kPlatformDomain];
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 204, 206, 223, 234, 199, 199, 254, 216, 206, 217, 0})),kPlatformDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -557,7 +557,7 @@ static NSInteger huhaMoreTime = 0;
                        if (0 == [result intValue]) {
 //                           NSLog(@"---获取用户列表成功---\n %@",resultJsonDic);
                            
-                           [YCDataUtils yc_handleReqUserList:resultJsonDic];
+                           [YCDataUtils ycd_handleReqUserList:resultJsonDic];
 
                        } else {
 //                           NSLog(@"---获取用户列表失败--- \n resultDic = %@",resultJsonDic);
@@ -570,13 +570,13 @@ static NSInteger huhaMoreTime = 0;
 
 #pragma mark - 获取公告信息
 
-+ (void)yc_getGoodNews
++ (void)yce_getGoodNews
 {
     NSDictionary * dict = @{
                             @"aid"      :   [YCUser shareUser].aid ? : @"",                // option
                             };
     
-    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {143, 234, 133, 203, 218, 195, 133, 196, 197, 222, 195, 201, 207, 0})),kPlatformDomain];
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 197, 196, 223, 194, 200, 206, 0})),kPlatformDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -594,7 +594,7 @@ static NSInteger huhaMoreTime = 0;
                        if (0 == [result intValue]) {
 //                           NSLog(@"---获取游戏公告成功---\n %@",resultJsonDic);
                            
-                           [YCDataUtils yc_handleGoodNews:resultJsonDic[@"data"]];
+                           [YCDataUtils ycd_handleGoodNews:resultJsonDic[@"data"]];
                            
                        } else {
 //                           NSLog(@"---获取游戏公告失败--- \n resultDic = %@",resultJsonDic);
@@ -604,10 +604,10 @@ static NSInteger huhaMoreTime = 0;
                        if (huhaMoreTime <= totolTryTimeMax) {
                            // 再次请求
                            NSLog(@"request more %ld",(long)huhaMoreTime);
-                           [NetEngine yc_getGoodNews];
+                           [NetEngine yce_getGoodNews];
                        } else {
                            huhaMoreTime = 0;
-                           [HelloUtils spToastWithMsg:@"请求超时"];
+                           [HelloUtils ycu_sToastWithMsg:@"请求超时"];
                        }
                    }
                    
@@ -616,7 +616,7 @@ static NSInteger huhaMoreTime = 0;
 
 #pragma mark - 获取第三方支付链接
 
-+ (void)yc_getPPPOrderIdWithParams:(NSDictionary *)dict completion:(void (^)())completion
++ (void)yce_getPPPOrderIdWithParams:(NSDictionary *)dict completion:(void (^)())completion
 {
     NSDictionary * aDict = @{
                             @"uid"          :   [YCUser shareUser].uid,             // must
@@ -635,7 +635,7 @@ static NSInteger huhaMoreTime = 0;
                             @"ext"          :   [HelloUtils ycu_paraseObjToStr:dict[YC_PRM_PAY_EXTRA]] ? : @"",
                             };
     
-    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {143, 234, 133, 203, 218, 195, 133, 205, 207, 222, 250, 203, 211, 229, 216, 206, 207, 216, 0})),kPayDomain];
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 204, 206, 223, 251, 202, 210, 228, 217, 207, 206, 217, 0})),kPayDomain];
     
     [SPRequestor requestByParams:aDict
                 additionalParams:nil
@@ -653,7 +653,7 @@ static NSInteger huhaMoreTime = 0;
                            completion(resultJsonDic);
                        } else {
 //                           NSLog(@"---获取订单失败--- \n resultDic = %@",resultJsonDic);
-                           [HelloUtils spToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
+                           [HelloUtils ycu_sToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
                            completion(nil);
                        }
                    } else {
@@ -663,10 +663,10 @@ static NSInteger huhaMoreTime = 0;
                }];
 }
 
-+ (void)yc_getPPPLinkWithParams:(NSDictionary *)dict
++ (void)yce_getPPPLinkWithParams:(NSDictionary *)dict
                      completion:(void(^)())completion
 {
-    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {143, 234, 133, 203, 218, 195, 133, 205, 207, 222, 250, 203, 211, 255, 216, 198, 0})),kPayDomain];
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 204, 206, 223, 251, 202, 210, 254, 217, 199, 0})),kPayDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -684,7 +684,7 @@ static NSInteger huhaMoreTime = 0;
                            completion(resultJsonDic);
                        } else {
 //                           NSLog(@"---获取第三方支付链接失败--- \n resultDic = %@",resultJsonDic);
-                           [HelloUtils spToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
+                           [HelloUtils ycu_sToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
                            completion(nil);
                        }
                    } else {
@@ -697,14 +697,14 @@ static NSInteger huhaMoreTime = 0;
 
 #pragma mark - IAP
 
-+ (void)yc_gotoHell:(NSDictionary *)dict
++ (void)yce_gotoHell:(NSDictionary *)dict
 {
     [YCIapFunction directToInAppPurchaseWithParams:dict];
 }
 
 #pragma mark - CDN
 
-+ (void)yc_cdnFileGoodCompletion:(void (^)())completion
++ (void)yce_cdnFileGoodCompletion:(void (^)())completion
 {
     NSString *mainDomain = strCdnInitUrl;
     
@@ -722,7 +722,7 @@ static NSInteger huhaMoreTime = 0;
                    if (!error && resultJsonDic.count > 0) {
                        
                        if ([resultJsonDic[@"url_address"] count] > 0) {
-                           [YCDataUtils yc_handleCDNGoods:resultJsonDic[@"url_address"]];
+                           [YCDataUtils ycd_handleCDNGoods:resultJsonDic[@"url_address"]];
                            completion ? completion(@"YES"):nil;
 
                        } else {
@@ -736,10 +736,10 @@ static NSInteger huhaMoreTime = 0;
                        if (cndMoreTime <= totolTryTimeMax) {
                            // 再次请求
                            NSLog(@"request more %ld",(long)cndMoreTime);
-                           [NetEngine yc_cdnFileGoodCompletion:nil];
+                           [NetEngine yce_cdnFileGoodCompletion:nil];
                        } else {
                            cndMoreTime = 0;
-                           [HelloUtils spToastWithMsg:@"请求超时"];
+                           [HelloUtils ycu_sToastWithMsg:@"请求超时"];
                            completion ? completion(@"NO"):nil;
                        }
                    }
@@ -749,7 +749,7 @@ static NSInteger huhaMoreTime = 0;
 
 #pragma mark - 发货
 
-+ (void)yc_postDataToValiteWithOrderID:(NSString * _Nonnull)orderID
++ (void)yce_postDataToValiteWithOrderID:(NSString * _Nonnull)orderID
                           currencyCode:(NSString * _Nonnull)currencyCode
                             localPrice:(NSString * _Nonnull)localPrice
                          transactionId:(NSString * _Nonnull)transactionId
@@ -775,11 +775,11 @@ static NSInteger huhaMoreTime = 0;
         SP_FUNCTION_LOG(exception.description);
         dispatch_async(dispatch_get_main_queue(), ^
                        {
-                           [HelloUtils spToastWithMsg:[NSString stringWithFormat:@"!!!ERROR Dic At postDataToValiteWithOrderID:\n %@ \n %@", dic, exception.description]];
+                           [HelloUtils ycu_sToastWithMsg:[NSString stringWithFormat:@"!!!ERROR Dic At postDataToValiteWithOrderID:\n %@ \n %@", dic, exception.description]];
                        });
     }
     
-    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {143, 234, 133, 203, 218, 195, 133, 220, 207, 216, 195, 204, 211, 248, 207, 201, 207, 195, 218, 222, 0})),kPayDomain];
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 221, 206, 217, 194, 205, 210, 249, 206, 200, 206, 194, 219, 223, 0})),kPayDomain];
     NSArray * expectResponseDicKeysArray = nil;
     
     [SPRequestor requestByParams:dic
@@ -818,7 +818,7 @@ static NSInteger huhaMoreTime = 0;
                }];
 }
 
-+ (void)yc_pppIsFeelBetterWithOrderId:(NSString *)orderId
++ (void)yce_pppIsFeelBetterWithOrderId:(NSString *)orderId
                            completion:(void (^)())completion
 {
     
@@ -827,7 +827,7 @@ static NSInteger huhaMoreTime = 0;
                           @"json"             : @"1", //通过该字段去获取最终的json对象，否则就是一个网页信息
                           };
     
-    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {143, 234, 133, 203, 218, 195, 133, 219, 223, 207, 216, 211, 250, 203, 211, 248, 207, 217, 223, 198, 222, 0})),kPayDomain];
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 218, 222, 206, 217, 210, 251, 202, 210, 249, 206, 216, 222, 199, 223, 0})),kPayDomain];
     
     
     [SPRequestor requestByParams:dic
@@ -843,7 +843,7 @@ static NSInteger huhaMoreTime = 0;
                        completion ? completion(resultJsonDic) : nil;
                        
                    } else {                       
-                       [HelloUtils spToastWithMsg:@"请求超时"];
+                       [HelloUtils ycu_sToastWithMsg:@"请求超时"];
                        completion ? completion(nil):nil;                       
                    }
                }];

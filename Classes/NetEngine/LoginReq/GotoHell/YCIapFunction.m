@@ -41,7 +41,7 @@
     {
         SP_IAP_LOG(@"there is one transaction purchasing")
         //提示原因
-        [NSClassFromString(@"HelloUtils") spToastWithMsg:@"有一笔交易正在进行中"];
+        [NSClassFromString(@"HelloUtils") ycu_sToastWithMsg:@"有一笔交易正在进行中"];
         POST_NOTE(NOTE_YC_PAY_FAIL)
         return;
     }
@@ -49,7 +49,7 @@
     if (![SPFunction connectedToNetWork])
     {
         SP_IAP_LOG(@"check no net")
-        [NSClassFromString(@"HelloUtils") spToastWithMsg:@"没有网络"];
+        [NSClassFromString(@"HelloUtils") ycu_sToastWithMsg:@"没有网络"];
         POST_NOTE(NOTE_YC_PAY_FAIL)
         return;
     }
@@ -58,7 +58,7 @@
     {
         SP_IAP_LOG(@"payment queue not support make payment")
         //提示原因
-        [NSClassFromString(@"HelloUtils") spToastWithMsg:@"目前无法进行购买"];
+        [NSClassFromString(@"HelloUtils") ycu_sToastWithMsg:@"目前无法进行购买"];
         POST_NOTE(NOTE_YC_PAY_FAIL)
         return;
     }
@@ -120,7 +120,7 @@
     
     if ([transaction.transactionIdentifier isEqualToString:@""]
         || transaction.transactionIdentifier == nil) {
-        [HelloUtils spToastWithMsg:@"苹果返回的 transactionId 是空的"];
+        [HelloUtils ycu_sToastWithMsg:@"苹果返回的 transactionId 是空的"];
         POST_NOTE(NOTE_YC_PAY_FAIL)
         return;
     }
@@ -128,7 +128,7 @@
     NSString * parameterStr = transaction.payment.applicationUsername;
     if (parameterStr==nil || [parameterStr isEqualToString:@""])
     {
-        [HelloUtils spToastWithMsg:@"苹果返回的 applicationUsername 是空的,与发起购买传入的数据不正确"];
+        [HelloUtils ycu_sToastWithMsg:@"苹果返回的 applicationUsername 是空的,与发起购买传入的数据不正确"];
         [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
         POST_NOTE(NOTE_YC_PAY_FAIL)
         return;
@@ -140,7 +140,7 @@
        ![parameterDic.allKeys containsObject:@"serverCode"] ||
        ![parameterDic.allKeys containsObject:@"orderId"] )
     {
-        [HelloUtils spToastWithMsg:@"苹果返回的 applicationUsername 数据中有空值,与发起购买传入的数据不正确"];
+        [HelloUtils ycu_sToastWithMsg:@"苹果返回的 applicationUsername 数据中有空值,与发起购买传入的数据不正确"];
         [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
         POST_NOTE(NOTE_YC_PAY_FAIL)
         return;
@@ -187,7 +187,7 @@
     }
     else
     {
-        [HelloUtils spToastWithMsg:@"跟当前单例eoi不相同，需要保存本次信息"];
+        [HelloUtils ycu_sToastWithMsg:@"跟当前单例eoi不相同，需要保存本次信息"];
         // 临时
         [IapDataDog removeIapData];
         [YCIapData defaultData].ISPURCHASING = NO;
@@ -226,11 +226,11 @@
     //提示玩家失败原因
     if ([YCIapData defaultData].APPLE_PAY_FAIL_CODE == SKErrorPaymentCancelled)
     {
-        [HelloUtils spToastWithMsg:@"AppStore支付失败，用户取消了购买"];
+        [HelloUtils ycu_sToastWithMsg:@"AppStore支付失败，用户取消了购买"];
     }
     else
     {
-        [HelloUtils spToastWithMsg:@"AppStore支付失败，苹果支付异常"];
+        [HelloUtils ycu_sToastWithMsg:@"AppStore支付失败，苹果支付异常"];
     }
     
     //发送购买失敗的广播

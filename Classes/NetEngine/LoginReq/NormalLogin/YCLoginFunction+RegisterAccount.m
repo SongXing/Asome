@@ -57,7 +57,7 @@
              @"udid"        :  [SPFunction getSpUUID],
              };
     
-    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {143, 234, 133, 203, 218, 195, 133, 216, 207, 205, 195, 217, 222, 0})),kPlatformDomain];
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 217, 206, 204, 194, 216, 223, 0})),kPlatformDomain];
     
     [SPRequestor requestByParams:dict
                 additionalParams:nil
@@ -78,7 +78,7 @@
                            completion(resultJsonDic);
                        }
                        else {
-                           [HelloUtils spToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
+                           [HelloUtils ycu_sToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
                            completion(nil);
                        }
                    }

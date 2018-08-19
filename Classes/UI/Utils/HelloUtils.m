@@ -14,7 +14,7 @@
 
 #pragma mark - UI
 
-+ (UIButton *)yc_rightViewWithImage:(NSString *)image
++ (UIButton *)ycu_rightViewWithImage:(NSString *)image
                                 tag:(NSUInteger)tag
                            selector:(SEL)selector
                              target:(id)targer
@@ -28,7 +28,7 @@
     return btn;
 }
 
-+ (UIButton *)initBtnWithNormalImage:(NSString *)normalImageName
++ (UIButton *)ycu_initBtnWithNormalImage:(NSString *)normalImageName
                     highlightedImage:(NSString *)highlightedImageName
                                  tag:(NSUInteger)tag
                             selector:(SEL)selector
@@ -43,7 +43,7 @@
     return btn;
 }
 
-+ (UIButton *)initBtnWithTitle:(NSString *)titleText
++ (UIButton *)ycu_initBtnWithTitle:(NSString *)titleText
                                  tag:(NSUInteger)tag
                             selector:(SEL)selector
                               target:(id)target
@@ -84,7 +84,7 @@
     return btn;
 }
 
-+ (UIButton *)initBtnWithType:(UIButtonType)type
++ (UIButton *)ycu_initBtnWithType:(UIButtonType)type
                         title:(NSString *)titleText
                           tag:(NSUInteger)tag
                      selector:(SEL)selector
@@ -104,7 +104,7 @@
     return btn;
 }
 
-+ (HelloTextField *)customTextfieldWidgetWithLeftView:(NSString *)imageName rightView:(UIView *)right placeholder:(NSString *)placeholder delegate:(id)delegate
++ (HelloTextField *)ycu_customTextfieldWidgetWithLeftView:(NSString *)imageName rightView:(UIView *)right placeholder:(NSString *)placeholder delegate:(id)delegate
 {
     UIImageView *icon = [[UIImageView alloc] initWithImage:GetImage(imageName)];
     HelloTextField *resultText = [[HelloTextField alloc] initWithFrame:CGRectZero leftView:icon rightView:right];
@@ -143,7 +143,7 @@
 
 #pragma mark -
 
-+ (CGSize)calculateSizeOfString:(NSString *)str withFont:(UIFont *)font
++ (CGSize)ycu_calculateSizeOfString:(NSString *)str withFont:(UIFont *)font
 {
     CGSize resultSize = [str boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT)
                                           options:NSStringDrawingTruncatesLastVisibleLine
@@ -154,7 +154,7 @@
 }
 
 
-+ (CGSize)calculateSizeOfString:(NSMutableAttributedString *)str
++ (CGSize)ycu_calculateSizeOfString:(NSMutableAttributedString *)str
 {
     NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     style.lineBreakMode = NSLineBreakByWordWrapping;
@@ -171,7 +171,7 @@
 }
 
 
-+ (CGSize)calculateSizeOfLabel:(UILabel *)label
++ (CGSize)ycu_calculateSizeOfLabel:(UILabel *)label
 {
     NSString *labelStr = label.text;
     CGSize resultSize = [labelStr boundingRectWithSize:CGSizeMake(1000, 1000)
@@ -182,7 +182,7 @@
     return CGSizeMake(ceil(resultSize.width)+1, ceil(resultSize.height)+1);
 }
 
-+ (CGSize)calculateSizeOfLabel:(UILabel *)label andWidth:(CGFloat)width
++ (CGSize)ycu_calculateSizeOfLabel:(UILabel *)label andWidth:(CGFloat)width
 {
     NSString *labelStr = label.text;
     
@@ -200,12 +200,12 @@
 
 #pragma mark - Toast
 
-+ (void)spToastWithMsg:(NSString *)msg
++ (void)ycu_sToastWithMsg:(NSString *)msg
 {
-    [self spToastWithMsg:msg atView:nil];
+    [self ycu_sToastWithMsg:msg atView:nil];
 }
 
-+ (void)spToastWithMsg:(NSString *)msg atView:(UIView *)baseView
++ (void)ycu_sToastWithMsg:(NSString *)msg atView:(UIView *)baseView
 {
     if (!baseView) {
         baseView = [UIApplication sharedApplication].windows[0];
@@ -238,7 +238,7 @@
         
         //        CGSize tempStringSize = [SPUtils calculateSizeOfLabel:toastLabel];
         // 多行文字要分行 test
-        CGSize tempStringSize = [HelloUtils calculateSizeOfLabel:toastLabel andWidth:[HelloUtils ycu_getCurrentScreenFrame].size.width-100];
+        CGSize tempStringSize = [HelloUtils ycu_calculateSizeOfLabel:toastLabel andWidth:[HelloUtils ycu_getCurrentScreenFrame].size.width-100];
         
         
         CGFloat _width = tempStringSize.width + 60;
@@ -282,7 +282,7 @@
 
 #pragma mark - 菊花图
 
-+ (void)spStarLoadingAtView:(UIView *)baseView
++ (void)ycu_sStarLoadingAtView:(UIView *)baseView
 {
     if (nil == baseView) {
         UIWindow * window = [UIApplication sharedApplication].windows[0];
@@ -319,7 +319,7 @@
     [indicator startAnimating];
 }
 
-+ (void)spStopLoadingAtView:(UIView *)baseView
++ (void)ycu_sStopLoadingAtView:(UIView *)baseView
 {
     if (nil == baseView) {
         UIWindow * window = [UIApplication sharedApplication].windows[0];
@@ -334,21 +334,21 @@
 
 #pragma mark - NSUserDefault
 
-+ (void)yc_userdefault_setObj:(id)obj key:(id)key
++ (void)ycu_userdefault_setObj:(id)obj key:(id)key
 {
     NSUserDefaults *df = [NSUserDefaults standardUserDefaults];
     [df setObject:obj forKey:key];
     [df synchronize];
 }
 
-+ (id)yc_userdefault_getObjforKey:(id)key
++ (id)ycu_userdefault_getObjforKey:(id)key
 {
     return [[NSUserDefaults standardUserDefaults] objectForKey:key];
 }
 
 #pragma mark - Others
 
-+ (void)makeTextFieldPlaceHolderProperty:(UITextField *)textField
++ (void)ycu_makeTextFieldPlaceHolderProperty:(UITextField *)textField
 {
     NSMutableParagraphStyle *style = [textField.defaultTextAttributes[NSParagraphStyleAttributeName] mutableCopy];
     style.minimumLineHeight = textField.font.lineHeight - (textField.font.lineHeight - [UIFont systemFontOfSize:14.0].lineHeight) / 2.0;
@@ -358,7 +358,7 @@
 
 #pragma mark - Trim
 
-+ (NSString *)triString:(NSString *)aStr
++ (NSString *)ycu_triString:(NSString *)aStr
 {
     return [aStr stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];// 去掉左右两边的空格
 }
@@ -444,33 +444,33 @@
 
 #pragma mark - 正则不通过的提示语
 
-+ (void)invalidNameToast
++ (void)ycu_invalidNameToast
 {
-    [HelloUtils spToastWithMsg:@"用户名无效"];
+    [HelloUtils ycu_sToastWithMsg:@"用户名无效"];
 }
-+ (void)invalidPwdToast
++ (void)ycu_invalidPwdToast
 {
-    [HelloUtils spToastWithMsg:@"密码无效"];
+    [HelloUtils ycu_sToastWithMsg:@"密码无效"];
 }
-+ (void)invalidPhoneToast
++ (void)ycu_invalidPhoneToast
 {
-    [HelloUtils spToastWithMsg:@"手机无效"];
+    [HelloUtils ycu_sToastWithMsg:@"手机无效"];
 }
-+ (void)invalidEmailToast
++ (void)ycu_invalidEmailToast
 {
-    [HelloUtils spToastWithMsg:@"邮箱无效"];
+    [HelloUtils ycu_sToastWithMsg:@"邮箱无效"];
 }
-+ (void)invalidVertifyCodeToast
++ (void)ycu_invalidVertifyCodeToast
 {
-    [HelloUtils spToastWithMsg:@"验证码无效"];
+    [HelloUtils ycu_sToastWithMsg:@"验证码无效"];
 }
-+ (void)disagreeAgreeementToast
++ (void)ycu_disagreeAgreeementToast
 {
-    [HelloUtils spToastWithMsg:@"您需要先同意协议"];
+    [HelloUtils ycu_sToastWithMsg:@"您需要先同意协议"];
 }
 
 #pragma mark - 按钮倒计时处理
-+ (void)     counttingButton:(UIButton *)sender
++ (void)     ycu_counttingButton:(UIButton *)sender
                    startTime:(NSInteger)timeLine
                        title:(NSString *)title
               countDownTitle:(NSString *)subTitle
@@ -510,7 +510,7 @@
     dispatch_resume(_timer);
 }
 
-+ (void)yc_showSomeSenceOnSafari:(NSString *)urlStr
++ (void)ycu_showSomeSenceOnSafari:(NSString *)urlStr
 {
     NSURL *url = [NSURL URLWithString:urlStr];
     if([[UIDevice currentDevice].systemVersion floatValue] >= 10.0){
@@ -533,7 +533,7 @@
 
 #pragma mark - Post Note
 
-+ (void)yc_postNoteWithName:(NSString *)name userInfo:(NSDictionary *)dict
++ (void)ycu_postNoteWithName:(NSString *)name userInfo:(NSDictionary *)dict
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:name object:nil userInfo:dict[@"data"]];
 }
@@ -623,7 +623,7 @@
         msg =  @"您的帐号密码已保存到相册";
     }
     
-    [HelloUtils spToastWithMsg:msg];
+    [HelloUtils ycu_sToastWithMsg:msg];
 }
 
 #pragma mark - Other Helper

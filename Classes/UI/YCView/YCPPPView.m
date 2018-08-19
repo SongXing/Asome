@@ -123,7 +123,7 @@
 //    pArr = [[NSArray alloc] initWithObjects:@"600钻石",@"￥6.00", nil];
 //    mArr = [[NSArray alloc] initWithObjects:@"微信",@"支付宝", nil];
     
-    pModel = [YCDataUtils yc_getPPP];
+    pModel = [YCDataUtils ycd_getPPP];
     NSMutableArray *pDetailList = [[NSMutableArray alloc] initWithCapacity:pModel.detailList.count];
     for (PPPDetailModel *detail in pModel.detailList) {
         [pDetailList addObject:detail];
@@ -169,7 +169,7 @@
     mTopPadding += firstGap/2;
     
     // back btn
-    UIButton *backBtn = [HelloUtils initBtnWithNormalImage:backBtn_normal highlightedImage:backBtn_highlighted tag:kPPPBackBtnTag selector:@selector(pppViewBtnAction:) target:self];
+    UIButton *backBtn = [HelloUtils ycu_initBtnWithNormalImage:backBtn_normal highlightedImage:backBtn_highlighted tag:kPPPBackBtnTag selector:@selector(pppViewBtnAction:) target:self];
     [mainBg addSubview:backBtn];
     [backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding/2));
@@ -208,7 +208,7 @@
     saySome.layer.borderWidth = 0.0f;
     [saySome setFont:[UIFont fontWithName:kTxtFontName size:kTxtFontSize]];
     [mainBg addSubview:saySome];
-    CGSize saySize = [HelloUtils calculateSizeOfLabel:saySome];
+    CGSize saySize = [HelloUtils ycu_calculateSizeOfLabel:saySome];
     [saySome mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding));
         make.left.equalTo(@(anotherLeftPadding*rate*curWidth));
@@ -274,7 +274,7 @@
         UILabel *pLB = [cell viewWithTag:kPPPPriceLabelTag];
         pLB.text = [NSString stringWithFormat:@"￥%@",productInfo[YC_PRM_PAY_PRODUCT_PRICE]];
 
-        CGSize pSize = [HelloUtils calculateSizeOfLabel:pLB];
+        CGSize pSize = [HelloUtils ycu_calculateSizeOfLabel:pLB];
         [cell.contentView addSubview:pLB];
         [pLB mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(@(0));
@@ -313,7 +313,7 @@
     
     if ([[HelloUtils ycu_paraseObjToStr:model.pType] isEqualToString:@"1"]) {
         
-        [NetEngine yc_gotoHell:productInfo];
+        [NetEngine yce_gotoHell:productInfo];
         
         return;
     }
@@ -322,13 +322,13 @@
                             @"order_id"         : [HelloUtils ycu_paraseObjToStr:productInfo[@"yc_product_order_id"]],
                             @"pay_type"         : [HelloUtils ycu_paraseObjToStr:model.pType],
                             };
-    [NetEngine yc_getPPPLinkWithParams:dict
+    [NetEngine yce_getPPPLinkWithParams:dict
                             completion:^(id result){
                                 if ([result isKindOfClass:[NSDictionary class]]) {
                                     NSString *url = result[@"data"][@"pay_url"];
                                     YCProtocol *web = [[YCProtocol alloc] initWithProtocolMode:YCProtocol_YCWebMode optionUrl:url close:^{
                                         // 查询是否 ppp 成功
-                                        [NetEngine yc_pppIsFeelBetterWithOrderId:dict[@"order_id"]
+                                        [NetEngine yce_pppIsFeelBetterWithOrderId:dict[@"order_id"]
                                                                       completion:^(id result) {
                                                                           // 回调给CP，告知充值结果
                                                                           //  0\2 是失败，其他成功

@@ -87,7 +87,7 @@
 {
     // dic {name:pwd}
     NSString *nameKkey = dic.allKeys[0];
-    nameKkey = [HelloUtils triString:nameKkey];
+    nameKkey = [HelloUtils ycu_triString:nameKkey];
     
     if (!nameKkey || [nameKkey isEqualToString:@""]) {
         return;
@@ -139,18 +139,18 @@
 
 #pragma mark - 处理请求返回的用户列表
 
-+ (void)yc_handleGoodNews:(NSDictionary *)dict
++ (void)ycd_handleGoodNews:(NSDictionary *)dict
 {
-    [HelloUtils yc_userdefault_setObj:dict key:kYCGoodNewsKey];
+    [HelloUtils ycu_userdefault_setObj:dict key:kYCGoodNewsKey];
 }
 
-+ (NSDictionary *)yc_getGoodNews
++ (NSDictionary *)ycd_getGoodNews
 {
-    return [HelloUtils yc_userdefault_getObjforKey:kYCGoodNewsKey];
+    return [HelloUtils ycu_userdefault_getObjforKey:kYCGoodNewsKey];
 }
 
 
-+ (void)yc_handleReqUserList:(NSDictionary *)dict
++ (void)ycd_handleReqUserList:(NSDictionary *)dict
 {
     NSArray *everList = dict[@"data"];
     if (everList.count > 0) {
@@ -163,16 +163,16 @@
         }
         
         // save
-        NSArray *curSavedArr = [HelloUtils yc_userdefault_getObjforKey:kYCReqUserListKey];
+        NSArray *curSavedArr = [HelloUtils ycu_userdefault_getObjforKey:kYCReqUserListKey];
         if (!curSavedArr || ![curSavedArr isEqual:mArr]) {
-            [HelloUtils yc_userdefault_setObj:mArr key:kYCReqUserListKey];
+            [HelloUtils ycu_userdefault_setObj:mArr key:kYCReqUserListKey];
         }
     }
 }
 
-+ (NSArray *)yc_unarchUserList
++ (NSArray *)ycd_unarchUserList
 {
-    NSArray *curSavedArr = [HelloUtils yc_userdefault_getObjforKey:kYCReqUserListKey];
+    NSArray *curSavedArr = [HelloUtils ycu_userdefault_getObjforKey:kYCReqUserListKey];
     NSMutableArray *mArr = [[NSMutableArray alloc] initWithCapacity:curSavedArr.count];
     for (NSData *data in curSavedArr) {
         YCUserModel *model = [NSKeyedUnarchiver unarchiveObjectWithData:data];
@@ -182,19 +182,19 @@
     return mArr;
 }
 
-+ (void)yc_handleGuestLoginData:(NSDictionary *)dict
++ (void)ycd_handleGuestLoginData:(NSDictionary *)dict
 {
     // 转成 自定义对象
     YCUserModel *model = [[YCUserModel alloc] initWithDict:dict[@"data"]];
     // 自定义对象转成 data
     NSData *modelData = [NSKeyedArchiver archivedDataWithRootObject:model];
     // data 存到 userdefault 中
-    [HelloUtils yc_userdefault_setObj:modelData key:kYCGuestUserKey];
+    [HelloUtils ycu_userdefault_setObj:modelData key:kYCGuestUserKey];
 }
 
-+ (NSArray *)yc_unarchGuest
++ (NSArray *)ycd_unarchGuest
 {
-    NSData *guestData = [HelloUtils yc_userdefault_getObjforKey:kYCGuestUserKey];
+    NSData *guestData = [HelloUtils ycu_userdefault_getObjforKey:kYCGuestUserKey];
     NSMutableArray *mArr = [[NSMutableArray alloc] initWithCapacity:1];
     
     YCUserModel *model = [NSKeyedUnarchiver unarchiveObjectWithData:guestData];
@@ -205,14 +205,14 @@
 
 #pragma mark - Normal User
 
-+ (void)yc_handelNormalUser:(NSDictionary *)dict
++ (void)ycd_handelNormalUser:(NSDictionary *)dict
 {
     NSDictionary *cur = dict[@"data"];
     YCUserModel *curModel = [[YCUserModel alloc] initWithDict:cur];
     NSData *curData = [NSKeyedArchiver archivedDataWithRootObject:curModel];
     
     // get List
-    NSArray *savedList = [self yc_unarchNormalUser];// model list
+    NSArray *savedList = [self ycd_unarchNormalUser];// model list
     NSMutableArray *mArr = nil;
     
     if (savedList.count < 1) {
@@ -242,12 +242,12 @@
         isAdd ? : [mArr insertObject:curData atIndex:0];
     }
     
-    [HelloUtils yc_userdefault_setObj:mArr key:kYCNormalUserListKey];
+    [HelloUtils ycu_userdefault_setObj:mArr key:kYCNormalUserListKey];
 }
 
-+ (NSArray *)yc_unarchNormalUser
++ (NSArray *)ycd_unarchNormalUser
 {
-    NSArray *curSavedArr = [HelloUtils yc_userdefault_getObjforKey:kYCNormalUserListKey];
+    NSArray *curSavedArr = [HelloUtils ycu_userdefault_getObjforKey:kYCNormalUserListKey];
     NSMutableArray *mArr = [[NSMutableArray alloc] initWithCapacity:curSavedArr.count];
     for (NSData *data in curSavedArr) {
         YCUserModel *model = [NSKeyedUnarchiver unarchiveObjectWithData:data];
@@ -257,10 +257,10 @@
     return mArr;
 }
 
-+ (void)yc_removeNormalUserWithIndex:(NSUInteger)idx
++ (void)ycd_removeNormalUserWithIndex:(NSUInteger)idx
 {
     // get cur model arr
-    NSArray *savedList = [self yc_unarchNormalUser];
+    NSArray *savedList = [self ycd_unarchNormalUser];
     // make them to data arr
     NSMutableArray *mArr = [[NSMutableArray alloc] initWithCapacity:savedList.count];
     for (YCUserModel *model in savedList) {
@@ -277,35 +277,35 @@
     }
     
     // resave
-    [HelloUtils yc_userdefault_setObj:mArr key:kYCNormalUserListKey];
+    [HelloUtils ycu_userdefault_setObj:mArr key:kYCNormalUserListKey];
 }
 
 #pragma mark - 处理请求返回的pay数据
 
-+ (void)yc_handlePPP:(NSDictionary *)dict
++ (void)ycd_handlePPP:(NSDictionary *)dict
 {
     YCPPPModel *model = [[YCPPPModel alloc] initWithDictionary:dict];
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:model];
-    [HelloUtils yc_userdefault_setObj:data key:kYCPPPModelKey];
+    [HelloUtils ycu_userdefault_setObj:data key:kYCPPPModelKey];
 }
 
-+ (YCPPPModel *)yc_getPPP
++ (YCPPPModel *)ycd_getPPP
 {
-    NSData *data = [HelloUtils yc_userdefault_getObjforKey:kYCPPPModelKey];
+    NSData *data = [HelloUtils ycu_userdefault_getObjforKey:kYCPPPModelKey];
     YCPPPModel *model = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     return model;
 }
 
 #pragma mark - 处理 CDN 信息
 
-+ (void)yc_handleCDNGoods:(NSDictionary *)dict
++ (void)ycd_handleCDNGoods:(NSDictionary *)dict
 {
-    [HelloUtils yc_userdefault_setObj:dict key:kYCCDNDomains];
+    [HelloUtils ycu_userdefault_setObj:dict key:kYCCDNDomains];
 }
 
 + (NSDictionary *)yc_getCDNGoods
 {
-    return [HelloUtils yc_userdefault_getObjforKey:kYCCDNDomains];
+    return [HelloUtils ycu_userdefault_getObjforKey:kYCCDNDomains];
 }
 
 @end

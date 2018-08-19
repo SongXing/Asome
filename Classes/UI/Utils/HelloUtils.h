@@ -14,15 +14,15 @@
 
 #pragma mark - UI
 
-+ (UIButton *)yc_rightViewWithImage:(NSString *)image tag:(NSUInteger)tag selector:(SEL)selector target:(id)targer;
++ (UIButton *)ycu_rightViewWithImage:(NSString *)image tag:(NSUInteger)tag selector:(SEL)selector target:(id)targer;
 
-+ (UIButton *)initBtnWithNormalImage:(NSString *)normalImageName
++ (UIButton *)ycu_initBtnWithNormalImage:(NSString *)normalImageName
                     highlightedImage:(NSString *)highlightedImageName
                                  tag:(NSUInteger)tag
                             selector:(SEL)selector
                               target:(id)target;
 
-+ (UIButton *)initBtnWithTitle:(NSString *)titleText
++ (UIButton *)ycu_initBtnWithTitle:(NSString *)titleText
                            tag:(NSUInteger)tag
                       selector:(SEL)selector
                         target:(id)target;
@@ -32,43 +32,43 @@
                          selector:(SEL)selector
                            target:(id)target;
 
-+ (UIButton *)initBtnWithType:(UIButtonType)type
++ (UIButton *)ycu_initBtnWithType:(UIButtonType)type
                         title:(NSString *)titleText
                           tag:(NSUInteger)tag
                      selector:(SEL)selector
                        target:(id)target;
 
-+ (HelloTextField *)customTextfieldWidgetWithLeftView:(NSString *)imageName
++ (HelloTextField *)ycu_customTextfieldWidgetWithLeftView:(NSString *)imageName
                                             rightView:(UIView *)right
                                           placeholder:(NSString *)placeholder
                                              delegate:(id)delegate;
 
 #pragma mark Calculate Label Size
 
-+ (CGSize)calculateSizeOfString:(NSMutableAttributedString *)str;
-+ (CGSize)calculateSizeOfString:(NSString *)str withFont:(UIFont *)font;
-+ (CGSize)calculateSizeOfLabel:(UILabel *)label;
-+ (CGSize)calculateSizeOfLabel:(UILabel *)label andWidth:(CGFloat)width;
++ (CGSize)ycu_calculateSizeOfString:(NSMutableAttributedString *)str;
++ (CGSize)ycu_calculateSizeOfString:(NSString *)str withFont:(UIFont *)font;
++ (CGSize)ycu_calculateSizeOfLabel:(UILabel *)label;
++ (CGSize)ycu_calculateSizeOfLabel:(UILabel *)label andWidth:(CGFloat)width;
 
 #pragma mark - Toast
 
-+ (void)spToastWithMsg:(NSString *)msg;
-+ (void)spToastWithMsg:(NSString *)msg atView:(UIView *)baseView;
++ (void)ycu_sToastWithMsg:(NSString *)msg;
++ (void)ycu_sToastWithMsg:(NSString *)msg atView:(UIView *)baseView;
 // loading
-+ (void)spStarLoadingAtView:(UIView *)baseView;
-+ (void)spStopLoadingAtView:(UIView *)baseView;
++ (void)ycu_sStarLoadingAtView:(UIView *)baseView;
++ (void)ycu_sStopLoadingAtView:(UIView *)baseView;
 
 #pragma mark - NSUserDefault
 
-+ (void)yc_userdefault_setObj:(id)obj key:(id)key;
-+ (id)yc_userdefault_getObjforKey:(id)key;
++ (void)ycu_userdefault_setObj:(id)obj key:(id)key;
++ (id)ycu_userdefault_getObjforKey:(id)key;
 
 
 #pragma mark - Others
 
-+ (void)makeTextFieldPlaceHolderProperty:(UITextField *)textField;
++ (void)ycu_makeTextFieldPlaceHolderProperty:(UITextField *)textField;
 
-+ (NSString *)triString:(NSString *)aStr;
++ (NSString *)ycu_triString:(NSString *)aStr;
 
 #pragma mark - 输入正则
 
@@ -82,16 +82,16 @@
 
 #pragma mark - 正则不通过的提示语
 
-+ (void)invalidNameToast;
-+ (void)invalidPwdToast;
-+ (void)invalidPhoneToast;
-+ (void)invalidEmailToast;
-+ (void)invalidVertifyCodeToast;
-+ (void)disagreeAgreeementToast;
++ (void)ycu_invalidNameToast;
++ (void)ycu_invalidPwdToast;
++ (void)ycu_invalidPhoneToast;
++ (void)ycu_invalidEmailToast;
++ (void)ycu_invalidVertifyCodeToast;
++ (void)ycu_disagreeAgreeementToast;
 
 #pragma mark - 按钮倒计时
 
-+ (void)     counttingButton:(UIButton *)sender
++ (void)     ycu_counttingButton:(UIButton *)sender
                    startTime:(NSInteger)timeLine
                        title:(NSString *)title
               countDownTitle:(NSString *)subTitle
@@ -100,13 +100,12 @@
 
 #pragma mark - 调到 Safari
 
-+ (void)yc_showSomeSenceOnSafari:(NSString *)urlStr;
++ (void)ycu_showSomeSenceOnSafari:(NSString *)urlStr;
+
 
 #pragma mark - Post Note
 
-#pragma mark - Post Note
-
-+ (void)yc_postNoteWithName:(NSString *)name userInfo:(NSDictionary *)dict;
++ (void)ycu_postNoteWithName:(NSString *)name userInfo:(NSDictionary *)dict;
 
 
 #pragma mark - YC Curent Size

@@ -123,7 +123,7 @@
     if (response.products.count >= 1) {
         self.checkCallback();
     } else {
-        [HelloUtils spToastWithMsg:[NSString stringWithFormat:@" %@ 是无效的商品ID",response.invalidProductIdentifiers[0]]];
+        [HelloUtils ycu_sToastWithMsg:[NSString stringWithFormat:@" %@ 是无效的商品ID",response.invalidProductIdentifiers[0]]];
     }
 }
 
@@ -210,12 +210,12 @@
 
 - (void)showPurchasingView
 {
-    [HelloUtils spStarLoadingAtView:nil];
+    [HelloUtils ycu_sStarLoadingAtView:nil];
 }
 
 - (void)dismissPurchasingView
 {
-    [HelloUtils spStopLoadingAtView:nil];
+    [HelloUtils ycu_sStopLoadingAtView:nil];
 }
 
 @end
