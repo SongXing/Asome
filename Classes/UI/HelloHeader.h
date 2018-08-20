@@ -63,8 +63,9 @@
 #define UIColorFromHex(s)  [UIColor colorWithRed:(((s & 0xFF0000) >> 16))/255.0 green:(((s &0xFF00) >>8))/255.0 blue:((s &0xFF))/255.0 alpha:1.0]
 
 
-#define device_is_iPhoneX   winWidth==812 || (!UIInterfaceOrientationIsLandscape([[YCUser shareUser] gameOrientation]) && winWidth==375)
-#define device_is_iPhone5   winWidth==568 || (!UIInterfaceOrientationIsLandscape([[YCUser shareUser] gameOrientation]) && winWidth==320)
+#define device_is_iPhoneX (CGSizeEqualToSize(CGSizeMake(375.f, 812.f), [UIScreen mainScreen].bounds.size) || CGSizeEqualToSize(CGSizeMake(812.f, 375.f), [UIScreen mainScreen].bounds.size))
+#define device_is_iPhone5 (CGSizeEqualToSize(CGSizeMake(320.f, 568.f), [UIScreen mainScreen].bounds.size) || CGSizeEqualToSize(CGSizeMake(568.f, 320.f), [UIScreen mainScreen].bounds.size))
+
 
 #define keyboardInitH           260.0f
 #define tRotaTomeInterval       0.3f
