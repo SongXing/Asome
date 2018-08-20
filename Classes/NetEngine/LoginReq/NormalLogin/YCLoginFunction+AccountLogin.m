@@ -15,12 +15,11 @@
 {    
     NSDictionary *dict = nil;
     dict = @{            
-             @"account"     :   userName,
-             @"password"    :   password ? :@"",
-             @"uid"         :   uid ? :@"",
-             @"sessionid"   :   sessionId ? :@"",
-             @"sid"         :   @"",
-             @"aid"         :   [YCUser shareUser].aid,
+             kReqStrAccount     :   userName,
+             kReqStrPassword    :   password ? :@"",
+             kReqStrUid         :   uid ? :@"",
+             kReqStrSessionId   :   sessionId ? :@"",
+             kReqStrAid         :   [YCUser shareUser].aid,
              
              };
     
@@ -38,14 +37,14 @@
                    if (!error && !jsonParseErr)
                    {                       
                        //获取code参数
-                       NSString * codeStr= [NSString stringWithFormat:@"%@",resultJsonDic[@"result"]];
+                       NSString * codeStr= [NSString stringWithFormat:@"%@",resultJsonDic[kRespStrResult]];
                        
                        if ( 0 == codeStr.intValue )// 成功
                        {
                            completion?completion(resultJsonDic):nil;
                        }
                        else {
-                           [HelloUtils ycu_sToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
+                           [HelloUtils ycu_sToastWithMsg:[resultJsonDic[kRespStrData] objectForKey:@"msg"]];
                            // 1110 认证过期
                            if (1110 == codeStr.intValue) {
                                completion?completion(@"SessionTimeIsOver"):nil;

@@ -44,6 +44,7 @@
 #import "YCWeinanView.h"
 
 #import "YCBeatifulGirl.h"
+#import "SUPRSA.h"
 
 #import "YCConstantConstant.h"
 

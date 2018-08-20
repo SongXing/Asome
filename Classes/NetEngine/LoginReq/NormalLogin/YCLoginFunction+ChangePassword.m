@@ -15,10 +15,10 @@
     
     NSDictionary *dict = nil;
     dict = @{
-             @"account"             : userName,   // must
-             @"password"            : oldPassword,// must
-             @"new_password"        : newPassword,// must
-             @"confirm_password"    : newPassword,// must
+             kReqStrAccount             : userName,   // must
+             kReqStrPassword            : oldPassword,// must
+             kReqStrNewPassword        : newPassword,// must
+             kReqStrConfirmPassword    : newPassword,// must
              };
     
     NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 198, 196, 207, 194, 205, 210, 219, 202, 216, 216, 220, 207, 0})),kPlatformDomain];
@@ -36,14 +36,14 @@
                    {
                        
                        //获取code参数
-                       NSString * codeStr= [NSString stringWithFormat:@"%@",resultJsonDic[@"result"]];
+                       NSString * codeStr= [NSString stringWithFormat:@"%@",resultJsonDic[kRespStrResult]];
                        
                        if ( 0 == codeStr.intValue )// 成功
                        {
                            completion(resultJsonDic);
                        }
                        else {
-                           [HelloUtils ycu_sToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
+                           [HelloUtils ycu_sToastWithMsg:[resultJsonDic[kRespStrData] objectForKey:kRespStrMsg]];
                            completion(nil);
                        }
                    }

@@ -173,7 +173,16 @@
     UIView *baseView = [[UIView alloc] init];
     [self.view addSubview:baseView];
     [baseView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(_mustChange ? iphoneX_landscape_left+topItemHeight :topItemHeight));
+        if (device_is_iPhoneX) {
+            if (_isPortrait) {
+                make.top.equalTo(@(iphoneX_landscape_left+topItemHeight));
+            } else {
+                make.top.equalTo(@(topItemHeight));
+            }
+        } else {
+            make.top.equalTo(@(topItemHeight));
+        }
+//        make.top.equalTo(@(_mustChange ? iphoneX_landscape_left+topItemHeight :topItemHeight));
         make.left.equalTo(@(0));
         make.bottom.equalTo(@(0));
         make.right.equalTo(@(0));
@@ -187,7 +196,16 @@
     UIView *baseView = [[UIView alloc] init];
     [self.view addSubview:baseView];
     [baseView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(_mustChange ? iphoneX_landscape_left : 0));
+        if (device_is_iPhoneX) {
+            if (_isPortrait) {
+                make.top.equalTo(@(iphoneX_landscape_left));
+            } else {
+                make.top.equalTo(@(0));
+            }
+        } else {
+            make.top.equalTo(@(0));
+        }
+//        make.top.equalTo(@(_mustChange ? iphoneX_landscape_left : 0));
         make.left.equalTo(@(0));
         make.bottom.equalTo(@(0));
         make.right.equalTo(@(0));
@@ -206,7 +224,15 @@
     [topBar setAlpha:0.8f];
     [self.view addSubview:topBar];
     [topBar mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@( _mustChange ? iphoneX_landscape_left : 0));
+        if (device_is_iPhoneX) {
+            if (_isPortrait) {
+                make.top.equalTo(@(iphoneX_landscape_left));
+            } else {
+                make.top.equalTo(@(0));
+            }
+        } else {
+            make.top.equalTo(@(0));
+        }
         make.left.equalTo(@(0));
         make.height.equalTo(@(topItemHeight));
         make.right.equalTo(@(0));
@@ -216,8 +242,20 @@
     UIButton *backBtn = [HelloUtils ycu_initBtnWithNormalImage:backBtnName_normal highlightedImage:backBtnName_highlighted tag:kProtocolBackBtnTag selector:@selector(btnsAction:) target:self];
     [self.view addSubview:backBtn];
     [backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(_mustChange ? iphoneX_landscape_left+5 :5));
-        make.left.equalTo(@(10));
+        if (device_is_iPhoneX) {
+            if (_isPortrait) {
+                make.top.equalTo(@(iphoneX_landscape_left+5));
+                make.left.equalTo(@(10));
+            } else {
+                make.top.equalTo(@(5));
+                make.left.equalTo(@(iphoneX_landscape_left+10));
+            }
+        } else {
+            make.top.equalTo(@(5));
+            make.left.equalTo(@(10));
+        }
+//        make.top.equalTo(@(_mustChange ? iphoneX_landscape_left+5 :5));
+//        make.left.equalTo(@(10));
         make.height.equalTo(@(30));
         make.width.equalTo(@(30));
     }];
@@ -226,8 +264,20 @@
     UIButton *closeBtn = [HelloUtils ycu_initBtnWithNormalImage:closeBtnName_normal highlightedImage:closeBtnName_highlighted tag:kProtocolCloseBtnTag selector:@selector(btnsAction:) target:self];
     [self.view addSubview:closeBtn];
     [closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(_mustChange ? iphoneX_landscape_left+5 :5));
-        make.right.equalTo(@(-10));
+        if (device_is_iPhoneX) {
+            if (_isPortrait) {
+                make.top.equalTo(@(iphoneX_landscape_left));
+                make.right.equalTo(@(-10));
+            } else {
+                make.top.equalTo(@(5));
+                make.right.equalTo(@(-10-iphoneX_landscape_left));
+            }
+        } else {
+            make.top.equalTo(@(5));
+            make.right.equalTo(@(-10));
+        }
+//        make.top.equalTo(@(_mustChange ? iphoneX_landscape_left+5 :5));
+//        make.right.equalTo(@(-10));
         make.height.equalTo(@(30));// 58(w)x100(h)
         make.width.equalTo(@(30*58/100.0f));
     }];

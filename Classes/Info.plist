@@ -68,7 +68,6 @@
 	<array>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationPortrait</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
@@ -76,12 +75,12 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>YCAid</key>
-	<string>91007715972711893</string>
+	<string>910077090078118</string>
 	<key>YCCid</key>
 	<string>5</string>
 	<key>YCKey</key>
-	<string>1c3d436426b0e80c8809f01e76ec2df2</string>
+	<string>489445b1f7a61270d31c0ea2b130497d</string>
 	<key>YCSite</key>
-	<string>qqjj_ios5</string>
+	<string>testadads_ios</string>
 </dict>
 </plist>

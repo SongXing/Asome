@@ -131,8 +131,8 @@ static NSInteger _level = 30;
             
         case 0:
         {
-//            [[YCSDK shareYC] yc_login];
-            [[YCSDK shareYC] yc_loginWithGameOrientation:UIInterfaceOrientationPortrait];
+            [[YCSDK shareYC] yc_login];
+//            [[YCSDK shareYC] yc_loginWithGameOrientation:UIInterfaceOrientationPortrait];
         }
             break;            
             

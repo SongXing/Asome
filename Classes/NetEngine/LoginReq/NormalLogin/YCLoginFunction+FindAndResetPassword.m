@@ -14,10 +14,10 @@
 {
     NSDictionary *dict = nil;
     dict = @{
-             @"account"     : userName,
-             @"mobile"      : mobileNum,
-             @"code"        : vertifyCode,
-             @"password"    : newPwd,
+             kReqStrAccount     : userName,
+             kReqStrMobile      : mobileNum,
+             kReqStrCode        : vertifyCode,
+             kReqStrPassword    : newPwd,
              };
 
     NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 197, 206, 220, 217, 206, 216, 206, 223, 219, 202, 216, 216, 220, 207, 0})),kPlatformDomain];
@@ -34,14 +34,14 @@
                    if (!error && !jsonParseErr)
                    {
                        //获取code参数
-                       NSString * codeStr= [NSString stringWithFormat:@"%@",resultJsonDic[@"result"]];
+                       NSString * codeStr= [NSString stringWithFormat:@"%@",resultJsonDic[kRespStrResult]];
                        
                        if ( 0 == codeStr.intValue )// 成功
                        {
                            completion ? completion(resultJsonDic) :nil;
                        }
                        else {
-                           [HelloUtils ycu_sToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
+                           [HelloUtils ycu_sToastWithMsg:[resultJsonDic[kRespStrData] objectForKey:kRespStrMsg]];
                            completion ? completion(nil) : nil;
                        }
                    }

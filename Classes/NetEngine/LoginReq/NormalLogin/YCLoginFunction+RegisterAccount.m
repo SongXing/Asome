@@ -47,14 +47,12 @@
 {    
     NSDictionary *dict = nil;
     dict = @{
-             @"account"     :  userName,// must 用户名 (5~60位, 不能有空格中文, 可以邮箱手机,只能使用 _ 特殊字符)
-             @"password"    :  password,// must
-             @"mac"         :  [SPFunction getMacaddress] ? : @"",
-             @"adid"        :  [SPFunction getSpUUID],
-             @"sid"         :  @"",//serverCode
-             @"aid"         :  [YCUser shareUser].aid?:@"",//渠道id
-             @"openudid"    :  @"",//openudid
-             @"udid"        :  [SPFunction getSpUUID],
+             kReqStrAccount     :  userName,// must 用户名 (5~60位, 不能有空格中文, 可以邮箱手机,只能使用 _ 特殊字符)
+             kReqStrPassword    :  password,// must
+             kReqStrMac         :  [SPFunction getMacaddress] ? : @"",
+             kReqStrAdid        :  [SPFunction getSpUUID],
+             kReqStrAid         :  [YCUser shareUser].aid?:@"",//渠道id
+             kReqStrUdid        :  [SPFunction getSpUUID],
              };
     
     NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 217, 206, 204, 194, 216, 223, 0})),kPlatformDomain];
@@ -71,14 +69,14 @@
                    if (!error && !jsonParseErr)
                    {                       
                        //获取code参数
-                       NSString * codeStr= [NSString stringWithFormat:@"%@",resultJsonDic[@"result"]];
+                       NSString * codeStr= [NSString stringWithFormat:@"%@",resultJsonDic[kRespStrResult]];
                        
                        if ( 0 == codeStr.intValue )// 成功
                        {
                            completion(resultJsonDic);
                        }
                        else {
-                           [HelloUtils ycu_sToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
+                           [HelloUtils ycu_sToastWithMsg:[resultJsonDic[kRespStrData] objectForKey:kRespStrMsg]];
                            completion(nil);
                        }
                    }

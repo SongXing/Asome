@@ -319,21 +319,21 @@
     }
     
     NSDictionary * dict = @{
-                            @"order_id"         : [HelloUtils ycu_paraseObjToStr:productInfo[@"yc_product_order_id"]],
-                            @"pay_type"         : [HelloUtils ycu_paraseObjToStr:model.pType],
+                            kParmOrderId         : [HelloUtils ycu_paraseObjToStr:productInfo[kParmYcProductId]],
+                            kParmPayType         : [HelloUtils ycu_paraseObjToStr:model.pType],
                             };
     [NetEngine yce_getPPPLinkWithParams:dict
                             completion:^(id result){
                                 if ([result isKindOfClass:[NSDictionary class]]) {
-                                    NSString *url = result[@"data"][@"pay_url"];
+                                    NSString *url = result[kParmData][kParmPayUrl];
                                     YCProtocol *web = [[YCProtocol alloc] initWithProtocolMode:YCProtocol_YCWebMode optionUrl:url close:^{
                                         // 查询是否 ppp 成功
-                                        [NetEngine yce_pppIsFeelBetterWithOrderId:dict[@"order_id"]
+                                        [NetEngine yce_pppIsFeelBetterWithOrderId:dict[kParmOrderId]
                                                                       completion:^(id result) {
                                                                           // 回调给CP，告知充值结果
                                                                           //  0\2 是失败，其他成功
                                                                           if ([result isKindOfClass:[NSDictionary class]]) {
-                                                                              NSInteger statusCode = [result[@"data"][@"pay_status"] integerValue];
+                                                                              NSInteger statusCode = [result[kParmData][kParmPayStatus] integerValue];
                                                                               if (statusCode == 0 || statusCode == 2) {
                                                                                   POST_NOTE(NOTE_YC_PAY_FAIL)
                                                                               } else {

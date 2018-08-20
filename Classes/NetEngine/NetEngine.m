@@ -65,8 +65,8 @@ static NSInteger huhaMoreTime = 0;
 {
     NSDictionary *dict = nil;
     dict = @{
-             @"mobile"            : mobileNum,
-             @"sendtype"          : situation,//固定字段
+             kReqStrMobile            : mobileNum,
+             kReqStrSendtype          : situation,//固定字段
              };
     
     NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 216, 206, 197, 207, 198, 196, 201, 194, 199, 206, 200, 196, 207, 206, 0})),kPlatformDomain];
@@ -83,14 +83,14 @@ static NSInteger huhaMoreTime = 0;
                    if (!error && !jsonParseErr)
                    {
                        //获取code参数
-                       NSString * codeStr= [NSString stringWithFormat:@"%@",resultJsonDic[@"result"]];
+                       NSString * codeStr= [NSString stringWithFormat:@"%@",resultJsonDic[kRespStrResult]];
                        
                        if ( 0 == codeStr.intValue )// 成功
                        {
                            completion ? completion(resultJsonDic) : nil;
                        }
                        else {
-                           [HelloUtils ycu_sToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
+                           [HelloUtils ycu_sToastWithMsg:[resultJsonDic[kRespStrData] objectForKey:kRespStrMsg]];
                            completion ? completion(nil) : nil;
                        }
                    }
@@ -109,12 +109,12 @@ static NSInteger huhaMoreTime = 0;
 {
     NSDictionary *dict = nil;
     dict = @{
-             @"account"            : mobile,
-             @"code"               : code,
-             @"aid"               : [YCUser shareUser].aid ?:@"",
-             @"udid"              : [SPFunction getSpUUID],
-             @"mac"               : [SPFunction getMacaddress]?:@"",
-             @"adid"              : [SPFunction getSpUUID],
+             kReqStrAccount            : mobile,
+             kReqStrCode               : code,
+             kReqStrAid               : [YCUser shareUser].aid ?:@"",
+             kReqStrUdid              : [SPFunction getSpUUID],
+             kReqStrMac               : [SPFunction getMacaddress]?:@"",
+             kReqStrAdid              : [SPFunction getSpUUID],
              };
     
     NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 219, 195, 196, 197, 206, 231, 196, 204, 194, 197, 0})),kPlatformDomain];
@@ -131,14 +131,14 @@ static NSInteger huhaMoreTime = 0;
                    if (!error && !jsonParseErr)
                    {
                        //获取code参数
-                       NSString * codeStr= [NSString stringWithFormat:@"%@",resultJsonDic[@"result"]];
+                       NSString * codeStr= [NSString stringWithFormat:@"%@",resultJsonDic[kRespStrResult]];
                        
                        if ( 0 == codeStr.intValue )// 成功
                        {
                            completion ? completion(resultJsonDic) : nil;
                        }
                        else {
-                           [NSClassFromString(@"HelloUtils") ycu_sToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
+                           [NSClassFromString(@"HelloUtils") ycu_sToastWithMsg:[resultJsonDic[kRespStrData] objectForKey:kRespStrMsg]];
                            completion ? completion(nil) : nil;
                        }
                    }
@@ -158,10 +158,10 @@ static NSInteger huhaMoreTime = 0;
 {
     NSDictionary *dict = nil;
     dict = @{
-             @"account"           : name,
-             @"mobile"            : mobile,
-             @"code"              : code,
-             @"password"          : newPwd,
+             kReqStrAccount           : name,
+             kReqStrMobile            : mobile,
+             kReqStrCode              : code,
+             kReqStrPassword          : newPwd,
              };
     
     NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 197, 206, 220, 217, 206, 216, 206, 223, 219, 202, 216, 216, 220, 207, 0})),kPlatformDomain];
@@ -178,14 +178,14 @@ static NSInteger huhaMoreTime = 0;
                    if (!error && !jsonParseErr)
                    {
                        //获取code参数
-                       NSString * codeStr= [NSString stringWithFormat:@"%@",resultJsonDic[@"result"]];
+                       NSString * codeStr= [NSString stringWithFormat:@"%@",resultJsonDic[kRespStrResult]];
                        
                        if ( 0 == codeStr.intValue )// 成功
                        {
                            completion ? completion(resultJsonDic) : nil;
                        }
                        else {
-                           [NSClassFromString(@"HelloUtils") ycu_sToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
+                           [NSClassFromString(@"HelloUtils") ycu_sToastWithMsg:[resultJsonDic[kRespStrData] objectForKey:kRespStrMsg]];
                            completion ? completion(nil) : nil;
                        }
                    }
@@ -205,14 +205,14 @@ static NSInteger huhaMoreTime = 0;
 {    
     NSDictionary *dict = nil;
     dict = @{
-             @"mobile"            : mobileNum,
-             @"password"          : pwd,
-             @"code"              : vertifyCode,
-             @"sid"               : @"",
-             @"aid"               : [YCUser shareUser].aid ?:@"",
-             @"udid"              : [SPFunction getSpUUID],
-             @"mac"               : [SPFunction getMacaddress]?:@"",
-             @"adid"              : [SPFunction getSpUUID],
+             kReqStrMobile            : mobileNum,
+             kReqStrPassword          : pwd,
+             kReqStrCode              : vertifyCode,
+             kReqStrSid               : @"",
+             kReqStrAid               : [YCUser shareUser].aid ?:@"",
+             kReqStrUdid              : [SPFunction getSpUUID],
+             kReqStrMac               : [SPFunction getMacaddress]?:@"",
+             kReqStrAdid              : [SPFunction getSpUUID],
              };
     
     NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 198, 196, 201, 194, 199, 206, 199, 196, 204, 194, 197, 0})),kPlatformDomain];
@@ -229,14 +229,14 @@ static NSInteger huhaMoreTime = 0;
                    if (!error && !jsonParseErr)
                    {
                        //获取code参数
-                       NSString * codeStr= [NSString stringWithFormat:@"%@",resultJsonDic[@"result"]];
+                       NSString * codeStr= [NSString stringWithFormat:@"%@",resultJsonDic[kRespStrResult]];
                        
                        if ( 0 == codeStr.intValue )// 成功
                        {
                            completion ? completion(resultJsonDic) : nil;
                        }
                        else {
-                           [NSClassFromString(@"HelloUtils") ycu_sToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
+                           [NSClassFromString(@"HelloUtils") ycu_sToastWithMsg:[resultJsonDic[kRespStrData] objectForKey:kRespStrMsg]];
                            completion ? completion(nil) : nil;
                        }
                    }
@@ -255,7 +255,7 @@ static NSInteger huhaMoreTime = 0;
 {
     NSDictionary *dict = nil;
     dict = @{
-             @"account"            : mobileNum,
+             kReqStrAccount            : mobileNum,
              };
     
     NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 204, 206, 223, 230, 196, 201, 194, 199, 206, 251, 195, 196, 197, 206, 0})),kPlatformDomain];
@@ -272,17 +272,17 @@ static NSInteger huhaMoreTime = 0;
                    if (!error && !jsonParseErr)
                    {
                        //获取code参数
-                       NSString * codeStr= [NSString stringWithFormat:@"%@",resultJsonDic[@"result"]];
+                       NSString * codeStr= [NSString stringWithFormat:@"%@",resultJsonDic[kRespStrResult]];
                        
                        if ( 0 == codeStr.intValue )// 成功
                        {
 //                           NSLog(@"---result = %@", resultJsonDic);
-                           [HelloUtils ycu_sToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
+                           [HelloUtils ycu_sToastWithMsg:[resultJsonDic[kRespStrData] objectForKey:kRespStrMsg]];
                            completion(resultJsonDic);
                            
                        }
                        else {
-                           [HelloUtils ycu_sToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
+                           [HelloUtils ycu_sToastWithMsg:[resultJsonDic[kRespStrData] objectForKey:kRespStrMsg]];
                            completion(nil);
                        }
                    }
@@ -304,10 +304,10 @@ static NSInteger huhaMoreTime = 0;
 {
     NSDictionary *dict = nil;
     dict = @{
-             @"account"           : account,
-             @"password"          : pwd,
-             @"mobile"            : mobileNum,
-             @"code"              : vertifyCode,
+             kReqStrAccount           : account,
+             kReqStrPassword          : pwd,
+             kReqStrMobile            : mobileNum,
+             kReqStrCode              : vertifyCode,
              };
     
     NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 197, 206, 220, 201, 194, 197, 207, 198, 196, 201, 194, 199, 206, 0})),kPlatformDomain];
@@ -324,14 +324,14 @@ static NSInteger huhaMoreTime = 0;
                    if (!error && !jsonParseErr)
                    {
                        //获取code参数
-                       NSString * codeStr= [NSString stringWithFormat:@"%@",resultJsonDic[@"result"]];
+                       NSString * codeStr= [NSString stringWithFormat:@"%@",resultJsonDic[kRespStrResult]];
                        
                        if ( 0 == codeStr.intValue )// 成功
                        {
                            completion(resultJsonDic);
                        }
                        else {
-                           [HelloUtils ycu_sToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
+                           [HelloUtils ycu_sToastWithMsg:[resultJsonDic[kRespStrData] objectForKey:kRespStrMsg]];
                            completion(nil);
                        }
                    }
@@ -354,7 +354,7 @@ static NSInteger huhaMoreTime = 0;
                                     andPassword:password
                                        andEmail:email
                                      andLoginId:nil
-                                  andThirdPlate:@"mac"
+                                  andThirdPlate:kReqStrMac
                                      completion:completion];
 }
 
@@ -364,7 +364,7 @@ static NSInteger huhaMoreTime = 0;
 + (void)yce_mysuperJuniaCompletion:(void (^)())completion
 {
     NSDictionary * dict = @{
-                            @"aid"      :   [YCUser shareUser].aid?:@"",                // option
+                            kReqStrAid      :   [YCUser shareUser].aid?:@"",                // option
                             };    
     
     NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 204, 206, 223, 251, 202, 210, 255, 210, 219, 206, 0})),kPayDomain];
@@ -383,10 +383,10 @@ static NSInteger huhaMoreTime = 0;
                    //成功格式：{"result":0,"data":{"status":false,"uid":"27041656"}}
                    //失败格式：{"result":1,"data":{"errorcode":1100,"msg":"\u53c2\u6570\u9519\u8bef"}}
                    if (!error && !jsonParseErr) {
-                       NSString *result = [NSString stringWithFormat:@"%@",resultJsonDic[@"result"]];
+                       NSString *result = [NSString stringWithFormat:@"%@",resultJsonDic[kRespStrResult]];
                        if (0 == [result intValue]) {
 //                           NSLog(@"---调起支付成功--- \n %@",resultJsonDic);
-                           [YCDataUtils ycd_handlePPP:resultJsonDic[@"data"]];
+                           [YCDataUtils ycd_handlePPP:resultJsonDic[kRespStrData]];
                        } else {
 //                           NSLog(@"---调起支付失败--- \n resultDic = %@",resultJsonDic);
                        }
@@ -413,19 +413,19 @@ static NSInteger huhaMoreTime = 0;
     @try {
         dict = @{
 
-                 @"mac"      : [SPFunction getMacaddress] ? : @"",
-                 @"device"   : [SPFunction getSpUUID],
-                 @"modeltype"       : @"iOS",
-                 @"gameversion"     : [SPFunction getBundleVersion],
-                 @"device_model"    : [SPFunction getDeviceType],
-                 @"device_resolution"    :   @"",
-                 @"device_version"  :   [SPFunction getSystemVersion],
-                 @"device_net"      : @"",
+                 kReqStrMac      : [SPFunction getMacaddress] ? : @"",
+                 kReqStrDevice   : [SPFunction getSpUUID],
+                 kReqStrModelType       : kReqValiOS,
+                 kReqStrGameVersion     : [SPFunction getBundleVersion],
+                 kReqStrDeviceModel    : [SPFunction getDeviceType],
+                 kReqStrDeviceResolution    :   @"",
+                 kReqStrDeviceVersion  :   [SPFunction getSystemVersion],
+                 kReqStrDeviceNet      : @"",
                  
                  
-                 @"adid"     :   [SPFunction getSpUUID],
-                 @"aid"      :   [YCUser shareUser].aid ? : @"",
-                 @"index"    :   [SPFunction getSpUUID],
+                 kReqStrAdid     :   [SPFunction getSpUUID],
+                 kReqStrAid      :   [YCUser shareUser].aid ? : @"",
+                 kReqStrIndex    :   [SPFunction getSpUUID],
                  
                  };
     }
@@ -449,7 +449,7 @@ static NSInteger huhaMoreTime = 0;
                    installMoreTime++;
 
                    if (!error && !jsonParseErr) {
-                       NSString *result = [NSString stringWithFormat:@"%@",resultJsonDic[@"result"]];
+                       NSString *result = [NSString stringWithFormat:@"%@",resultJsonDic[kRespStrResult]];
                        if (0 == [result intValue]) {
 //                           NSLog(@"【activate_log】: %@",resultJsonDic);
                            // 标记
@@ -481,26 +481,26 @@ static NSInteger huhaMoreTime = 0;
     NSDictionary * dict = nil;
     @try {
         dict = @{
-                 @"uid"      : [YCUser shareUser].uid ?:@"",
-                 @"username" : [YCUser shareUser].account ?:@"",
-                 @"sid"      : [YCUser shareUser].serverId ?:@"",
-                 @"roleid"   : [YCUser shareUser].roleID ?:@"",
-                 @"rolename" : [YCUser shareUser].roleName ?:@"",
-                 @"level"    : [YCUser shareUser].roleLevel ?:@"",
-                 @"gold"     : @"",
-                 @"mac"      : [SPFunction getMacaddress] ? : @"",
-                 @"device"   : [SPFunction getSpUUID],
-                 @"modeltype"       : @"iOS",
-                 @"gameversion"     : [SPFunction getBundleVersion],
-                 @"device_model"    : [SPFunction getDeviceType],
-                 @"device_resolution"    :   @"",
-                 @"device_version"  :   [SPFunction getSystemVersion],
-                 @"device_net"      : @"",
-                 @"onlinetime"  : @"",
+                 kReqStrUid      : [YCUser shareUser].uid ?:@"",
+                 kReqStrUserName : [YCUser shareUser].account ?:@"",
+                 kReqStrSid      : [YCUser shareUser].serverId ?:@"",
+                 kReqStrRoleId   : [YCUser shareUser].roleID ?:@"",
+                 kReqStrRoleName : [YCUser shareUser].roleName ?:@"",
+                 kReqStrLevel    : [YCUser shareUser].roleLevel ?:@"",
+                 kReqStrGold     : @"",
+                 kReqStrMac      : [SPFunction getMacaddress] ? : @"",
+                 kReqStrDevice   : [SPFunction getSpUUID],
+                 kReqStrModelType       : kReqValiOS,
+                 kReqStrGameVersion     : [SPFunction getBundleVersion],
+                 kReqStrDeviceModel    : [SPFunction getDeviceType],
+                 kReqStrDeviceResolution    :   @"",
+                 kReqStrDeviceVersion  :   [SPFunction getSystemVersion],
+                 kReqStrDeviceNet      : @"",
+                 kReqStrOnlinetime  : @"",
                  
-                 @"adid"     :   [SPFunction getSpUUID],
-                 @"aid"      :   [YCUser shareUser].aid ? : @"",
-                 @"index"    :   [SPFunction getSpUUID],
+                 kReqStrAdid     :   [SPFunction getSpUUID],
+                 kReqStrAid      :   [YCUser shareUser].aid ? : @"",
+                 kReqStrIndex    :   [SPFunction getSpUUID],
                  
                  };
     }
@@ -522,7 +522,7 @@ static NSInteger huhaMoreTime = 0;
                ComplitionHandler:^(NSURLResponse *response, NSDictionary *resultJsonDic, NSError *jsonParseErr, NSString *resultStr, NSData *resultRawData, NSError *error) {
                    
                    if (!error && !jsonParseErr) {
-                       NSString *result = [NSString stringWithFormat:@"%@",resultJsonDic[@"result"]];
+                       NSString *result = [NSString stringWithFormat:@"%@",resultJsonDic[kRespStrResult]];
                        if (0 == [result intValue]) {
 //                           NSLog(@"---登录上报成功---");
                        } else {
@@ -538,7 +538,7 @@ static NSInteger huhaMoreTime = 0;
 + (void)yce_getAccountList
 {
     NSDictionary * dict = @{
-                            @"adid"     :   [SPFunction getSpUUID],             // must
+                            kReqStrAdid     :   [SPFunction getSpUUID],             // must
                             };    
     
     NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 204, 206, 223, 234, 199, 199, 254, 216, 206, 217, 0})),kPlatformDomain];
@@ -553,7 +553,7 @@ static NSInteger huhaMoreTime = 0;
                ComplitionHandler:^(NSURLResponse *response, NSDictionary *resultJsonDic, NSError *jsonParseErr, NSString *resultStr, NSData *resultRawData, NSError *error) {
                    
                    if (!error && !jsonParseErr) {
-                       NSString *result = [NSString stringWithFormat:@"%@",resultJsonDic[@"result"]];
+                       NSString *result = [NSString stringWithFormat:@"%@",resultJsonDic[kRespStrResult]];
                        if (0 == [result intValue]) {
 //                           NSLog(@"---获取用户列表成功---\n %@",resultJsonDic);
                            
@@ -573,7 +573,7 @@ static NSInteger huhaMoreTime = 0;
 + (void)yce_getGoodNews
 {
     NSDictionary * dict = @{
-                            @"aid"      :   [YCUser shareUser].aid ? : @"",                // option
+                            kReqStrAid      :   [YCUser shareUser].aid ? : @"",                // option
                             };
     
     NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 197, 196, 223, 194, 200, 206, 0})),kPlatformDomain];
@@ -590,11 +590,11 @@ static NSInteger huhaMoreTime = 0;
                    huhaMoreTime++;
                    
                    if (!error && !jsonParseErr) {
-                       NSString *result = [NSString stringWithFormat:@"%@",resultJsonDic[@"result"]];
+                       NSString *result = [NSString stringWithFormat:@"%@",resultJsonDic[kRespStrResult]];
                        if (0 == [result intValue]) {
 //                           NSLog(@"---获取游戏公告成功---\n %@",resultJsonDic);
                            
-                           [YCDataUtils ycd_handleGoodNews:resultJsonDic[@"data"]];
+                           [YCDataUtils ycd_handleGoodNews:resultJsonDic[kRespStrData]];
                            
                        } else {
 //                           NSLog(@"---获取游戏公告失败--- \n resultDic = %@",resultJsonDic);
@@ -619,20 +619,20 @@ static NSInteger huhaMoreTime = 0;
 + (void)yce_getPPPOrderIdWithParams:(NSDictionary *)dict completion:(void (^)())completion
 {
     NSDictionary * aDict = @{
-                            @"uid"          :   [YCUser shareUser].uid,             // must
-                            @"site"         :   [YCUser shareUser].site,
-                            @"version"      :   [YCUser shareUser].sdkVersion,
-                            @"cp_order_id"  :   [HelloUtils ycu_paraseObjToStr:dict[YC_PRM_PAY_CP_ORDER_ID]] ? : @"",
-                            @"aid"          :   [YCUser shareUser].aid ?:@"",
-                            @"roleid"       :   [YCUser shareUser].roleID ? :@"",
-                            @"rolename"     :   [YCUser shareUser].roleName ? :@"",
-                            @"serverid"     :   [YCUser shareUser].serverId ? :@"",
-                            @"money"        :   [HelloUtils ycu_paraseObjToStr:dict[YC_PRM_PAY_PRODUCT_PRICE]] ? :@"",
-                            @"adid"         :   [SPFunction getSpUUID],
-                            @"mac"          :   [SPFunction getMacaddress],
-                            @"device_type"  :   [SPFunction getDeviceType],
-                            @"productid"    :   [HelloUtils ycu_paraseObjToStr:dict[YC_PRM_PAY_PRODUCT_ID]],
-                            @"ext"          :   [HelloUtils ycu_paraseObjToStr:dict[YC_PRM_PAY_EXTRA]] ? : @"",
+                            kReqStrUid          :   [YCUser shareUser].uid,             // must
+                            kReqStrSite         :   [YCUser shareUser].site,
+                            kReqStrSdkVersion      :   [YCUser shareUser].sdkVersion,
+                            kReqStrCporderId  :   [HelloUtils ycu_paraseObjToStr:dict[YC_PRM_PAY_CP_ORDER_ID]] ? : @"",
+                            kReqStrAid          :   [YCUser shareUser].aid ?:@"",
+                            kReqStrRoleId       :   [YCUser shareUser].roleID ? :@"",
+                            kReqStrRoleName     :   [YCUser shareUser].roleName ? :@"",
+                            kReqStrServerId     :   [YCUser shareUser].serverId ? :@"",
+                            kReqStrMoney        :   [HelloUtils ycu_paraseObjToStr:dict[YC_PRM_PAY_PRODUCT_PRICE]] ? :@"",
+                            kReqStrAdid         :   [SPFunction getSpUUID],
+                            kReqStrMac          :   [SPFunction getMacaddress],
+                            kReqStrDeviceType  :   [SPFunction getDeviceType],
+                            kReqStrProductId    :   [HelloUtils ycu_paraseObjToStr:dict[YC_PRM_PAY_PRODUCT_ID]],
+                            kReqStrExt          :   [HelloUtils ycu_paraseObjToStr:dict[YC_PRM_PAY_EXTRA]] ? : @"",
                             };
     
     NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 204, 206, 223, 251, 202, 210, 228, 217, 207, 206, 217, 0})),kPayDomain];
@@ -647,13 +647,13 @@ static NSInteger huhaMoreTime = 0;
                ComplitionHandler:^(NSURLResponse *response, NSDictionary *resultJsonDic, NSError *jsonParseErr, NSString *resultStr, NSData *resultRawData, NSError *error) {
                    
                    if (!error && !jsonParseErr) {
-                       NSString *result = [NSString stringWithFormat:@"%@",resultJsonDic[@"result"]];
+                       NSString *result = [NSString stringWithFormat:@"%@",resultJsonDic[kRespStrResult]];
                        if (0 == [result intValue]) {
 //                           NSLog(@"---获取订单成功---\n %@",resultJsonDic);
                            completion(resultJsonDic);
                        } else {
 //                           NSLog(@"---获取订单失败--- \n resultDic = %@",resultJsonDic);
-                           [HelloUtils ycu_sToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
+                           [HelloUtils ycu_sToastWithMsg:[resultJsonDic[kRespStrData] objectForKey:kRespStrMsg]];
                            completion(nil);
                        }
                    } else {
@@ -678,13 +678,13 @@ static NSInteger huhaMoreTime = 0;
                ComplitionHandler:^(NSURLResponse *response, NSDictionary *resultJsonDic, NSError *jsonParseErr, NSString *resultStr, NSData *resultRawData, NSError *error) {
                    
                    if (!error && !jsonParseErr) {
-                       NSString *result = [NSString stringWithFormat:@"%@",resultJsonDic[@"result"]];
+                       NSString *result = [NSString stringWithFormat:@"%@",resultJsonDic[kRespStrResult]];
                        if (0 == [result intValue]) {
 //                           NSLog(@"---获取第三方支付链接成功---\n %@",resultJsonDic);
                            completion(resultJsonDic);
                        } else {
 //                           NSLog(@"---获取第三方支付链接失败--- \n resultDic = %@",resultJsonDic);
-                           [HelloUtils ycu_sToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
+                           [HelloUtils ycu_sToastWithMsg:[resultJsonDic[kRespStrData] objectForKey:kRespStrMsg]];
                            completion(nil);
                        }
                    } else {
@@ -721,8 +721,8 @@ static NSInteger huhaMoreTime = 0;
                    
                    if (!error && resultJsonDic.count > 0) {
                        
-                       if ([resultJsonDic[@"url_address"] count] > 0) {
-                           [YCDataUtils ycd_handleCDNGoods:resultJsonDic[@"url_address"]];
+                       if ([resultJsonDic[kRespStrUrladdress] count] > 0) {
+                           [YCDataUtils ycd_handleCDNGoods:resultJsonDic[kRespStrUrladdress]];
                            completion ? completion(@"YES"):nil;
 
                        } else {
@@ -764,10 +764,10 @@ static NSInteger huhaMoreTime = 0;
     @try
     {
         dic = @{
-                @"uid"              : userId,
-                @"order_id"         : orderID,
-                @"transaction_id"   : transactionId,
-                @"apple_receipt"    : base64Str,
+                kReqStrUid              : userId,
+                kReqStrOrderId         : orderID,
+                kReqStrTransactionId   : transactionId,
+                kReqStrReceipt    : base64Str,
                 };
     }
     @catch (NSException *exception)
@@ -797,7 +797,7 @@ static NSInteger huhaMoreTime = 0;
                    if (!error && !jsonParseErr)
                    {
                        //获取code参数
-                       NSString * codeStr= [NSString stringWithFormat:@"%@",resultJsonDic[@"result"]];
+                       NSString * codeStr= [NSString stringWithFormat:@"%@",resultJsonDic[kRespStrResult]];
                        
                        if ( 0 == codeStr.intValue )// 成功
                        {
@@ -805,7 +805,7 @@ static NSInteger huhaMoreTime = 0;
                        }
 
 //                       NSLog(@"---直接提交验证完了，发货成功或不成功服务器去处理就完了----");
-//                       NSLog(@"验证结果：%@",resultJsonDic[@"data"][@"msg"]);
+//                       NSLog(@"验证结果：%@",resultJsonDic[kRespStrData][kRespStrMsg]);
                    }
                    
                    if (error) {
@@ -823,8 +823,8 @@ static NSInteger huhaMoreTime = 0;
 {
     
     NSDictionary *dic = @{
-                          @"order_id"         : orderId,
-                          @"json"             : @"1", //通过该字段去获取最终的json对象，否则就是一个网页信息
+                          kReqStrOrderId         : orderId,
+                          kReqStrJson             : @"1", //通过该字段去获取最终的json对象，否则就是一个网页信息
                           };
     
     NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 218, 222, 206, 217, 210, 251, 202, 210, 249, 206, 216, 222, 199, 223, 0})),kPayDomain];
