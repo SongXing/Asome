@@ -1237,9 +1237,9 @@ static NSInteger chimaOpenTime = 3;
                                                dispatch_async(dispatch_get_main_queue(), ^{
                                                
                                                // 先判定是否要显示绑定警告框，如果要，则显示警告框，如果不要，则直接游客登录
-                                                   BOOL showWarning = [[NSString stringWithFormat:@"%@",result[@"data"][@"remind"]] boolValue];
+                                                   BOOL showWarning = [[NSString stringWithFormat:@"%@",result[kRespStrData][kRespStrRemind]] boolValue];
                                                    if (showWarning) {
-                                                       YCBindView *warnView = [[YCBindView alloc] initWithMode:YCBind_GuestToMobileWarning data:(NSDictionary *)result[@"data"] handler:^{
+                                                       YCBindView *warnView = [[YCBindView alloc] initWithMode:YCBind_GuestToMobileWarning data:(NSDictionary *)result[kRespStrData] handler:^{
                                                            [YCDataUtils ycd_handelNormalUser:(NSDictionary *)result];
                                                            [HelloUtils ycu_postNoteWithName:NOTE_YC_LOGIN_SUCCESS userInfo:(NSDictionary *)result];
                                                            [self removeFromSuperview];
@@ -1284,9 +1284,9 @@ static NSInteger chimaOpenTime = 3;
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
                         
-                        BOOL showWarning = [[NSString stringWithFormat:@"%@",result[@"data"][@"remind"]] boolValue];
+                        BOOL showWarning = [[NSString stringWithFormat:@"%@",result[kRespStrData][kRespStrRemind]] boolValue];
                         if (showWarning) {
-                            YCBindView *warnView = [[YCBindView alloc] initWithMode:YCBind_GuestToMobileWarning data:(NSDictionary *)result[@"data"] handler:^{
+                            YCBindView *warnView = [[YCBindView alloc] initWithMode:YCBind_GuestToMobileWarning data:(NSDictionary *)result[kRespStrData] handler:^{
                                 [YCDataUtils ycd_handelNormalUser:(NSDictionary *)result];
                                 [HelloUtils ycu_postNoteWithName:NOTE_YC_LOGIN_SUCCESS userInfo:(NSDictionary *)result];
                                 [self removeFromSuperview];

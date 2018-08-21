@@ -535,7 +535,7 @@
 
 + (void)ycu_postNoteWithName:(NSString *)name userInfo:(NSDictionary *)dict
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:name object:nil userInfo:dict[@"data"]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:name object:nil userInfo:dict[kRespStrData]];
 }
 
 #pragma mark - Screen Size
@@ -644,8 +644,8 @@
                                                             error:nil];
     NSString *ipStr = nil;
     
-    if (ipDic && [ipDic[@"code"] integerValue] == 0) {
-        ipStr = ipDic[@"data"][@"ip"];
+    if (ipDic && [ipDic[kRespStrCode] integerValue] == 0) {
+        ipStr = ipDic[kRespStrData][kRespStrIp];
     }
     
     return ipStr?:@"";

@@ -125,9 +125,9 @@
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 
-                BOOL showWarning = [[NSString stringWithFormat:@"%@",result[@"data"][@"remind"]] boolValue];
+                BOOL showWarning = [[NSString stringWithFormat:@"%@",result[kRespStrData][kRespStrRemind]] boolValue];
                 if (showWarning) {
-                    YCBindView *warnView = [[YCBindView alloc] initWithMode:YCBind_GuestToMobileWarning data:(NSDictionary *)result[@"data"] handler:^{
+                    YCBindView *warnView = [[YCBindView alloc] initWithMode:YCBind_GuestToMobileWarning data:(NSDictionary *)result[kRespStrData] handler:^{
                         [YCDataUtils ycd_handelNormalUser:(NSDictionary *)result];
                         [HelloUtils ycu_postNoteWithName:NOTE_YC_LOGIN_SUCCESS userInfo:(NSDictionary *)result];
 //                        [self removeFromSuperview];

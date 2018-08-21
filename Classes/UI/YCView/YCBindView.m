@@ -1130,8 +1130,8 @@
                     [NetEngine checkMobileBindStatusWithNun:name
                                                  completion:^(id result){
                                                      if ([result isKindOfClass:[NSDictionary class]]) {
-                                                         NSString *phoneNum = result[@"data"][@"mobile_phone"];
-                                                         NSString *account = result[@"data"][@"username"];
+                                                         NSString *phoneNum = result[kRespStrData][kRespStrMobilephone];
+                                                         NSString *account = result[kRespStrData][kRespStrUsername];
                                                          m_phoneNum = phoneNum.copy;
                                                          m_curAccount = account.copy;
                                                          [self _changeToForgetResetPwdMode];

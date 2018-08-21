@@ -152,7 +152,7 @@
 
 + (void)ycd_handleReqUserList:(NSDictionary *)dict
 {
-    NSArray *everList = dict[@"data"];
+    NSArray *everList = dict[kRespStrData];
     if (everList.count > 0) {
         NSMutableArray *mArr = [[NSMutableArray alloc] initWithCapacity:everList.count];
         
@@ -185,7 +185,7 @@
 + (void)ycd_handleGuestLoginData:(NSDictionary *)dict
 {
     // 转成 自定义对象
-    YCUserModel *model = [[YCUserModel alloc] initWithDict:dict[@"data"]];
+    YCUserModel *model = [[YCUserModel alloc] initWithDict:dict[kRespStrData]];
     // 自定义对象转成 data
     NSData *modelData = [NSKeyedArchiver archivedDataWithRootObject:model];
     // data 存到 userdefault 中
@@ -207,7 +207,7 @@
 
 + (void)ycd_handelNormalUser:(NSDictionary *)dict
 {
-    NSDictionary *cur = dict[@"data"];
+    NSDictionary *cur = dict[kRespStrData];
     YCUserModel *curModel = [[YCUserModel alloc] initWithDict:cur];
     NSData *curData = [NSKeyedArchiver archivedDataWithRootObject:curModel];
     

@@ -66,8 +66,8 @@ static float bgViewH = 44 * 0.6;
 //    time = "";
 //    url = "";
     NSDictionary *dic = [YCDataUtils ycd_getGoodNews];
-    NSString *adStr = dic[@"data"];
-    NSString *urlStr = dic[@"url"];
+    NSString *adStr = dic[kRespStrData];
+    NSString *urlStr = dic[kRespStrUrl];
     self.rollingView = [[YCRollingView alloc] initWithShowStr:adStr andURLStr:urlStr];
 
     [self addSubview:self.rollingView];

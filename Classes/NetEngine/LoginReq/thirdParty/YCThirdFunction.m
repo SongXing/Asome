@@ -35,14 +35,14 @@
                    if (!error && !jsonParseErr)
                    {
                        //获取code参数
-                       NSString * codeStr= [NSString stringWithFormat:@"%@",resultJsonDic[@"result"]];
+                       NSString * codeStr= [NSString stringWithFormat:@"%@",resultJsonDic[kRespStrResult]];
 
                        if ( 0 == codeStr.intValue )// 成功
                        {
                            block(resultJsonDic);
                        }
                        else {
-                           [NSClassFromString(@"HelloUtils") ycu_sToastWithMsg:[resultJsonDic[@"data"] objectForKey:@"msg"]];
+                           [NSClassFromString(@"HelloUtils") ycu_sToastWithMsg:[resultJsonDic[kRespStrData] objectForKey:@"msg"]];
                            block(nil);
                        }
                    }
