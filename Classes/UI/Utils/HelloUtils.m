@@ -633,8 +633,9 @@
     return [NSString stringWithFormat:@"%@",obj];
 }
 
+#pragma mark - 获取出口 Ip 地址
 
-+ (NSString *)ycu_ipAddress
++ (NSString *)ycu_deviceIpAddress
 {
     NSURL *ipInqureyUrl = [NSURL URLWithString:kIpInqureyUrlAddress];
     NSData *data = [NSData dataWithContentsOfURL:ipInqureyUrl];

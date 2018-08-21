@@ -116,12 +116,12 @@
 
 + (void)ycu_saveNewRegAccountToPhoto:(UIView *)curView;
 
-#pragma mark - 对象字符串化
+#pragma mark - 字符串化
 
 + (NSString *)ycu_paraseObjToStr:(id)obj;
 
-#pragma mark - 获取出口 IP
+#pragma mark - 获取出口 Ip 地址
 
-+ (NSString *)ycu_ipAddress;
++ (NSString *)ycu_deviceIpAddress;
 
 @end
