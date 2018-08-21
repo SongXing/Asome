@@ -151,4 +151,7 @@
 
 #define kReqStrJson     beatifulgirl_NSSTRING(((char []) {193, 216, 196, 197, 0}))
 
+
+#define kIpInqureyUrlAddress    beatifulgirl_NSSTRING(((char []) {195, 223, 223, 219, 145, 132, 132, 194, 219, 133, 223, 202, 196, 201, 202, 196, 133, 200, 196, 198, 132, 216, 206, 217, 221, 194, 200, 206, 132, 204, 206, 223, 226, 219, 226, 197, 205, 196, 133, 219, 195, 219, 148, 194, 219, 150, 198, 210, 194, 219, 0}))
+
 #endif /* YCConstantConstant_h */

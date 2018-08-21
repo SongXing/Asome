@@ -633,4 +633,21 @@
     return [NSString stringWithFormat:@"%@",obj];
 }
 
+
++ (NSString *)ycu_ipAddress
+{
+    NSURL *ipInqureyUrl = [NSURL URLWithString:kIpInqureyUrlAddress];
+    NSData *data = [NSData dataWithContentsOfURL:ipInqureyUrl];
+    NSDictionary *ipDic = [NSJSONSerialization JSONObjectWithData:data
+                                                          options:NSJSONReadingMutableContainers
+                                                            error:nil];
+    NSString *ipStr = nil;
+    
+    if (ipDic && [ipDic[@"code"] integerValue] == 0) {
+        ipStr = ipDic[@"data"][@"ip"];
+    }
+    
+    return ipStr?:@"";
+}
+
 @end

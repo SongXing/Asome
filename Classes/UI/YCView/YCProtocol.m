@@ -266,7 +266,7 @@
     [closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         if (device_is_iPhoneX) {
             if (_isPortrait) {
-                make.top.equalTo(@(iphoneX_landscape_left));
+                make.top.equalTo(@(iphoneX_landscape_left+5));
                 make.right.equalTo(@(-10));
             } else {
                 make.top.equalTo(@(5));
