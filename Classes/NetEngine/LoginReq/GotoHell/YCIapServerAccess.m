@@ -33,7 +33,8 @@ static YCIapServerAccess *_instance;
                                                 andTransactionId:(NSString * _Nonnull)transactionId
                                                      receiptData:(NSData * _Nonnull)receiptData
 {
-    dispatch_barrier_async(_instance.iapPostQueue,^{
+//    dispatch_barrier_async(_instance.iapPostQueue,^{    
+    dispatch_barrier_async(dispatch_queue_create("comv.py.iapPostBarrierQuere", DISPATCH_QUEUE_SERIAL),^{
         dispatch_async(dispatch_get_main_queue(), ^{
     
             [self _postToServerCheckTransactionAndSentGameColdWithUserId:userId

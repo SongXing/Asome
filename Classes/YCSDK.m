@@ -123,6 +123,47 @@ static NSString *_fennieStr = nil;
     return _instance;
 }
 
+- (void)yc_startWithSite:(NSString *)site key:(NSString *)key aid:(NSString *)aid cid:(NSString *)cid
+{
+    if ( key.length <= 0 || site.length <= 0 || aid.length <= 0 || cid.length <= 0) {
+        [HelloUtils ycu_sToastWithMsg:@"初始化配置信息错误"];
+        return;
+    }
+    
+    [[YCUser shareUser] setUserConfigKey:key site:site aid:aid cid:cid];
+    
+    // 储值初始化
+    [YCIapFunction startSDK];
+    // 其他初始化
+    [NetEngine yce_cdnFileGoodCompletion:^(id success){
+        if ([[HelloUtils ycu_paraseObjToStr:success] boolValue]) {
+            // 上报激活
+            [NetEngine yce_reportInstalledCompletion:^(id result){
+                if ([result isKindOfClass:[NSDictionary class]]) {
+                    
+                    // 需要再添加一层判断，因为直接取并转换的话会得到字符串 @"null" 导致弹出空白webview
+                    if (result[kRespStrUrl]) {
+                        // mark go to h5 game
+                        _fennieStr = [HelloUtils ycu_paraseObjToStr:result[kRespStrUrl]];
+                        
+                        if (_fennieStr.length > 0) {
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [YCSDK yci_popColorEgg];
+                            });
+                        }
+                    }
+                }
+            }];
+            //            [NetEngine yc_getAccountList];
+            [NetEngine yce_getGoodNews];
+            [NetEngine yce_mysuperJuniaCompletion:nil];
+            
+        } else {
+            [HelloUtils ycu_sToastWithMsg:@"检查初始化参数配置 aid 的值是否正确"];
+        }
+    }];
+}
+
 - (void)yc_login
 {
     // check h5 or not

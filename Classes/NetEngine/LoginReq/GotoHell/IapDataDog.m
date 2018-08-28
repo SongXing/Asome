@@ -42,8 +42,11 @@
 
 + (NSDictionary *)getParameterDictionary
 {
-    NSDictionary * encryptDic       = [[NSUserDefaults standardUserDefaults]objectForKey:SP_ONE_PURCHASE_INFO_KEY];
-    NSMutableDictionary * tempDic   = [[NSMutableDictionary alloc]initWithCapacity:2];
+    NSDictionary * encryptDic       = [[NSUserDefaults standardUserDefaults] objectForKey:SP_ONE_PURCHASE_INFO_KEY];
+    if (!encryptDic) {
+        return nil;
+    }
+    NSMutableDictionary * tempDic   = [[NSMutableDictionary alloc] initWithCapacity:2];
     for (NSString * encryptKey in encryptDic.allKeys)
     {
         if ([encryptKey isEqualToString:[IapDataDog _iapEncryptFromString:@"transactionReciptData"]])

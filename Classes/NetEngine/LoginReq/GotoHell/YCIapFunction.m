@@ -134,7 +134,7 @@
         return;
     }
     
-    NSDictionary * parameterDic = [self getParameterFromStr:parameterStr];
+    NSDictionary * parameterDic = [self getParameterFromStr:parameterStr];// 此步骤会有一个问题，发了付款之后,在这个方法里面取值有个小问题，subtringwithrangw
     
     if(![parameterDic.allKeys containsObject:@"uid"] ||
        ![parameterDic.allKeys containsObject:@"serverCode"] ||
@@ -187,7 +187,7 @@
     }
     else
     {
-        [HelloUtils ycu_sToastWithMsg:@"跟当前单例eoi不相同，需要保存本次信息"];
+        [HelloUtils ycu_sToastWithMsg:@"跟当前单例eoi不相同，需要保存本次信息"];        
         // 临时
         [IapDataDog removeIapData];
         [YCIapData defaultData].ISPURCHASING = NO;
@@ -199,11 +199,15 @@
 +(NSDictionary *)getParameterFromStr:(NSString *)parameterStr
 {
     NSArray * parameterArray        = [parameterStr componentsSeparatedByString:@"&"];
+    if (!parameterArray) {
+        return nil;
+    }
+    
     NSMutableDictionary * paraDic   = [[NSMutableDictionary alloc] init];
     for (NSString * oneParameterStr in parameterArray)
     {
         NSRange dengyuhaoRange=[oneParameterStr rangeOfString:@"="];
-        NSString * paraKeyStr=[oneParameterStr substringWithRange:NSMakeRange(0, dengyuhaoRange.location)];
+        NSString * paraKeyStr=[oneParameterStr substringWithRange:NSMakeRange(0, dengyuhaoRange.location)];//报错报在这里
         NSString * paraValueStr=[oneParameterStr substringWithRange:NSMakeRange(dengyuhaoRange.location+1, oneParameterStr.length-dengyuhaoRange.location-1)];
         [paraDic addEntriesFromDictionary:[NSDictionary dictionaryWithObjectsAndKeys:paraValueStr,paraKeyStr, nil]];
     }
@@ -252,10 +256,10 @@
 此时有十个或者九个参数*/
 +(void)checkTransactionUnfinished
 {
-//    NSLog(@"checkTransactionUnfinished");
+    NSLog(@"checkTransactionUnfinished");
 
     //从本地读取数据：从本地获取数据
-    NSDictionary * lastTransactionInfodic   = [IapDataDog getParameterDictionary];
+    NSDictionary * lastTransactionInfodic   = [IapDataDog getParameterDictionary]; // 此处有问题，即充值后因为某种原因中断了，再次补发的时候此处获取到的数据为 nil
     if (!lastTransactionInfodic || lastTransactionInfodic.count <= 0) {
         return;
     }
