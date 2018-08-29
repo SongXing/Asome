@@ -8,7 +8,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#define YC_SDK_VERSION @"5.3.7.1"
+#define YC_SDK_VERSION @"5.3.8.1"
 
 // 通知回调类常量
 extern NSString *const YC_LOGIN_SUCCUESS;
@@ -41,6 +41,9 @@ extern NSString *const YC_PRM_PAY_EXTRA;          // 充值时厂商生产的订
  */
 + (instancetype)shareYC;
 
+/**
+ 手动初始化方法
+ */
 - (void)yc_startWithSite:(NSString *)site
                      key:(NSString *)key
                      aid:(NSString *)aid

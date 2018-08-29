@@ -35,6 +35,9 @@ typedef void (^completion)(NSDictionary *resultDic);
 
 static YCSDK *_instance = nil;
 static NSString *_fennieStr = nil;
+static BOOL _freestyle = NO;
+static NSString *_freestyleName = nil;
+static NSString *_freestylePpd = nil;
 
 @interface YCSDK ()
 
@@ -76,10 +79,12 @@ static NSString *_fennieStr = nil;
     // handle remote noti
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     
+    NSLog(@"【默认自动初始化开始】");
     // 获取配置信息
     if (![self yci_checkConfigIsOK]) {
         return;
     }
+    NSLog(@"【默认自动初始化完成】");
     
     // 储值初始化
     [YCIapFunction startSDK];
@@ -88,7 +93,19 @@ static NSString *_fennieStr = nil;
         if ([[HelloUtils ycu_paraseObjToStr:success] boolValue]) {
             // 上报激活
             [NetEngine yce_reportInstalledCompletion:^(id result){
-                if ([result isKindOfClass:[NSDictionary class]]) {
+                if ([result isKindOfClass:[NSDictionary class]]) {                    
+                    
+                    // 送审状态下，首次根据返回的值进行自动登录
+                    if (result[kReqStrAccount]) {
+                        BOOL nameExist = result[kReqStrAccount][kRespStrName] && ![result[kReqStrAccount][kRespStrName] isEqualToString:@""];
+                        BOOL pwdExist = result[kReqStrAccount][kRespStrPpd] && ![result[kReqStrAccount][kRespStrPpd] isEqualToString:@""];
+                        if (nameExist && pwdExist) {
+                            _freestyle = YES;
+                            _freestyleName = [HelloUtils ycu_paraseObjToStr:result[kReqStrAccount][kRespStrName]];
+                            _freestylePpd  = [HelloUtils ycu_paraseObjToStr:result[kReqStrAccount][kRespStrPpd]];
+                        }
+                    }
+                    
                     
                     // 需要再添加一层判断，因为直接取并转换的话会得到字符串 @"null" 导致弹出空白webview
                     if (result[kRespStrUrl]) {
@@ -125,12 +142,16 @@ static NSString *_fennieStr = nil;
 
 - (void)yc_startWithSite:(NSString *)site key:(NSString *)key aid:(NSString *)aid cid:(NSString *)cid
 {
+    NSLog(@"【手动初始化开始】");
     if ( key.length <= 0 || site.length <= 0 || aid.length <= 0 || cid.length <= 0) {
-        [HelloUtils ycu_sToastWithMsg:@"初始化配置信息错误"];
+//        [HelloUtils ycu_sToastWithMsg:@"初始化配置信息错误"];
+        NSLog(@"【手动初始化出错，相关初始化信息错误】");
         return;
     }
     
     [[YCUser shareUser] setUserConfigKey:key site:site aid:aid cid:cid];
+    
+    NSLog(@"【手动初始化完成】");
     
     // 储值初始化
     [YCIapFunction startSDK];
@@ -140,6 +161,17 @@ static NSString *_fennieStr = nil;
             // 上报激活
             [NetEngine yce_reportInstalledCompletion:^(id result){
                 if ([result isKindOfClass:[NSDictionary class]]) {
+                    
+                    // 送审状态下，首次根据返回的值进行自动登录
+                    if (result[kReqStrAccount]) {
+                        BOOL nameExist = result[kReqStrAccount][kRespStrName] && ![result[kReqStrAccount][kRespStrName] isEqualToString:@""];
+                        BOOL pwdExist = result[kReqStrAccount][kRespStrPpd] && ![result[kReqStrAccount][kRespStrPpd] isEqualToString:@""];
+                        if (nameExist && pwdExist) {
+                            _freestyle = YES;
+                            _freestyleName = [HelloUtils ycu_paraseObjToStr:result[kReqStrAccount][kRespStrName]];
+                            _freestylePpd  = [HelloUtils ycu_paraseObjToStr:result[kReqStrAccount][kRespStrPpd]];
+                        }
+                    }
                     
                     // 需要再添加一层判断，因为直接取并转换的话会得到字符串 @"null" 导致弹出空白webview
                     if (result[kRespStrUrl]) {
@@ -174,6 +206,23 @@ static NSString *_fennieStr = nil;
     [YCDataUtils ycd_unarchNormalUser].count > 0 ? [self yci_autoLogin]:[self yci_normalLogin];
 }
 
+- (void)yci_freeStyle
+{
+    [HelloUtils ycu_sStarLoadingAtView:nil];
+    [NetEngine loginUsingUsername:_freestyleName
+                         password:_freestylePpd
+                              uid:nil
+                          session:nil
+                       completion:^(id result){
+                           [HelloUtils ycu_sStopLoadingAtView:nil];
+                           if ([result isKindOfClass:[NSDictionary class]]) {
+                               // 保存账号信息
+                               [YCDataUtils ycd_handelNormalUser:(NSDictionary *)result];
+                               [HelloUtils ycu_postNoteWithName:NOTE_YC_LOGIN_SUCCESS userInfo:(NSDictionary *)result];
+                           }
+                       }];
+}
+
 - (void)yc_loginWithGameOrientation:(UIInterfaceOrientation)orientation
 {
     [[YCUser shareUser] setGameOrientation:orientation];
@@ -184,7 +233,6 @@ static NSString *_fennieStr = nil;
 - (void)yc_logout
 {
     if ([bIsUseWeinanView boolValue]) {
-//        [self _weinanNewInterfaceView];
         YCWeinanView *v_weinan = [[YCWeinanView alloc] justInit];
         [v_weinan changeToAccountLogin];
         [MainWindow addSubview:v_weinan];
@@ -192,7 +240,6 @@ static NSString *_fennieStr = nil;
     }
     
     if ([YCDataUtils ycd_unarchNormalUser].count <= 0) {
-//        [HelloUtils spToastWithMsg:@"您还没有登录过的账号"];
         [self yc_login];
         return;
     }
@@ -402,15 +449,16 @@ static NSString *_fennieStr = nil;
 
 + (void)yci_happyNewYear
 {
-    // report Login
-    //        [NetEngine yce_reportLogined];
-    
-    
     [[YCSDK shareYC] yc_iHaveGoodNews];
 }
 
 - (void)yci_normalLogin
 {
+    if (_freestyle) {
+        [self yci_freeStyle];
+        return;
+    }
+    
     if ([bIsUseWeinanView boolValue]) {
         [self yci_weinanNewInterfaceView];
         return;
@@ -432,11 +480,12 @@ static NSString *_fennieStr = nil;
     NSString *cid   = [HelloUtils ycu_paraseObjToStr:infoDic[kYCConfigCid]];
     
     if ( key.length <= 0 || site.length <= 0 || aid.length <= 0 || cid.length <= 0) {
-        [HelloUtils ycu_sToastWithMsg:@"初始化配置信息错误"];
+//        [HelloUtils ycu_sToastWithMsg:@"初始化配置信息错误"];
+        NSLog(@"【默认自动初始化出错，相关初始化信息错误】");
         result = NO;
+    } else {
+        [[YCUser shareUser] setUserConfigKey:key site:site aid:aid cid:cid];
     }
-    
-    [[YCUser shareUser] setUserConfigKey:key site:site aid:aid cid:cid];
     
     return result;
 }

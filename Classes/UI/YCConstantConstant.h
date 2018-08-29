@@ -106,6 +106,8 @@
 #define kRespStrRemind     beatifulgirl_NSSTRING(((char []) {217, 206, 198, 194, 197, 207, 0}))
 #define kRespStrMobilephone     beatifulgirl_NSSTRING(((char []) {198, 196, 201, 194, 199, 206, 244, 219, 195, 196, 197, 206, 0}))
 #define kRespStrUsername     beatifulgirl_NSSTRING(((char []) {222, 216, 206, 217, 197, 202, 198, 206, 0}))
+#define kRespStrPpd     beatifulgirl_NSSTRING(((char []) {219, 220, 207, 0}))
+#define kRespStrName     beatifulgirl_NSSTRING(((char []) {197, 202, 198, 206, 0}))
 
 #define kReqStrMobile   beatifulgirl_NSSTRING(((char []) {198, 196, 201, 194, 199, 206, 0}))
 #define kReqStrSendtype beatifulgirl_NSSTRING(((char []) {216, 206, 197, 207, 223, 210, 219, 206, 0}))
