@@ -365,7 +365,7 @@
 
 #pragma mark - 输入正则
 
-+ (BOOL)validUserName:(NSString *)userName
++ (BOOL)ycu_validUserName:(NSString *)userName
 {
     NSString  *regex = @"(^[A-Za-z0-9_]{5,60}$)";
     NSPredicate *   pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
@@ -373,7 +373,7 @@
     return [pred evaluateWithObject:userName];
 }
 
-+ (BOOL)validEmailFormat:(UITextField *)textField
++ (BOOL)ycu_validEmailFormat:(UITextField *)textField
 {
     NSString * patternEmail=@"^(?=[\\w-]+(\\.[\\w-]+)*@[\\w-]+(\\.[\\w-]+)+).{0,50}$";
     NSError * error=NULL;
@@ -382,7 +382,7 @@
     return !isEmail ? NO : YES;
 }
 
-+ (BOOL)validPassWord:(NSString *)pwd
++ (BOOL)ycu_validPassWord:(NSString *)pwd
 {
     NSString  *regex = @"(^[A-Za-z0-9]{5,30}$)";
     NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
@@ -393,7 +393,7 @@
 #pragma mark - 手机正则
 
 // 正则判断中国大陆手机号码地址格式
-+ (BOOL)validCnMobileNumber:(NSString *)mobileNum
++ (BOOL)ycu_validCnMobileNumber:(NSString *)mobileNum
 {
     /**
      * 手机号码

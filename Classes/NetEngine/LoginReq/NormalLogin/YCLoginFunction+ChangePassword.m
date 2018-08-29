@@ -4,11 +4,11 @@
 
 @implementation YCLoginFunction (Password)
 
-+(void)doChangePasswordWithUserName:(NSString *)userName
-                    andOldPassword:(NSString *)oldPassword
-                    andNewPassword:(NSString *)newPassword
-                     andDomainName:(NSString *)domainName
-                        completion:(void (^)())completion
++(void)ycy_doChangePasswordWithUserName:(NSString *)userName
+                    ycy_andOldPassword:(NSString *)oldPassword
+                    ycy_andNewPassword:(NSString *)newPassword
+                     ycy_andDomainName:(NSString *)domainName
+                        ycy_completion:(void (^)())completion
 {
     
 //    void (^otherBlock)() = Block_copy(completion);

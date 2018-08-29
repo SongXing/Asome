@@ -11,71 +11,71 @@ typedef void (^IapAppstoreCallBack)(NSString * _Nullable code, NSString * _Nulla
 #pragma mark - 登录 & 注册
 
 /* Register a new account */
-+ (void)registerAccountWithUserName:(NSString *_Nonnull)username
-                           password:(NSString *_Nonnull)password
-                              email:(NSString *_Nullable)email
-                         completion:(void(^)())completion;
++ (void)yce_registerAccountWithUserName:(NSString *_Nonnull)username
+                           yce_password:(NSString *_Nonnull)password
+                              yce_email:(NSString *_Nullable)email
+                         yce_completion:(void(^)())completion;
 
 // 登录接口分两种，传入密码的时候使用账号密码登陆，不传入走session登陆
 /* Login using account*/
-+ (void)loginUsingUsername:(NSString *_Nonnull)userName
-                  password:(NSString *_Nullable)password
-                       uid:(NSString *_Nullable)uid
-                   session:(NSString *_Nullable)sessionId
-                completion:(void(^)())completion;
++ (void)yce_loginUsingUsername:(NSString *_Nonnull)userName
+                  yce_password:(NSString *_Nullable)password
+                       yce_uid:(NSString *_Nullable)uid
+                   yce_session:(NSString *_Nullable)sessionId
+                yce_completion:(void(^)())completion;
 
 /* Change password */
-+ (void)resetPasswordWithUserName:(NSString *_Nonnull)userName
-                      oldPassword:(NSString *_Nonnull)oldPassword
-                      newPassword:(NSString *_Nonnull)newPassword
-                       completion:(void(^)())completion;
++ (void)yce_resetPasswordWithUserName:(NSString *_Nonnull)userName
+                      yce_oldPassword:(NSString *_Nonnull)oldPassword
+                      yce_newPassword:(NSString *_Nonnull)newPassword
+                       yce_completion:(void(^)())completion;
 
 /* 游客登录 */
-+ (void)guestLoginAndCompletion:(void(^)())completion;
++ (void)yce_guestLoginAndCompletion:(void(^)())completion;
 
 #pragma mark - 手机快速注册, 发送验证码 & 注册
 
 //发送短信验证码
-+ (void)sendVertifyCodeToMobile:(NSString *_Nonnull)mobileNum
-                      situation:(NSString *)situation
-                     completion:(void(^)())completion;
++ (void)yce_sendVertifyCodeToMobile:(NSString *_Nonnull)mobileNum
+                      yce_situation:(NSString *)situation
+                     yce_completion:(void(^)())completion;
 
 // 手机号、验证码登录
-+ (void)loginUsingMobileNum:(NSString *)mobile
-                vertifyCode:(NSString *)code
-                 completion:(void (^)())completion;
++ (void)yce_loginUsingMobileNum:(NSString *)mobile
+                yce_vertifyCode:(NSString *)code
+                 yce_completion:(void (^)())completion;
 
 // 通过手机号、验证码重置密码(因为输入的账号类型可能是 普通账号、也可能是手机号)
-+ (void)resetPasswordWithAccount:(NSString *)name
-                          mobile:(NSString *)mobile
-                            code:(NSString *)code
-                          newPwd:(NSString *)newPwd
-                      completion:(void (^)())completion;
++ (void)yce_resetPasswordWithAccount:(NSString *)name
+                          yce_mobile:(NSString *)mobile
+                            yce_code:(NSString *)code
+                          yce_newPwd:(NSString *)newPwd
+                      yce_completion:(void (^)())completion;
 
 // 手机号码注册
-+ (void)registerWithMobileNum:(NSString *_Nonnull)mobileNum
-                  vertifyCode:(NSString *_Nonnull)vertifyCode
-                     password:(NSString *_Nonnull)pwd
-                   completion:(void(^)())completion;
++ (void)yce_registerWithMobileNum:(NSString *_Nonnull)mobileNum
+                  yce_vertifyCode:(NSString *_Nonnull)vertifyCode
+                     yce_password:(NSString *_Nonnull)pwd
+                   yce_completion:(void(^)())completion;
 
 // 检查账号绑定状态（输入或手机号、或账号）
-+ (void)checkMobileBindStatusWithNun:(NSString *_Nonnull)mobileNum
-                          completion:(void(^)())completion;
++ (void)yce_checkMobileBindStatusWithNun:(NSString *_Nonnull)mobileNum
+                          yce_completion:(void(^)())completion;
 
 // 账号绑定手机(临时和正式)
-+ (void)allAccountBindMobilePhone:(NSString *_Nonnull)mobileNum
-                         password:(NSString *_Nonnull)pwd
-                          account:(NSString *_Nonnull)account
-                      vertifyCode:(NSString *_Nonnull)vertifyCode
-                       completion:(void(^)())completion;
++ (void)yce_allAccountBindMobilePhone:(NSString *_Nonnull)mobileNum
+                         yce_password:(NSString *_Nonnull)pwd
+                          yce_account:(NSString *_Nonnull)account
+                      yce_vertifyCode:(NSString *_Nonnull)vertifyCode
+                       yce_completion:(void(^)())completion;
 
 #pragma mark - 账号绑定
 
 /* Bind guest account */
-+ (void)bindingGuestAccountWithUserName:(NSString *_Nonnull)username
-                               password:(NSString *_Nonnull)password
-                                  email:(NSString *_Nullable)email
-                             completion:(void(^)())completion;
++ (void)yce_bindingGuestAccountWithUserName:(NSString *_Nonnull)username
+                               yce_password:(NSString *_Nonnull)password
+                                  yce_email:(NSString *_Nullable)email
+                             yce_completion:(void(^)())completion;
 
 
 

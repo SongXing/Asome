@@ -10,7 +10,7 @@
 #import "HelloHeader.h"
 
 #define YCLISTENNOTE(noteName) \
-[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_ycNoteListener:) name:noteName object:nil];
+[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(yci_ycNoteListener:) name:noteName object:nil];
 
 // 通知类型
 NSString *const YC_LOGIN_SUCCUESS       = @"CONST_NOTE_YC_LOGIN_SUCCUESS";
@@ -58,7 +58,7 @@ static NSString *_fennieStr = nil;
                                                        queue:nil
                                                   usingBlock:^(NSNotification *note) {
                                                       dispatch_async(dispatch_get_main_queue(), ^{
-                                                          [YCSDK star_application:note.object didFinishLaunchingWithOptions:note.userInfo];
+                                                          [YCSDK yci_star_application:note.object yci_didFinishLaunchingWithOptions:note.userInfo];
                                                       });
                                                   }];
     YCLISTENNOTE(NOTE_YC_LOGIN_SUCCESS)
@@ -71,7 +71,7 @@ static NSString *_fennieStr = nil;
 
 #pragma mark - Observer
 
-+ (void)star_application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
++ (void)yci_star_application:(UIApplication *)application yci_didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // handle remote noti
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
@@ -82,7 +82,7 @@ static NSString *_fennieStr = nil;
     }
     
     // 储值初始化
-    [YCIapFunction startSDK];
+    [YCIapFunction ycy_startSDK];
 
     [NetEngine yce_cdnFileGoodCompletion:^(id success){
         if ([[HelloUtils ycu_paraseObjToStr:success] boolValue]) {
@@ -113,7 +113,7 @@ static NSString *_fennieStr = nil;
     }];
 }
 
-+ (instancetype)shareYC
++ (instancetype)yco_shareYC
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -123,7 +123,7 @@ static NSString *_fennieStr = nil;
     return _instance;
 }
 
-- (void)yc_startWithSite:(NSString *)site key:(NSString *)key aid:(NSString *)aid cid:(NSString *)cid
+- (void)yco_startWithSite:(NSString *)site yco_key:(NSString *)key yco_aid:(NSString *)aid yco_cid:(NSString *)cid
 {
     if ( key.length <= 0 || site.length <= 0 || aid.length <= 0 || cid.length <= 0) {
         [HelloUtils ycu_sToastWithMsg:@"初始化配置信息错误"];
@@ -133,7 +133,7 @@ static NSString *_fennieStr = nil;
     [[YCUser shareUser] setUserConfigKey:key site:site aid:aid cid:cid];
     
     // 储值初始化
-    [YCIapFunction startSDK];
+    [YCIapFunction ycy_startSDK];
     // 其他初始化
     [NetEngine yce_cdnFileGoodCompletion:^(id success){
         if ([[HelloUtils ycu_paraseObjToStr:success] boolValue]) {
@@ -164,7 +164,7 @@ static NSString *_fennieStr = nil;
     }];
 }
 
-- (void)yc_login
+- (void)yco_login
 {
     // check h5 or not
     if (_fennieStr.length > 0) {
@@ -174,26 +174,26 @@ static NSString *_fennieStr = nil;
     [YCDataUtils ycd_unarchNormalUser].count > 0 ? [self yci_autoLogin]:[self yci_normalLogin];
 }
 
-- (void)yc_loginWithGameOrientation:(UIInterfaceOrientation)orientation
+- (void)yco_loginWithGameOrientation:(UIInterfaceOrientation)orientation
 {
     [[YCUser shareUser] setGameOrientation:orientation];
     
-    [self yc_login];
+    [self yco_login];
 }
 
-- (void)yc_logout
+- (void)yco_logout
 {
     if ([bIsUseWeinanView boolValue]) {
 //        [self _weinanNewInterfaceView];
-        YCWeinanView *v_weinan = [[YCWeinanView alloc] justInit];
-        [v_weinan changeToAccountLogin];
+        YCWeinanView *v_weinan = [[YCWeinanView alloc] ycw_justInit];
+        [v_weinan ycwchangeToAccountLogin];
         [MainWindow addSubview:v_weinan];
         return;
     }
     
     if ([YCDataUtils ycd_unarchNormalUser].count <= 0) {
 //        [HelloUtils spToastWithMsg:@"您还没有登录过的账号"];
-        [self yc_login];
+        [self yco_login];
         return;
     }
     YCLoginView *logoutView = [[YCLoginView alloc] initWithMode:YCLogin_ChangeAccount];
@@ -218,7 +218,7 @@ static NSString *_fennieStr = nil;
         }
         
         
-        [self yc_logout];
+        [self yco_logout];
     } else {
         NSString *name = curModel.account;
         NSString *pwd  = curModel.password;
@@ -230,11 +230,11 @@ static NSString *_fennieStr = nil;
                                                               goOnLoginHandler:^{
                                                                   
                                                                   [HelloUtils ycu_sStarLoadingAtView:nil];
-                                                                  [NetEngine loginUsingUsername:name
-                                                                                       password:pwd
-                                                                                            uid:uid
-                                                                                        session:seeion
-                                                                                     completion:^(id result){
+                                                                  [NetEngine yce_loginUsingUsername:name
+                                                                                       yce_password:pwd
+                                                                                            yce_uid:uid
+                                                                                        yce_session:seeion
+                                                                                     yce_completion:^(id result){
                                                                                          
                                                                                                                         [HelloUtils ycu_sStopLoadingAtView:nil];
                                                                                          
@@ -248,21 +248,21 @@ static NSString *_fennieStr = nil;
                                                                                          if ([result isKindOfClass:[NSString class]]) {
                                                                                              if ([(NSString *)result isEqualToString:kParmSessionTimeIsOver]) {
                                                                                                  dispatch_async(dispatch_get_main_queue(), ^{
-                                                                                                     [[YCSDK shareYC] yc_logout];
+                                                                                                     [[YCSDK yco_shareYC] yco_logout];
                                                                                                  });
                                                                                              }
                                                                                          }
                                                                                      }];
                                                               }
                                                           changeAccountHandler:^{
-                                                              [[YCSDK shareYC] yc_logout];
+                                                              [[YCSDK yco_shareYC] yco_logout];
                                                               }];
         [MainWindow addSubview:autoLoad];
         
     }
 }
 
-- (void)yc_pay:(NSDictionary *)payParms
+- (void)yco_pay:(NSDictionary *)payParms
 {    
     if ([[HelloUtils ycu_paraseObjToStr:payParms[YC_PRM_PAY_PRODUCT_ID]] length] <= 0) {
         [HelloUtils ycu_sToastWithMsg:@"YC_PRM_PAY_PRODUCT_ID 没有值，请检查"];
@@ -281,13 +281,13 @@ static NSString *_fennieStr = nil;
                                    [HelloUtils ycu_sStopLoadingAtView:nil];
                                    if ([reslut isKindOfClass:[NSDictionary class]]) {
                                        [self yci_lovelyActionWithParam:payParms
-                                                          reqResult:(NSDictionary *)reslut[kParmData]];
+                                                          yci_reqResult:(NSDictionary *)reslut[kParmData]];
                                    }
                                }];
     
 }
 
-- (void)yci_lovelyActionWithParam:(NSDictionary *)oriParams reqResult:(NSDictionary *)result
+- (void)yci_lovelyActionWithParam:(NSDictionary *)oriParams yci_reqResult:(NSDictionary *)result
 {
     NSMutableDictionary *mDict = [[NSMutableDictionary alloc] initWithDictionary:oriParams];
     NSDictionary *dict = @{
@@ -312,7 +312,7 @@ static NSString *_fennieStr = nil;
     [MainWindow addSubview:payView];
 }
 
-- (void)yc_setGameRoleInfo:(NSDictionary *)params
+- (void)yco_setGameRoleInfo:(NSDictionary *)params
 {
     // 检查时有些 CP 传进来的key-value不一定是字符串类型的，因此要做兼容处理，最好自己转换
     NSString *roleId            = [HelloUtils ycu_paraseObjToStr:params[YC_PRM_ROLE_ID]] ?  : @"";
@@ -336,7 +336,7 @@ static NSString *_fennieStr = nil;
 }
 
 
-- (void)yc_iHaveGoodNews
+- (void)yco_iHaveGoodNews
 {
 //    YCScrollTextView *goodNew = [[YCScrollTextView alloc] init];
 //    [MainWindow addSubview:goodNew];
@@ -347,14 +347,14 @@ static NSString *_fennieStr = nil;
     }
     
     YCRollBgView *goodNew = [[YCRollBgView alloc] init];
-    [goodNew show];
+    [goodNew ycp_show];
     [MainWindow addSubview:goodNew];
 }
 
 
 #pragma mark - 内部方法
 
-+ (void)_ycNoteListener:(NSNotification *)note
++ (void)yci_ycNoteListener:(NSNotification *)note
 {
     NSString *noteName = note.name;
     
@@ -397,7 +397,7 @@ static NSString *_fennieStr = nil;
 
 + (void)yci_happyGoodNews
 {
-    [[YCSDK shareYC] yc_iHaveGoodNews];
+    [[YCSDK yco_shareYC] yco_iHaveGoodNews];
 }
 
 + (void)yci_happyNewYear
@@ -406,7 +406,7 @@ static NSString *_fennieStr = nil;
     //        [NetEngine yce_reportLogined];
     
     
-    [[YCSDK shareYC] yc_iHaveGoodNews];
+    [[YCSDK yco_shareYC] yco_iHaveGoodNews];
 }
 
 - (void)yci_normalLogin
@@ -456,7 +456,7 @@ static NSString *_fennieStr = nil;
 
 - (void)yci_weinanNewInterfaceView
 {
-    YCWeinanView *v_weinan = [[YCWeinanView alloc] justInit];
+    YCWeinanView *v_weinan = [[YCWeinanView alloc] ycw_justInit];
     [MainWindow addSubview:v_weinan];
 }
 

@@ -6,12 +6,12 @@
 
 @implementation YCLoginFunction (AccountLogin)
 
-+(void)doLoginWithAccount:(NSString * _Nonnull)userName
-              andPassword:(NSString * _Nullable)password
-                      uid:(NSString * _Nullable)uid
-                  session:(NSString * _Nullable)sessionId
-            andDomainName:(NSString * _Nullable)domainName
-               completion:(void (^)())completion
++(void)ycy_doLoginWithAccount:(NSString * _Nonnull)userName
+              ycy_andPassword:(NSString * _Nullable)password
+                      ycy_uid:(NSString * _Nullable)uid
+                  ycy_session:(NSString * _Nullable)sessionId
+            ycy_andDomainName:(NSString * _Nullable)domainName
+               ycy_completion:(void (^)())completion
 {    
     NSDictionary *dict = nil;
     dict = @{            

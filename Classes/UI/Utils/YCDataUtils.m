@@ -14,7 +14,7 @@
 
 #pragma mark - CN
 
-+ (void)cn_saveUserInfo:(NSDictionary *)dic
++ (void)ycc_saveUserInfo:(NSDictionary *)dic
 {
     // dic {name:pwd}
     NSString *nameKkey = dic.allKeys[0];
@@ -56,7 +56,7 @@
     }
     
     // 调整顺序，因为调用是保存完最新的账号然后再保存到list上，因此在这里直接调整顺序
-    NSDictionary *latestDic = [YCDataUtils cn_getLatestUserInfo];
+    NSDictionary *latestDic = [YCDataUtils ycc_getLatestUserInfo];
     NSUInteger tmpIdx = 0;
     for (int i = 0; i<curUsers.count; i++) {
         if ([[[curUsers[i] allKeys] objectAtIndex:0] isEqualToString:latestDic.allKeys[0]]) {
@@ -78,12 +78,12 @@
     [userDef synchronize];
 }
 
-+ (NSArray *)cn_getAllUserInfo
++ (NSArray *)ycc_getAllUserInfo
 {
     return [[NSUserDefaults standardUserDefaults] objectForKey:kYCCnUsersKey];
 }
 
-+ (void)cn_saveLatestUserInfo:(NSDictionary *)dic
++ (void)ycc_saveLatestUserInfo:(NSDictionary *)dic
 {
     // dic {name:pwd}
     NSString *nameKkey = dic.allKeys[0];
@@ -110,12 +110,12 @@
     }
 }
 
-+ (NSDictionary *)cn_getLatestUserInfo
++ (NSDictionary *)ycc_getLatestUserInfo
 {
     return [[NSUserDefaults standardUserDefaults] objectForKey:kYCCnLatestUserKey];
 }
 
-+ (void)cn_removeUserWithKey:(NSString *)key
++ (void)ycc_removeUserWithKey:(NSString *)key
 {
     NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *curUsers = [NSMutableDictionary dictionaryWithDictionary:[userDef objectForKey:kYCCnUsersKey]];
@@ -128,7 +128,7 @@
     }
 }
 
-+ (void)cn_removeUserWithIndex:(NSUInteger)idx
++ (void)ycc_removeUserWithIndex:(NSUInteger)idx
 {
     NSUserDefaults *userDef = [NSUserDefaults standardUserDefaults];
     NSMutableArray *curUsers = [NSMutableArray arrayWithArray:[userDef objectForKey:kYCCnUsersKey]];
@@ -303,7 +303,7 @@
     [HelloUtils ycu_userdefault_setObj:dict key:kYCCDNDomains];
 }
 
-+ (NSDictionary *)yc_getCDNGoods
++ (NSDictionary *)ycy_getCDNGoods
 {
     return [HelloUtils ycu_userdefault_getObjforKey:kYCCDNDomains];
 }

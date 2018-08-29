@@ -15,13 +15,13 @@
 {
     self = [super init];
     if (self) {
-        [self _popertyInit];
-        [self _baseViewInit];
+        [self ycb_popertyInit];
+        [self ycb_baseViewInit];
     }
     return self;
 }
 
-- (void)_popertyInit
+- (void)ycb_popertyInit
 {
     self.rate = 0.8f; // 校对比值
     self.curWidth = winWidth;
@@ -68,7 +68,7 @@
     }
 }
 
-- (void)_baseViewInit
+- (void)ycb_baseViewInit
 {
     [self setFrame:CGRectMake(0, 0, winWidth, winHeight)];
     [self setBackgroundColor:[UIColor clearColor]];

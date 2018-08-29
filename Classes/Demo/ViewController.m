@@ -88,7 +88,7 @@ static NSInteger _level = 30;
                                    YC_PRM_ROLE_SERVER_ID    :@"9999",
                                    YC_PRM_ROLE_SERVER_NAME  :@"S1",
                                    };
-        [[YCSDK shareYC] yc_setGameRoleInfo:roleInfo];
+        [[YCSDK yco_shareYC] yco_setGameRoleInfo:roleInfo];
     }
     else if ([YC_PAY_SUCCUESS isEqualToString:noteName]) {
         NSLog(@"【SDK】: 充值成功");
@@ -132,7 +132,7 @@ static NSInteger _level = 30;
         case 0:
         {
 //            [[YCSDK shareYC] yc_login];
-            [[YCSDK shareYC] yc_loginWithGameOrientation:UIInterfaceOrientationPortrait];
+            [[YCSDK yco_shareYC] yco_loginWithGameOrientation:UIInterfaceOrientationPortrait];
         }
             break;            
             
@@ -158,7 +158,7 @@ static NSInteger _level = 30;
 //                                     };
 //            [[YCSDK shareYC] yc_pay:params];
             
-            [[YCSDK shareYC] yc_pay:@{
+            [[YCSDK yco_shareYC] yco_pay:@{
                                       YC_PRM_PAY_CP_ORDER_ID     :dataPoint,
                                       YC_PRM_PAY_PRODUCT_ID      :@"test.prodictid.2",
                                       YC_PRM_PAY_PRODUCT_NAME    :@"20元宝",
@@ -171,7 +171,7 @@ static NSInteger _level = 30;
             
         case 2:
         {
-            [[YCSDK shareYC] yc_logout];
+            [[YCSDK yco_shareYC] yco_logout];
         }
             break;
             
@@ -187,14 +187,14 @@ static NSInteger _level = 30;
                                        YC_PRM_ROLE_SERVER_ID    :@"9999",
                                        YC_PRM_ROLE_SERVER_NAME  :@"S1",
                                        };
-            [[YCSDK shareYC] yc_setGameRoleInfo:roleInfo];
+            [[YCSDK yco_shareYC] yco_setGameRoleInfo:roleInfo];
             
         }
             break;
             
         case 4:
         {
-            [[YCSDK shareYC] yc_iHaveGoodNews];
+            [[YCSDK yco_shareYC] yco_iHaveGoodNews];
         }
             break;
         case 5:

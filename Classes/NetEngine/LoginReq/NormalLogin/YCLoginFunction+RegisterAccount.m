@@ -5,45 +5,45 @@
 
 @implementation YCLoginFunction (RegisterAccount)
 
-+(void)doRegisterAccountWithUserName:(NSString *)userName
-                             andPassword:(NSString *)password
-                                andEmail:(NSString *)email
-                           andDomainName:(NSString *)domainName
-                              completion:(void(^)())completion
++(void)ycy_doRegisterAccountWithUserName:(NSString *)userName
+                             ycy_andPassword:(NSString *)password
+                                ycy_andEmail:(NSString *)email
+                           ycy_andDomainName:(NSString *)domainName
+                              ycy_completion:(void(^)())completion
 {
-    [self doRegisterAccountWithUserName:userName
-                            andPassword:password
-                               andEmail:email
-                               andPhone:nil
-                            andLoadCode:nil
-                          andDomainName:domainName
-                             completion:completion];
+    [self ycy_doRegisterAccountWithUserName:userName
+                            ycy_andPassword:password
+                               ycy_andEmail:email
+                               ycy_andPhone:nil
+                            ycy_andLoadCode:nil
+                          ycy_andDomainName:domainName
+                             ycy_completion:completion];
 }
 
 //手机注册
 
-+ (void)doRegisterAccountWithPhone:(NSString *)phone
-                       andPassword:(NSString *)password
-                       andLoadCode:(NSString *)loadCode
-                     andDomainName:(NSString *)domainName
-                        completion:(void(^)())completion
++ (void)ycy_doRegisterAccountWithPhone:(NSString *)phone
+                       ycy_andPassword:(NSString *)password
+                       ycy_andLoadCode:(NSString *)loadCode
+                     ycy_andDomainName:(NSString *)domainName
+                        ycy_completion:(void(^)())completion
 {
-    [self doRegisterAccountWithUserName:nil
-                            andPassword:password
-                               andEmail:nil
-                               andPhone:phone
-                            andLoadCode:loadCode
-                          andDomainName:domainName
-                             completion:completion];
+    [self ycy_doRegisterAccountWithUserName:nil
+                            ycy_andPassword:password
+                               ycy_andEmail:nil
+                               ycy_andPhone:phone
+                            ycy_andLoadCode:loadCode
+                          ycy_andDomainName:domainName
+                             ycy_completion:completion];
 }
 
-+ (void)doRegisterAccountWithUserName:(NSString *)userName
-                          andPassword:(NSString *)password
-                             andEmail:(NSString *)email
-                             andPhone:(NSString *)phone
-                          andLoadCode:(NSString *)loadCode
-                        andDomainName:(NSString *)domainName
-                           completion:(void(^)())completion
++ (void)ycy_doRegisterAccountWithUserName:(NSString *)userName
+                          ycy_andPassword:(NSString *)password
+                             ycy_andEmail:(NSString *)email
+                             ycy_andPhone:(NSString *)phone
+                          ycy_andLoadCode:(NSString *)loadCode
+                        ycy_andDomainName:(NSString *)domainName
+                           ycy_completion:(void(^)())completion
 {    
     NSDictionary *dict = nil;
     dict = @{

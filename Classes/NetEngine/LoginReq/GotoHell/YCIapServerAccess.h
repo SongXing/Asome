@@ -8,10 +8,10 @@
 @property (nonatomic, strong) dispatch_queue_t _Nonnull iapGetCurrencyQueue;
 
 
-+ (instancetype _Nonnull)defaultInstance;
++ (instancetype _Nonnull)ycy_defaultInstance;
 
 // 发货
-+ (void)postToServerCheckTransactionAndSentGameColdWithUserId:(NSString * _Nonnull)userId
++ (void)ycy_postToServerCheckTransactionAndSentGameColdWithUserId:(NSString * _Nonnull)userId
                                                 andServerCode:(NSString * _Nonnull)serverCode
                                                    andOrderId:(NSString * _Nonnull)orderId
                                               andCurrencyCode:(NSString * _Nonnull)currencyCode
@@ -20,6 +20,6 @@
                                                   receiptData:(NSData * _Nonnull)receiptData;
 
 // 程序自验证
-+ (void)_verifyTransactionBase64Str:(NSString *)base64Str;
++ (void)yci_verifyTransactionBase64Str:(NSString *)base64Str;
 
 @end

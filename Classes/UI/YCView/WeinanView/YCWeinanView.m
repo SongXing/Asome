@@ -20,23 +20,23 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (instancetype)justInit
+- (instancetype)ycw_justInit
 {
     if ([super init]) {
-        [self _createItemds];
+        [self ycw_createItemds];
         
         [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(dismissView) name:NOTE_YC_LOGIN_SUCCESS object:nil];
+                                                 selector:@selector(ycw_dismissView) name:NOTE_YC_LOGIN_SUCCESS object:nil];
     }
     return self;
 }
 
-- (void)changeToAccountLogin
+- (void)ycwchangeToAccountLogin
 {
-    [self _accountLogin];
+    [self ycw_accountLogin];
 }
 
-- (void)_createItemds
+- (void)ycw_createItemds
 {
     CGFloat mbgW = self.rate*self.curWidth;
     CGFloat mbgH = self.rate*self.curHeight*0.35f;
@@ -68,7 +68,7 @@
         UIButton *btn = [HelloUtils ycu_initBtnWithNormalImage:imgNames[i]
                                           highlightedImage:imgNames[i]
                                                        tag:[tags[i] integerValue]
-                                                  selector:@selector(_weinanBtnAction:)
+                                                  selector:@selector(ycw_weinanBtnAction:)
                                                     target:self];
         [v_btnbg addSubview:btn];
         CGFloat btnWidth = self.rate*self.curHeight* 0.4f * 1/2.0f;
@@ -99,27 +99,27 @@
     }
 }
 
-- (void)_weinanBtnAction:(UIButton *)sender
+- (void)ycw_weinanBtnAction:(UIButton *)sender
 {
     switch (sender.tag) {
         case kWeinanGuestBtnTag:
-            [self _guestLogin];
+            [self ycw_guestLogin];
             break;
         case kWeinanAccountLoginBtnTag:
-            [self _accountLogin];
+            [self ycw_accountLogin];
             break;
         case kWeinanAccountRegBtnTag:
-            [self _accountReg];
+            [self ycw_accountReg];
             break;
         default:
             break;
     }
 }
 
-- (void)_guestLogin
+- (void)ycw_guestLogin
 {
     [HelloUtils ycu_sStarLoadingAtView:nil];
-    [NetEngine guestLoginAndCompletion:^(id result){
+    [NetEngine yce_guestLoginAndCompletion:^(id result){
         [HelloUtils ycu_sStopLoadingAtView:nil];
         if ([result isKindOfClass:[NSDictionary class]]) {
             
@@ -150,13 +150,13 @@
     }];
 }
 
-- (void)_accountLogin
+- (void)ycw_accountLogin
 {
     YCLoginView *v_accountLogin = [[YCLoginView alloc] initWithMode:YCLogin_Account];
     [self addSubview:v_accountLogin];
 }
 
-- (void)_accountReg
+- (void)ycw_accountReg
 {
     YCLoginView *v_reg = [[YCLoginView alloc] initWithMode:YCLogin_DirectToRegister];
     [self addSubview:v_reg];
@@ -164,7 +164,7 @@
 
 #pragma mark - Dismiss Listener
 
-- (void)dismissView
+- (void)ycw_dismissView
 {
     if (self) {
         [self removeFromSuperview];

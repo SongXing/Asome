@@ -15,19 +15,19 @@
 
 
 /*玩家进入游戏服务器的时候，调用，初始化基本对象，可以进行补单*/
-+(void)startSDK
++(void)ycy_startSDK
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        [YCIapServerAccess defaultInstance];
-        [YCIapFunction checkTransactionUnfinished];
+        [YCIapServerAccess ycy_defaultInstance];
+        [YCIapFunction ycy_checkTransactionUnfinished];
         [YCIapData defaultData];
     });
 }
 
 #pragma mark - 直接请求Iap
 
-+ (void)directToInAppPurchaseWithParams:(NSDictionary *)params
++ (void)ycy_directToInAppPurchaseWithParams:(NSDictionary *)params
 {
 //    NSLog(@"开始购买：");
 //    NSLog(@"开始检查购买环境");
@@ -84,7 +84,7 @@
                                                                             kLocalTran_productId:[YCIapData defaultData].productID,
                                                                             kLocalTran_orderId  :[YCIapData defaultData].orderId};
                                                  // 3 纪录购买历史纪录
-                                                 [IapDataDog saveParameterDictionaryWithDictionary:baseInfo];
+                                                 [IapDataDog ycy_saveParameterDictionaryWithDictionary:baseInfo];
                                                  
                                                  // 4 进行商品购买
                                                  
@@ -134,7 +134,7 @@
         return;
     }
     
-    NSDictionary * parameterDic = [self getParameterFromStr:parameterStr];// 此步骤会有一个问题，发了付款之后,在这个方法里面取值有个小问题，subtringwithrangw
+    NSDictionary * parameterDic = [self ycy_getParameterFromStr:parameterStr];// 此步骤会有一个问题，发了付款之后,在这个方法里面取值有个小问题，subtringwithrangw
     
     if(![parameterDic.allKeys containsObject:@"uid"] ||
        ![parameterDic.allKeys containsObject:@"serverCode"] ||
@@ -163,7 +163,7 @@
                                    };
 
         // 3 纪录购买历史纪录
-        [IapDataDog saveParameterDictionaryWithDictionary:baseInfo];
+        [IapDataDog ycy_saveParameterDictionaryWithDictionary:baseInfo];
         
         NSLog(@"finish transaction");
         [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
@@ -171,7 +171,7 @@
         //设置状态为YES
         //****************************** 苹果付款收到票据完成，传票据给服务端进行验证并发放游戏币 **********************
         [YCIapData defaultData].ISPURCHASING = NO;
-        [YCIapServerAccess      postToServerCheckTransactionAndSentGameColdWithUserId:[parameterDic objectForKey:@"uid"]
+        [YCIapServerAccess      ycy_postToServerCheckTransactionAndSentGameColdWithUserId:[parameterDic objectForKey:@"uid"]
                                                                         andServerCode:[parameterDic objectForKey:@"serverCode"]
                                                                            andOrderId:[parameterDic objectForKey:@"orderId"]
                                                                       andCurrencyCode:@"currencyCode"//[SPIapData defaultData].currencyCode
@@ -189,14 +189,14 @@
     {
         [HelloUtils ycu_sToastWithMsg:@"跟当前单例eoi不相同，需要保存本次信息"];        
         // 临时
-        [IapDataDog removeIapData];
+        [IapDataDog ycy_removeIapData];
         [YCIapData defaultData].ISPURCHASING = NO;
         [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
     }
     
 }
 
-+(NSDictionary *)getParameterFromStr:(NSString *)parameterStr
++(NSDictionary *)ycy_getParameterFromStr:(NSString *)parameterStr
 {
     NSArray * parameterArray        = [parameterStr componentsSeparatedByString:@"&"];
     if (!parameterArray) {
@@ -246,7 +246,7 @@
 #define _ASSERT_VAL_STR_(str) (!(str==nil) && ![str isEqualToString:@""])
 
 //开启游戏，初始化paymentQueue代理以后，自动补单了，就开始初始化数据0
-+(BOOL)setDataFromLocal
++(BOOL)ycy_setDataFromLocal
 {
     
     return NO;
@@ -254,12 +254,12 @@
 
 /*有两种情况：一，支付成功，向服务器验证；二，支付失败，向服务器通知
 此时有十个或者九个参数*/
-+(void)checkTransactionUnfinished
++(void)ycy_checkTransactionUnfinished
 {
     NSLog(@"checkTransactionUnfinished");
 
     //从本地读取数据：从本地获取数据
-    NSDictionary * lastTransactionInfodic   = [IapDataDog getParameterDictionary]; // 此处有问题，即充值后因为某种原因中断了，再次补发的时候此处获取到的数据为 nil
+    NSDictionary * lastTransactionInfodic   = [IapDataDog ycy_getParameterDictionary]; // 此处有问题，即充值后因为某种原因中断了，再次补发的时候此处获取到的数据为 nil
     if (!lastTransactionInfodic || lastTransactionInfodic.count <= 0) {
         return;
     }
@@ -325,7 +325,7 @@
         //开始补单
 //        NSLog(@"init memory from local success,begin post server check and sent game gold");
 
-        [YCIapServerAccess      postToServerCheckTransactionAndSentGameColdWithUserId:[YCIapData defaultData].userID
+        [YCIapServerAccess      ycy_postToServerCheckTransactionAndSentGameColdWithUserId:[YCIapData defaultData].userID
                                                                         andServerCode:[YCIapData defaultData].serverCode
                                                                            andOrderId:[YCIapData defaultData].orderId
                                                                       andCurrencyCode:@"currencyCode"

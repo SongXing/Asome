@@ -39,16 +39,16 @@ extern NSString *const YC_PRM_PAY_EXTRA;          // 充值时厂商生产的订
  
  @return Satrpy 单例对象
  */
-+ (instancetype)shareYC;
++ (instancetype)yco_shareYC;
 
-- (void)yc_startWithSite:(NSString *)site
-                     key:(NSString *)key
-                     aid:(NSString *)aid
-                     cid:(NSString *)cid;
+- (void)yco_startWithSite:(NSString *)site
+                     yco_key:(NSString *)key
+                     yco_aid:(NSString *)aid
+                     yco_cid:(NSString *)cid;
 /**
  登录
  */
-- (void)yc_login;
+- (void)yco_login;
 
 
 /**
@@ -56,32 +56,32 @@ extern NSString *const YC_PRM_PAY_EXTRA;          // 充值时厂商生产的订
 
  @param orientation 屏幕方向
  */
-- (void)yc_loginWithGameOrientation:(UIInterfaceOrientation)orientation;
+- (void)yco_loginWithGameOrientation:(UIInterfaceOrientation)orientation;
 
 /**
  快速登录入口
  注销、切换账号后调用
  */
-- (void)yc_logout;
+- (void)yco_logout;
 
 /**
  充值
  
  @param payParms 充值参数集合
  */
-- (void)yc_pay:(NSDictionary *)payParms;
+- (void)yco_pay:(NSDictionary *)payParms;
 
 /**
  保存角色信息
  
  */
-- (void)yc_setGameRoleInfo:(NSDictionary *)params;
+- (void)yco_setGameRoleInfo:(NSDictionary *)params;
 
 
 /**
  公告信息
  */
-- (void)yc_iHaveGoodNews;
+- (void)yco_iHaveGoodNews;
 
 
 @end

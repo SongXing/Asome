@@ -99,8 +99,8 @@ static NSInteger chimaOpenTime = 3;
         m_mode = mode;
         ori_mode = mode;
         
-        [self propertyPrapare];
-        [self helloInit];
+        [self ycl_propertyPrapare];
+        [self ycl_helloInit];
         
    
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_loginNoteLisetner:) name:UIKeyboardWillShowNotification object:nil];
@@ -109,7 +109,7 @@ static NSInteger chimaOpenTime = 3;
     return self;
 }
 
-- (void)propertyPrapare
+- (void)ycl_propertyPrapare
 {
     rate = 0.8f; // 校对比值
     curWidth = winWidth;
@@ -160,37 +160,37 @@ static NSInteger chimaOpenTime = 3;
         onCalWidth = onCalHeight / originBgWidthOfHeight ;
     }
     
-    listModelArr = [self _fetchUserList];
+    listModelArr = [self ycl_fetchUserList];
 }
 
-- (void)helloInit
+- (void)ycl_helloInit
 {
     self.userInteractionEnabled = YES;
     
-    [self bgViewInit];
+    [self ycl_bgViewInit];
     
     switch (m_mode) {
         case YCLogin_ChangeAccount:
-            [self _switchAccountModeInit];
+            [self ycl_switchAccountModeInit];
             break;
         case YCLogin_Account:
         {
-            [self catchMyWidget];
-            [self _changeToShowAccountLogin];
+            [self ycl_catchMyWidget];
+            [self ycl_changeToShowAccountLogin];
         }
             break;
         case YCLogin_DirectToRegister:
         {
-            [self wnDirectRegWidget];
+            [self ycl_wnDirectRegWidget];
         }
             break;
         default:
-            [self catchMyWidget];
+            [self ycl_catchMyWidget];
             break;
     }
 }
 
-- (void)bgViewInit
+- (void)ycl_bgViewInit
 {
     [self setFrame:CGRectMake(0, 0, winWidth, winHeight)];
     [self setBackgroundColor:[UIColor clearColor]];
@@ -213,13 +213,13 @@ static NSInteger chimaOpenTime = 3;
     mainBg.layer.borderColor = [UIColor colorWithHexString:kGrayHex].CGColor;
     mainBg.layer.cornerRadius = 5.0f;
     
-    [self _wowFunction];
+    [self ycl_wowFunction];
 }
 
-- (void)_wowFunction
+- (void)ycl_wowFunction
 {
     // hidden btn . show cur sdk version and cid
-    UIButton *wowBtn = [HelloUtils ycu_initBtnWithTitle:@"" tag:kYCLoginWowBtnTag selector:@selector(_wowActioin:) target:self];
+    UIButton *wowBtn = [HelloUtils ycu_initBtnWithTitle:@"" tag:kYCLoginWowBtnTag selector:@selector(ycl_wowActioin:) target:self];
     [wowBtn.layer setCornerRadius:0.0f];
     [wowBtn.layer setBorderWidth:0.0f];
     [wowBtn.layer setBorderColor:[UIColor clearColor].CGColor];
@@ -232,7 +232,7 @@ static NSInteger chimaOpenTime = 3;
     }];
 }
 
-- (void)_wowActioin:(UIButton *)sender
+- (void)ycl_wowActioin:(UIButton *)sender
 {
     chimaClickTIme++;
     if (chimaClickTIme == chimaOpenTime) {
@@ -246,7 +246,7 @@ static NSInteger chimaOpenTime = 3;
     }
 }
 
-- (void)catchMyWidget
+- (void)ycl_catchMyWidget
 {
     CGFloat onCalHeight = rate*curHeight*0.8;
     CGFloat mTopPadding = 0;
@@ -268,7 +268,7 @@ static NSInteger chimaOpenTime = 3;
     }];
     
     // back btn
-    UIButton *backBtn = [HelloUtils ycu_initBtnWithNormalImage:backBtn_normal highlightedImage:backBtn_highlighted tag:kLoginDamnBackBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    UIButton *backBtn = [HelloUtils ycu_initBtnWithNormalImage:backBtn_normal highlightedImage:backBtn_highlighted tag:kLoginDamnBackBtnTag selector:@selector(ycl_loginViewBtnAction:) target:self];
     [mainBg addSubview:backBtn];
     [backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding/2));
@@ -304,7 +304,7 @@ static NSInteger chimaOpenTime = 3;
     
     // pick btn
     NSInteger pickBtnTag = 10098;
-    UIButton * pickBtn = [HelloUtils ycu_initBtnWithTitle:@"+86" tag:pickBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    UIButton * pickBtn = [HelloUtils ycu_initBtnWithTitle:@"+86" tag:pickBtnTag selector:@selector(ycl_loginViewBtnAction:) target:self];
     [pickBtn.layer setCornerRadius:0.0f];
     [pickBtn.layer setBorderWidth:0.0f];
     [pickBtn.layer setBorderColor:[UIColor clearColor].CGColor];
@@ -318,7 +318,7 @@ static NSInteger chimaOpenTime = 3;
         make.right.equalTo(@(-loginBtnWidthOfBgWidth*rate*curWidth*0.8));
     }];
     // seperate line
-    UILabel *seperateLine = [self _createSeperateLine];
+    UILabel *seperateLine = [self ycl_createSeperateLine];
     [phoneView addSubview:seperateLine];
     [seperateLine mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(@(0));
@@ -345,7 +345,7 @@ static NSInteger chimaOpenTime = 3;
     // send vertify btn
     NSString *strFetchVertifyCode = @"获取验证码";
     NSInteger sendVertifyBtnTag = kYCLoginGetVertifyCodeTag;
-    UIButton *sendVertifyBtn = [HelloUtils ycu_initBtnWithType:UIButtonTypeCustom title:strFetchVertifyCode tag:sendVertifyBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    UIButton *sendVertifyBtn = [HelloUtils ycu_initBtnWithType:UIButtonTypeCustom title:strFetchVertifyCode tag:sendVertifyBtnTag selector:@selector(ycl_loginViewBtnAction:) target:self];
     [sendVertifyBtn setTitle:strFetchVertifyCode forState:0];
     [sendVertifyBtn.layer setCornerRadius:0.0f];
     [sendVertifyBtn.layer setBorderWidth:0.0f];
@@ -379,7 +379,7 @@ static NSInteger chimaOpenTime = 3;
     mTopPadding += secondGap + textFieldHeightOfBgHeight*rate*curWidth;
     
     // login btn
-    loginComfirmBtn = [HelloUtils yc_initBtnWithTitle:@"进入游戏" tag:kYCLoginMobileFastLoginBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    loginComfirmBtn = [HelloUtils yc_initBtnWithTitle:@"进入游戏" tag:kYCLoginMobileFastLoginBtnTag selector:@selector(ycl_loginViewBtnAction:) target:self];
     [mainBg addSubview:loginComfirmBtn];
     [loginComfirmBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding));
@@ -397,7 +397,7 @@ static NSInteger chimaOpenTime = 3;
     
     CGSize txtSize = CGSizeZero;
     // 游客登录按钮
-    UIButton *guestBtn = [HelloUtils ycu_initBtnWithTitle:@"游客登录" tag:kYCLoginGuestBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    UIButton *guestBtn = [HelloUtils ycu_initBtnWithTitle:@"游客登录" tag:kYCLoginGuestBtnTag selector:@selector(ycl_loginViewBtnAction:) target:self];
     [guestBtn.layer setBorderWidth:0.0f];
     [guestBtn.layer setBorderColor:[UIColor clearColor].CGColor];
     [guestBtn.layer setCornerRadius:0.0f];
@@ -414,7 +414,7 @@ static NSInteger chimaOpenTime = 3;
     
     
     // 账号登录按钮
-    UIButton *accountLoginBtn = [HelloUtils ycu_initBtnWithTitle:@"账号登录" tag:kYCLoginAccountLoginBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    UIButton *accountLoginBtn = [HelloUtils ycu_initBtnWithTitle:@"账号登录" tag:kYCLoginAccountLoginBtnTag selector:@selector(ycl_loginViewBtnAction:) target:self];
     [accountLoginBtn.layer setBorderWidth:0.0f];
     [accountLoginBtn.layer setBorderColor:[UIColor clearColor].CGColor];
     [accountLoginBtn.layer setCornerRadius:0.0f];
@@ -430,7 +430,7 @@ static NSInteger chimaOpenTime = 3;
     }];
     
     // 帮助中心按钮
-    UIButton *helpCenterBtn = [HelloUtils ycu_initBtnWithTitle:@"帮助中心" tag:kYCLoginHelpCenterBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    UIButton *helpCenterBtn = [HelloUtils ycu_initBtnWithTitle:@"帮助中心" tag:kYCLoginHelpCenterBtnTag selector:@selector(ycl_loginViewBtnAction:) target:self];
     [helpCenterBtn.layer setBorderWidth:0.0f];
     [helpCenterBtn.layer setBorderColor:[UIColor clearColor].CGColor];
     [helpCenterBtn.layer setCornerRadius:0.0f];
@@ -446,7 +446,7 @@ static NSInteger chimaOpenTime = 3;
     }];
 }
 
-- (void)wnDirectRegWidget
+- (void)ycl_wnDirectRegWidget
 {
     CGFloat onCalHeight = rate*curHeight*0.8;
     CGFloat mTopPadding = 0;
@@ -468,7 +468,7 @@ static NSInteger chimaOpenTime = 3;
     }];
     
     // back btn
-    UIButton *backBtn = [HelloUtils ycu_initBtnWithNormalImage:backBtn_normal highlightedImage:backBtn_highlighted tag:kLoginDamnBackBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    UIButton *backBtn = [HelloUtils ycu_initBtnWithNormalImage:backBtn_normal highlightedImage:backBtn_highlighted tag:kLoginDamnBackBtnTag selector:@selector(ycl_loginViewBtnAction:) target:self];
     [mainBg addSubview:backBtn];
     [backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding/2));
@@ -504,7 +504,7 @@ static NSInteger chimaOpenTime = 3;
     // ------------
     mTopPadding += secondGap + textFieldHeightOfBgHeight*rate*curWidth;
     
-    eyesBtn = [HelloUtils ycu_rightViewWithImage:eyeBtn_off tag:kYCLoginEyeBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    eyesBtn = [HelloUtils ycu_rightViewWithImage:eyeBtn_off tag:kYCLoginEyeBtnTag selector:@selector(ycl_loginViewBtnAction:) target:self];
     [eyesBtn setFrame:CGRectMake(0, 0, eyesBtn.frame.size.width, eyesBtn.frame.size.height)];
     
     pwdTF = [HelloUtils ycu_customTextfieldWidgetWithLeftView:nil
@@ -532,7 +532,7 @@ static NSInteger chimaOpenTime = 3;
     mTopPadding += secondGap + textFieldHeightOfBgHeight*rate*curWidth;
     
     // login btn
-    loginComfirmBtn = [HelloUtils yc_initBtnWithTitle:@"进入游戏" tag:kYCLoginMobileFastLoginBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    loginComfirmBtn = [HelloUtils yc_initBtnWithTitle:@"进入游戏" tag:kYCLoginMobileFastLoginBtnTag selector:@selector(ycl_loginViewBtnAction:) target:self];
     [mainBg addSubview:loginComfirmBtn];
     [loginComfirmBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding));
@@ -547,10 +547,10 @@ static NSInteger chimaOpenTime = 3;
     loginComfirmBtn.layer.borderColor = [UIColor colorWithHexString:kGrayHex].CGColor;
     [loginComfirmBtn.titleLabel setFont:[UIFont fontWithName:kTxtFontName size:kTxtFontBigSize]];
     
-    [self _makeAgreeViewContent];
+    [self ycl_makeAgreeViewContent];
     
     //
-    UIButton *phoneRegBtn = [HelloUtils ycu_initBtnWithTitle:@"手机注册" tag:kYCLoginPhoneRegBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    UIButton *phoneRegBtn = [HelloUtils ycu_initBtnWithTitle:@"手机注册" tag:kYCLoginPhoneRegBtnTag selector:@selector(ycl_loginViewBtnAction:) target:self];
     [phoneRegBtn.layer setBorderWidth:0.0f];
     [phoneRegBtn.layer setBorderColor:[UIColor clearColor].CGColor];
     [phoneRegBtn.layer setCornerRadius:0.0f];
@@ -570,16 +570,16 @@ static NSInteger chimaOpenTime = 3;
 
 #pragma mark - Change Account Mode
 
-- (void)_curLoginUserInit
+- (void)ycl_curLoginUserInit
 {
-    if ([self _fetchUserList].count > 0) {
-        curLoginUser = [self _fetchUserList][0];
+    if ([self ycl_fetchUserList].count > 0) {
+        curLoginUser = [self ycl_fetchUserList][0];
     }
 }
 
-- (void)_switchAccountModeInit
+- (void)ycl_switchAccountModeInit
 {
-    [self _curLoginUserInit];
+    [self ycl_curLoginUserInit];
     
     CGFloat txtFieldWidth = loginBtnWidthOfBgWidth*rate*curWidth;
     CGFloat txtFieldHeight = textFieldHeightOfBgHeight*rate*curWidth;
@@ -608,7 +608,7 @@ static NSInteger chimaOpenTime = 3;
     mTopPadding += firstGap + heightOfImage;
     
     // 账号下拉
-    userListBtn = [HelloUtils ycu_rightViewWithImage:userListBtn_down tag:kTVRightUserListBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    userListBtn = [HelloUtils ycu_rightViewWithImage:userListBtn_down tag:kTVRightUserListBtnTag selector:@selector(ycl_loginViewBtnAction:) target:self];
     [userListBtn setFrame:CGRectMake(-10, 0, userListBtn.frame.size.width, userListBtn.frame.size.height)];
     
     // text input
@@ -642,7 +642,7 @@ static NSInteger chimaOpenTime = 3;
     mTopPadding += secondGap*6 + txtFieldHeight;
     
     // login btn
-    loginComfirmBtn = [HelloUtils yc_initBtnWithTitle:@"进入游戏" tag:kYCLoginMobileFastLoginBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    loginComfirmBtn = [HelloUtils yc_initBtnWithTitle:@"进入游戏" tag:kYCLoginMobileFastLoginBtnTag selector:@selector(ycl_loginViewBtnAction:) target:self];
     [mainBg addSubview:loginComfirmBtn];
     [loginComfirmBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding));
@@ -660,7 +660,7 @@ static NSInteger chimaOpenTime = 3;
     
     CGSize txtSize = CGSizeZero;
     // btn
-    UIButton *guestBtn = [HelloUtils ycu_initBtnWithTitle:@"更换登录方式" tag:kYCLoginChangeAccountBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    UIButton *guestBtn = [HelloUtils ycu_initBtnWithTitle:@"更换登录方式" tag:kYCLoginChangeAccountBtnTag selector:@selector(ycl_loginViewBtnAction:) target:self];
     [guestBtn.layer setBorderWidth:0.0f];
     [guestBtn.layer setBorderColor:[UIColor clearColor].CGColor];
     [guestBtn.layer setCornerRadius:0.0f];
@@ -680,7 +680,7 @@ static NSInteger chimaOpenTime = 3;
 
 #pragma mark - weinan 模式下的手机注册账号并登陆
 
-- (void)_justHiddenGeneratedPhoneRegElements
+- (void)ycl_justHiddenGeneratedPhoneRegElements
 {
     [[self viewWithTag:kYCLoginPhoneRegBtnTag] setHidden:NO];
     
@@ -690,7 +690,7 @@ static NSInteger chimaOpenTime = 3;
     codeInput.hidden = YES;
 }
 
-- (void)_justShowGeneratedPhoneRegElements
+- (void)ycl_justShowGeneratedPhoneRegElements
 {
     [[self viewWithTag:kYCLoginPhoneInputViewTag] setHidden:NO];
     [[self viewWithTag:kYCLoginGetVertifyCodeTag] setHidden:NO];
@@ -698,14 +698,14 @@ static NSInteger chimaOpenTime = 3;
     codeInput.hidden = NO;
 }
 
-- (void)_weinanPhoneRegMode
+- (void)ycl_weinanPhoneRegMode
 {
     [[self viewWithTag:kYCLoginPhoneRegBtnTag] setHidden:YES];
  
-    [self _clearTextfield];
+    [self ycl_clearTextfield];
     
     if ([self viewWithTag:kYCLoginPhoneInputViewTag]) {
-        [self _justShowGeneratedPhoneRegElements];
+        [self ycl_justShowGeneratedPhoneRegElements];
         return;
     }
     
@@ -739,7 +739,7 @@ static NSInteger chimaOpenTime = 3;
     
     // pick btn
     NSInteger pickBtnTag = 10098;
-    UIButton * pickBtn = [HelloUtils ycu_initBtnWithTitle:@"+86" tag:pickBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    UIButton * pickBtn = [HelloUtils ycu_initBtnWithTitle:@"+86" tag:pickBtnTag selector:@selector(ycl_loginViewBtnAction:) target:self];
     [pickBtn.layer setCornerRadius:0.0f];
     [pickBtn.layer setBorderWidth:0.0f];
     [pickBtn.layer setBorderColor:[UIColor clearColor].CGColor];
@@ -753,7 +753,7 @@ static NSInteger chimaOpenTime = 3;
         make.right.equalTo(@(-loginBtnWidthOfBgWidth*rate*curWidth*0.8));
     }];
     // seperate line
-    UILabel *seperateLine = [self _createSeperateLine];
+    UILabel *seperateLine = [self ycl_createSeperateLine];
     [phoneView addSubview:seperateLine];
     [seperateLine mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(@(0));
@@ -780,7 +780,7 @@ static NSInteger chimaOpenTime = 3;
     // send vertify btn
     NSString *strFetchVertifyCode = @"获取验证码";
     NSInteger sendVertifyBtnTag = kYCLoginGetVertifyCodeTag;
-    UIButton *sendVertifyBtn = [HelloUtils ycu_initBtnWithType:UIButtonTypeCustom title:strFetchVertifyCode tag:sendVertifyBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    UIButton *sendVertifyBtn = [HelloUtils ycu_initBtnWithType:UIButtonTypeCustom title:strFetchVertifyCode tag:sendVertifyBtnTag selector:@selector(ycl_loginViewBtnAction:) target:self];
     [sendVertifyBtn setTitle:strFetchVertifyCode forState:0];
     [sendVertifyBtn.layer setCornerRadius:0.0f];
     [sendVertifyBtn.layer setBorderWidth:0.0f];
@@ -813,7 +813,7 @@ static NSInteger chimaOpenTime = 3;
 
 #pragma mark - 切换模式
 
-- (void)_doSomeMagicToFastLogin
+- (void)ycl_doSomeMagicToFastLogin
 {
     [self removeFromSuperview];
 
@@ -821,9 +821,9 @@ static NSInteger chimaOpenTime = 3;
     [MainWindow addSubview:logoutView];
 }
 
-- (void)_doSomeMagicToAccountLogin
+- (void)ycl_doSomeMagicToAccountLogin
 {
-    [self _clearTextfield];
+    [self ycl_clearTextfield];
     
     m_mode = YCLogin_Account;
     
@@ -835,11 +835,11 @@ static NSInteger chimaOpenTime = 3;
     [[self viewWithTag:kYCLoginGuestBtnTag] setHidden:YES];
     [[self viewWithTag:kYCLoginAgreeViewTag] setHidden:YES];
     
-    [self _openAccountLoginElement];
+    [self ycl_openAccountLoginElement];
 }
 
 // 打开账号登录页的选项
-- (void)_openAccountLoginElement
+- (void)ycl_openAccountLoginElement
 {
     [[self viewWithTag:kYCLoginEyeBtnTag] setHidden:YES];
     
@@ -850,13 +850,13 @@ static NSInteger chimaOpenTime = 3;
     [[self viewWithTag:kYCLoginBindMobilePhoneBtnTag] setHidden:NO];
     [[self viewWithTag:kYCLoginNoAccountTag] setHidden:NO];
     
-    [self _forgetBtnShow];
+    [self ycl_forgetBtnShow];
 }
 
-- (void)_forgetBtnShow
+- (void)ycl_forgetBtnShow
 {
     // ----- 忘记密码
-    forgetPwdBtn = [HelloUtils ycu_initBtnWithTitle:@"忘记密码？" tag:kYCLoginForgetPwdBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    forgetPwdBtn = [HelloUtils ycu_initBtnWithTitle:@"忘记密码？" tag:kYCLoginForgetPwdBtnTag selector:@selector(ycl_loginViewBtnAction:) target:self];
     [forgetPwdBtn.layer setBorderWidth:0.0f];
     [forgetPwdBtn.layer setBorderColor:[UIColor clearColor].CGColor];
     [forgetPwdBtn.layer setCornerRadius:0.0f];
@@ -871,7 +871,7 @@ static NSInteger chimaOpenTime = 3;
 }
 
 // 编辑清空
-- (void)_clearTextfield
+- (void)ycl_clearTextfield
 {
     nameTF.text     = @"";
     pwdTF.text      = @"";
@@ -879,9 +879,9 @@ static NSInteger chimaOpenTime = 3;
     codeInput.text  = @"";
 }
 
-- (void)_doSomeMagicToRegister
+- (void)ycl_doSomeMagicToRegister
 {
-    [self _clearTextfield];
+    [self ycl_clearTextfield];
     
     m_mode = YCLogin_Register;
     [[self viewWithTag:kYCLoginRegisterAccountBtnTag] setHidden:YES];
@@ -892,7 +892,7 @@ static NSInteger chimaOpenTime = 3;
     if ([self viewWithTag:kYCLoginAgreeViewTag]) {
         [[self viewWithTag:kYCLoginAgreeViewTag] setHidden:NO];
     } else {
-        [self _makeAgreeViewContent];
+        [self ycl_makeAgreeViewContent];
     }
     
     if ([self viewWithTag:kYCLoginEyeBtnTag]) {
@@ -900,14 +900,14 @@ static NSInteger chimaOpenTime = 3;
         return;
     }
     
-    eyesBtn = [HelloUtils ycu_rightViewWithImage:eyeBtn_off tag:kYCLoginEyeBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    eyesBtn = [HelloUtils ycu_rightViewWithImage:eyeBtn_off tag:kYCLoginEyeBtnTag selector:@selector(ycl_loginViewBtnAction:) target:self];
     [eyesBtn setFrame:CGRectMake(0, 0, eyesBtn.frame.size.width, eyesBtn.frame.size.height)];
     pwdTF.rightView = eyesBtn;
     pwdTF.secureTextEntry = pwdEntity;
     pwdTF.endEditDistance = eyesBtn.frame.size.width - 25;
 }
 
-- (void)_makeAgreeViewContent
+- (void)ycl_makeAgreeViewContent
 {
     // 用户协议
     UIView *agreeView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -922,10 +922,10 @@ static NSInteger chimaOpenTime = 3;
         make.height.equalTo(@(textFieldHeightOfBgHeight*rate*curWidth));
     }];
     
-    [self _addAgreeContentToView:agreeView];
+    [self ycl_addAgreeContentToView:agreeView];
 }
 
-- (void)_doSomeMagicToMobileLogin
+- (void)ycl_doSomeMagicToMobileLogin
 {
     m_mode = YCLogin_Mobile;
     
@@ -937,10 +937,10 @@ static NSInteger chimaOpenTime = 3;
     [[self viewWithTag:kYCLoginNoAccountTag] setHidden:YES];
     [[self viewWithTag:kYCLoginAgreeViewTag] setHidden:YES];
     
-    [self _openMobileLoginElement];
+    [self ycl_openMobileLoginElement];
 }
 
-- (void)_openMobileLoginElement
+- (void)ycl_openMobileLoginElement
 {
     [[self viewWithTag:kYCLoginPhoneInputViewTag] setHidden:NO];
     [[self viewWithTag:kYCLoginCodeInputViewTag] setHidden:NO];
@@ -949,9 +949,9 @@ static NSInteger chimaOpenTime = 3;
     [[self viewWithTag:kYCLoginGuestBtnTag] setHidden:NO];
 }
 
-- (void)_changeToShowAccountLogin
+- (void)ycl_changeToShowAccountLogin
 {
-    [self _doSomeMagicToAccountLogin];
+    [self ycl_doSomeMagicToAccountLogin];
     
     if ([self viewWithTag:kYCLoginNoAccountTag]) {
         return;
@@ -967,7 +967,7 @@ static NSInteger chimaOpenTime = 3;
     CGFloat heightOfImage   = 100*rate*curWidth/228.0f/440.0f*98.0f;
     
     // back btn
-    UIButton *backBtn = [HelloUtils ycu_initBtnWithNormalImage:backBtn_normal highlightedImage:backBtn_highlighted tag:kLoginBackBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    UIButton *backBtn = [HelloUtils ycu_initBtnWithNormalImage:backBtn_normal highlightedImage:backBtn_highlighted tag:kLoginBackBtnTag selector:@selector(ycl_loginViewBtnAction:) target:self];
     [mainBg addSubview:backBtn];
     [backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding/2));
@@ -981,7 +981,7 @@ static NSInteger chimaOpenTime = 3;
     
     mTopPadding += firstGap + heightOfImage;
     
-    userListBtn = [HelloUtils ycu_rightViewWithImage:userListBtn_down tag:kTVRightUserListBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    userListBtn = [HelloUtils ycu_rightViewWithImage:userListBtn_down tag:kTVRightUserListBtnTag selector:@selector(ycl_loginViewBtnAction:) target:self];
     [userListBtn setFrame:CGRectMake(-10, 0, userListBtn.frame.size.width, userListBtn.frame.size.height)];
     
     // text input
@@ -1011,7 +1011,7 @@ static NSInteger chimaOpenTime = 3;
     mTopPadding += secondGap + textFieldHeightOfBgHeight*rate*curWidth;
     
     // ----- 忘记密码
-    forgetPwdBtn = [HelloUtils ycu_initBtnWithTitle:@"忘记密码？" tag:kYCLoginForgetPwdBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    forgetPwdBtn = [HelloUtils ycu_initBtnWithTitle:@"忘记密码？" tag:kYCLoginForgetPwdBtnTag selector:@selector(ycl_loginViewBtnAction:) target:self];
     [forgetPwdBtn.layer setBorderWidth:0.0f];
     [forgetPwdBtn.layer setBorderColor:[UIColor clearColor].CGColor];
     [forgetPwdBtn.layer setCornerRadius:0.0f];
@@ -1060,7 +1060,7 @@ static NSInteger chimaOpenTime = 3;
     }];
     
     // 快速注册按钮
-    UIButton *guestBtn = [HelloUtils ycu_initBtnWithTitle:@"快速注册" tag:kYCLoginRegisterAccountBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    UIButton *guestBtn = [HelloUtils ycu_initBtnWithTitle:@"快速注册" tag:kYCLoginRegisterAccountBtnTag selector:@selector(ycl_loginViewBtnAction:) target:self];
     [guestBtn.layer setBorderWidth:0.0f];
     [guestBtn.layer setBorderColor:[UIColor clearColor].CGColor];
     [guestBtn.layer setCornerRadius:0.0f];
@@ -1076,7 +1076,7 @@ static NSInteger chimaOpenTime = 3;
     }];
     
     // 绑定手机按钮
-    UIButton *helpCenterBtn = [HelloUtils ycu_initBtnWithTitle:@"绑定手机" tag:kYCLoginBindMobilePhoneBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    UIButton *helpCenterBtn = [HelloUtils ycu_initBtnWithTitle:@"绑定手机" tag:kYCLoginBindMobilePhoneBtnTag selector:@selector(ycl_loginViewBtnAction:) target:self];
     [helpCenterBtn.layer setBorderWidth:0.0f];
     [helpCenterBtn.layer setBorderColor:[UIColor clearColor].CGColor];
     [helpCenterBtn.layer setCornerRadius:0.0f];
@@ -1097,10 +1097,10 @@ static NSInteger chimaOpenTime = 3;
 
 #pragma mark - Btn Actions
 
-- (void)usePhoneAndCodeLogin {
+- (void)ycl_usePhoneAndCodeLogin {
     NSString *mobileNum = phoneInput.text;
     NSString *code = [HelloUtils ycu_triString:codeInput.text];
-    if (![HelloUtils validCnMobileNumber:mobileNum]) {
+    if (![HelloUtils ycu_validCnMobileNumber:mobileNum]) {
         [HelloUtils ycu_invalidPhoneToast];
         return;
     }
@@ -1109,9 +1109,9 @@ static NSInteger chimaOpenTime = 3;
         return;
     }
     
-    [NetEngine loginUsingMobileNum:mobileNum
-                       vertifyCode:code
-                        completion:^(id result){
+    [NetEngine yce_loginUsingMobileNum:mobileNum
+                       yce_vertifyCode:code
+                        yce_completion:^(id result){
                             if ([result isKindOfClass:[NSDictionary class]]) {
                                 // 保存账号信息
                                 [YCDataUtils ycd_handelNormalUser:(NSDictionary *)result];
@@ -1121,25 +1121,25 @@ static NSInteger chimaOpenTime = 3;
                         }];
 }
 
-- (void)useAccountAndPwdLogin {
+- (void)ycl_useAccountAndPwdLogin {
     NSString *name = nameTF.text;
     NSString *pass = pwdTF.text;
     name = [HelloUtils ycu_triString:name];
     pass = [HelloUtils ycu_triString:pass];
-    if (![HelloUtils validUserName:name]) {
+    if (![HelloUtils ycu_validUserName:name]) {
         [HelloUtils ycu_invalidNameToast];
         return;
     }
-    if (![HelloUtils validPassWord:pass]) {
+    if (![HelloUtils ycu_validPassWord:pass]) {
         [HelloUtils ycu_invalidPwdToast];
         return;
     }
     [HelloUtils ycu_sStarLoadingAtView:nil];
-    [NetEngine loginUsingUsername:name
-                         password:pass
-                              uid:nil
-                          session:nil
-                       completion:^(id result){
+    [NetEngine yce_loginUsingUsername:name
+                         yce_password:pass
+                              yce_uid:nil
+                          yce_session:nil
+                       yce_completion:^(id result){
                            [HelloUtils ycu_sStopLoadingAtView:nil];
                            if ([result isKindOfClass:[NSDictionary class]]) {
                                // 保存账号信息
@@ -1150,14 +1150,14 @@ static NSInteger chimaOpenTime = 3;
                        }];
 }
 
-- (void)useAccounAndPwdRegister {
+- (void)ycl_useAccounAndPwdRegister {
     NSString *name = nameTF.text;
     NSString *pass = pwdTF.text;
-    if (![HelloUtils validUserName:name]) {
+    if (![HelloUtils ycu_validUserName:name]) {
         [HelloUtils ycu_invalidNameToast];
         return;
     }
-    if (![HelloUtils validPassWord:pass]) {
+    if (![HelloUtils ycu_validPassWord:pass]) {
         [HelloUtils ycu_invalidPwdToast];
         return;
     }
@@ -1167,10 +1167,10 @@ static NSInteger chimaOpenTime = 3;
     }
     
     [HelloUtils ycu_sStarLoadingAtView:nil];
-    [NetEngine registerAccountWithUserName:name
-                                  password:pass
-                                     email:@""
-                                completion:^(id result){
+    [NetEngine yce_registerAccountWithUserName:name
+                                  yce_password:pass
+                                     yce_email:@""
+                                yce_completion:^(id result){
                                     [HelloUtils ycu_sStopLoadingAtView:nil];
                                     if ([result isKindOfClass:[NSDictionary class]]) {
                                         
@@ -1185,12 +1185,12 @@ static NSInteger chimaOpenTime = 3;
                                 }];
 }
 
-- (void)loginViewBtnAction:(UIButton *)sender
+- (void)ycl_loginViewBtnAction:(UIButton *)sender
 {
     switch (sender.tag) {
         case kYCLoginPhoneRegBtnTag:
         {
-            [self _weinanPhoneRegMode];
+            [self ycl_weinanPhoneRegMode];
         }
             break;
         case kYCLoginHelpCenterBtnTag:
@@ -1204,32 +1204,32 @@ static NSInteger chimaOpenTime = 3;
                 case YCLogin_FastToDefault:
                 case YCLogin_Default:
                 {
-                    [self usePhoneAndCodeLogin];
+                    [self ycl_usePhoneAndCodeLogin];
                 }
                     break;
                 case YCLogin_Account:
                 {
-                    [self useAccountAndPwdLogin];
+                    [self ycl_useAccountAndPwdLogin];
                 }
                     break;
                 case YCLogin_DirectToRegister:
                 case YCLogin_Register:
                 {
-                    [self viewWithTag:kYCLoginPhoneRegBtnTag].hidden?[self usePhoneAndCodeLogin]:[self useAccounAndPwdRegister];
+                    [self viewWithTag:kYCLoginPhoneRegBtnTag].hidden?[self ycl_usePhoneAndCodeLogin]:[self ycl_useAccounAndPwdRegister];
                 }
                     break;
                 case YCLogin_ChangeAccount:
                 {
-                    if (![HelloUtils validUserName:nameTF.text]) {
+                    if (![HelloUtils ycu_validUserName:nameTF.text]) {
                         [HelloUtils ycu_sToastWithMsg:@"请选择要登录的账号"];
                         return;
                     }
                     [HelloUtils ycu_sStarLoadingAtView:nil];
-                    [NetEngine loginUsingUsername:curLoginUser.account
-                                         password:curLoginUser.password
-                                              uid:[NSString stringWithFormat:@"%@",curLoginUser.uid]
-                                          session:curLoginUser.sessionid
-                                       completion:^(id result){
+                    [NetEngine yce_loginUsingUsername:curLoginUser.account
+                                         yce_password:curLoginUser.password
+                                              yce_uid:[NSString stringWithFormat:@"%@",curLoginUser.uid]
+                                          yce_session:curLoginUser.sessionid
+                                       yce_completion:^(id result){
 
                                            [HelloUtils ycu_sStopLoadingAtView:nil];
                                            if ([result isKindOfClass:[NSDictionary class]]) {
@@ -1275,7 +1275,7 @@ static NSInteger chimaOpenTime = 3;
 //            2、回调，true--显示警告，绑定--绑定登录，不--回调给开发商 ，false -不显示，回调给开发商
             
             [HelloUtils ycu_sStarLoadingAtView:nil];
-            [NetEngine guestLoginAndCompletion:^(id result){
+            [NetEngine yce_guestLoginAndCompletion:^(id result){
                 [HelloUtils ycu_sStopLoadingAtView:nil];
                 if ([result isKindOfClass:[NSDictionary class]]) {
                     
@@ -1314,11 +1314,11 @@ static NSInteger chimaOpenTime = 3;
         {
             switch (m_mode) {
                 case YCLogin_Account:
-                    [self _doSomeMagicToRegister];
+                    [self ycl_doSomeMagicToRegister];
                     break;
                 case YCLogin_FastToDefault:
                 case YCLogin_Default:
-                    [self _changeToShowAccountLogin];
+                    [self ycl_changeToShowAccountLogin];
                     break;
                 default:
                     break;
@@ -1330,13 +1330,13 @@ static NSInteger chimaOpenTime = 3;
         {
             NSString *mobilePhoneNum = phoneInput.text;
             mobilePhoneNum = [HelloUtils ycu_triString:mobilePhoneNum];
-            if (![HelloUtils validCnMobileNumber:mobilePhoneNum]) {
+            if (![HelloUtils ycu_validCnMobileNumber:mobilePhoneNum]) {
                 [HelloUtils ycu_invalidPhoneToast];
                 return;
             }
-            [NetEngine sendVertifyCodeToMobile:mobilePhoneNum
-                                     situation:kSendCodeType_Login
-                                    completion:^(id reslut){
+            [NetEngine yce_sendVertifyCodeToMobile:mobilePhoneNum
+                                     yce_situation:kSendCodeType_Login
+                                    yce_completion:^(id reslut){
                                         if ([reslut isKindOfClass:[NSDictionary class]]) {
                                             [HelloUtils ycu_counttingButton:sender
                                                               startTime:59.0f
@@ -1359,12 +1359,12 @@ static NSInteger chimaOpenTime = 3;
                         [self removeFromSuperview];
                         break;
                     }
-                    [self _doSomeMagicToMobileLogin];
+                    [self ycl_doSomeMagicToMobileLogin];
                 }
                     
                     break;
                 case YCLogin_Register:
-                    [self _doSomeMagicToAccountLogin];
+                    [self ycl_doSomeMagicToAccountLogin];
                     break;
                     
                     
@@ -1379,29 +1379,29 @@ static NSInteger chimaOpenTime = 3;
                 
                 // 通过“手机注册”按钮是否显示作为判断返回
                 if ([self viewWithTag:kYCLoginPhoneRegBtnTag].hidden) {
-                    [self _justHiddenGeneratedPhoneRegElements];
+                    [self ycl_justHiddenGeneratedPhoneRegElements];
                     break;
                 }
                 
                 [self removeFromSuperview];
                 break;
             }
-            [self _doSomeMagicToFastLogin];
+            [self ycl_doSomeMagicToFastLogin];
         }
             break;
         case kYCLoginForgetPwdBtnTag:
         {
-            [self _toBindViewWithMode:YCBind_Forget_CheckAccount];
+            [self ycl_toBindViewWithMode:YCBind_Forget_CheckAccount];
         }
             break;
         case kYCLoginBindMobilePhoneBtnTag:
         {
-            [self _toBindViewWithMode:YCBind_Default];
+            [self ycl_toBindViewWithMode:YCBind_Default];
         }
             break;
         case kYCLoginRegisterAccountBtnTag:
         {
-            [self _doSomeMagicToRegister];
+            [self ycl_doSomeMagicToRegister];
         }
             break;
         case kYCLoginEyeBtnTag:
@@ -1426,16 +1426,16 @@ static NSInteger chimaOpenTime = 3;
             break;
         case kTVRightUserListBtnTag:
         {
-            if ([[self _fetchUserList] count] < 1) {
+            if ([[self ycl_fetchUserList] count] < 1) {
                 [HelloUtils ycu_sToastWithMsg:@"没有已保存的账号"];
                 return;
             }
             
             userListShow = !userListShow;
             if (userListShow) {
-                [self _userListViewShow];
+                [self ycl_userListViewShow];
             } else {
-                [self _userListViewClose];
+                [self ycl_userListViewClose];
             }
         }
             break;
@@ -1443,7 +1443,7 @@ static NSInteger chimaOpenTime = 3;
         {
             UITableViewCell *cell = (UITableViewCell *)[sender superview];
             NSIndexPath *indexPath = [uList indexPathForCell:cell];
-            [self _removeUserWithIndex:indexPath.row];
+            [self ycl_removeUserWithIndex:indexPath.row];
         }
             break;
         default:
@@ -1453,9 +1453,9 @@ static NSInteger chimaOpenTime = 3;
 
 #pragma mark - User List Method
 
-- (void)_userListViewShow
+- (void)ycl_userListViewShow
 {
-    [self _userListBtnRotaToShow];
+    [self ycl_userListBtnRotaToShow];
     
     userListView = [[UIView alloc] initWithFrame:CGRectZero];
     userListView.backgroundColor = [UIColor whiteColor];
@@ -1464,7 +1464,7 @@ static NSInteger chimaOpenTime = 3;
     userListView.backgroundColor = [UIColor clearColor];
     
     // 改用蒙版，添加手势
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cn_tapAction:)];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ycl_tapAction:)];
     tap.delegate = self;
     [userListView addGestureRecognizer:tap];
     
@@ -1490,22 +1490,22 @@ static NSInteger chimaOpenTime = 3;
     uList.bounces = NO;
 }
 
-- (void)_userListViewClose
+- (void)ycl_userListViewClose
 {
     // close
     [userListView removeFromSuperview];
-    [self _userListBtnRotaToClose];
+    [self ycl_userListBtnRotaToClose];
     userListShow = !userListShow;
 }
 
-- (void)cn_tapAction:(UITapGestureRecognizer *)tap
+- (void)ycl_tapAction:(UITapGestureRecognizer *)tap
 {
-    [self _userListViewClose];
+    [self ycl_userListViewClose];
 }
 
 #pragma mark - userListBtn Animation
 
-- (void)_userListBtnRotaToShow
+- (void)ycl_userListBtnRotaToShow
 {
     [UIView animateWithDuration:tRotaTomeInterval
                      animations:^{
@@ -1513,7 +1513,7 @@ static NSInteger chimaOpenTime = 3;
                      }];
 }
 
-- (void)_userListBtnRotaToClose
+- (void)ycl_userListBtnRotaToClose
 {
     [UIView animateWithDuration:tRotaTomeInterval
                      animations:^{
@@ -1549,7 +1549,7 @@ static NSInteger chimaOpenTime = 3;
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier] ;
         
-        UIButton *delBtn = [HelloUtils ycu_initBtnWithNormalImage:user_list_close_btn_name highlightedImage:nil tag:kYCUserListDelBtnTag selector:@selector(loginViewBtnAction:) target:self];
+        UIButton *delBtn = [HelloUtils ycu_initBtnWithNormalImage:user_list_close_btn_name highlightedImage:nil tag:kYCUserListDelBtnTag selector:@selector(ycl_loginViewBtnAction:) target:self];
         [delBtn setFrame:CGRectMake(loginBtnWidthOfBgWidth*rate*curWidth-40, 0, uList.rowHeight, uList.rowHeight)];
         [cell addSubview:delBtn];
         
@@ -1572,28 +1572,28 @@ static NSInteger chimaOpenTime = 3;
     curLoginUser = model;
     
     // close
-    [self _userListViewClose];
+    [self ycl_userListViewClose];
     
 }
 
-- (void)_removeUserWithIndex:(NSInteger)index
+- (void)ycl_removeUserWithIndex:(NSInteger)index
 {
     // remove in userdefault
     [YCDataUtils ycd_removeNormalUserWithIndex:index];
     // refresh list
-    listModelArr =  [self _fetchUserList].copy;
+    listModelArr =  [self ycl_fetchUserList].copy;
     [uList reloadData];
     
     if (listModelArr.count <= 0) {
         nameTF.text = @"";
-        [self _userListViewClose];
+        [self ycl_userListViewClose];
     }
 }
 
 
 #pragma mark - To Bind View Method
 
-- (void)_toBindViewWithMode:(YCBindMode)mode
+- (void)ycl_toBindViewWithMode:(YCBindMode)mode
 {
     YCBindView *bindView = [[YCBindView alloc] initWithMode:mode];
     [UIView animateWithDuration:tRotaTomeInterval
@@ -1662,7 +1662,7 @@ static NSInteger chimaOpenTime = 3;
     if (textField.returnKeyType == UIReturnKeyDone) {
         [textField resignFirstResponder];
         // comfirm btn down
-        [self loginViewBtnAction:loginComfirmBtn];
+        [self ycl_loginViewBtnAction:loginComfirmBtn];
     }
     
     return YES;
@@ -1725,28 +1725,28 @@ static NSInteger chimaOpenTime = 3;
 
 #pragma mark - Private
 
-- (UILabel *)_createSeperateLine
+- (UILabel *)ycl_createSeperateLine
 {
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
     label.backgroundColor = [UIColor colorWithHexString:kBlackHex];
     return label;
 }
 
-- (NSArray *)_fetchUserList
+- (NSArray *)ycl_fetchUserList
 {
     return [YCDataUtils ycd_unarchNormalUser];
 }
 
 #pragma mark - 用户协议
 
-- (void)_addAgreeContentToView:(UIView *)baseview
+- (void)ycl_addAgreeContentToView:(UIView *)baseview
 {
     // 条款
     // 条款的勾选按钮
     checkBoxBtn = [HelloUtils ycu_initBtnWithNormalImage:termBtn_check
                                     highlightedImage:nil
                                                  tag:kYCLoginCheckBoxBtnTag
-                                            selector:@selector(_changeBoxImage)
+                                            selector:@selector(ycl_changeBoxImage)
                                               target:self];
     [baseview addSubview:checkBoxBtn];
     
@@ -1817,7 +1817,7 @@ static NSInteger chimaOpenTime = 3;
     return YES;
 }
 
-- (void)_changeBoxImage
+- (void)ycl_changeBoxImage
 {
     checkboxStatus = !checkboxStatus;
     if (checkboxStatus) {

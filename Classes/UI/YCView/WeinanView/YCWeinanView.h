@@ -10,8 +10,8 @@
 
 @interface YCWeinanView : YCBaseView
 
-- (instancetype)justInit;
+- (instancetype)ycw_justInit;
 
-- (void)changeToAccountLogin;
+- (void)ycwchangeToAccountLogin;
 
 @end

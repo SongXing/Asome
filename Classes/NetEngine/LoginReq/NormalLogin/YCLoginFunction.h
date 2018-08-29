@@ -11,11 +11,11 @@
  */
 @interface YCLoginFunction (ChangePassword)
 
-+(void)doChangePasswordWithUserName:(NSString *)userName
-                    andOldPassword:(NSString *)oldPassword
-                    andNewPassword:(NSString *)newPassword
-                     andDomainName:(NSString *)domainName
-                        completion:(void(^)())completion;
++(void)ycy_doChangePasswordWithUserName:(NSString *)userName
+                    ycy_andOldPassword:(NSString *)oldPassword
+                    ycy_andNewPassword:(NSString *)newPassword
+                     ycy_andDomainName:(NSString *)domainName
+                        ycy_completion:(void(^)())completion;
 
 @end
 
@@ -25,25 +25,25 @@
  */
 @interface YCLoginFunction (RegisterAccount)
 
-+(void)doRegisterAccountWithUserName:(NSString *)userName
-                         andPassword:(NSString *)password
-                            andEmail:(NSString *)email
-                       andDomainName:(NSString *)domainName
-                          completion:(void(^)())completion;
++(void)ycy_doRegisterAccountWithUserName:(NSString *)userName
+                         ycy_andPassword:(NSString *)password
+                            ycy_andEmail:(NSString *)email
+                       ycy_andDomainName:(NSString *)domainName
+                          ycy_completion:(void(^)())completion;
 
-+ (void)doRegisterAccountWithUserName:(NSString *)userName
-                          andPassword:(NSString *)password
-                             andEmail:(NSString *)email
-                             andPhone:(NSString *)phone
-                          andLoadCode:(NSString *)loadCode
-                        andDomainName:(NSString *)domainName
-                           completion:(void(^)())completion;
++ (void)ycy_doRegisterAccountWithUserName:(NSString *)userName
+                          ycy_andPassword:(NSString *)password
+                             ycy_andEmail:(NSString *)email
+                             ycy_andPhone:(NSString *)phone
+                          ycy_andLoadCode:(NSString *)loadCode
+                        ycy_andDomainName:(NSString *)domainName
+                           ycy_completion:(void(^)())completion;
 
-+ (void)doRegisterAccountWithPhone:(NSString *)phone
-                       andPassword:(NSString *)password
-                       andLoadCode:(NSString *)loadCode
-                     andDomainName:(NSString *)domainName
-                        completion:(void(^)())completion;
++ (void)ycy_doRegisterAccountWithPhone:(NSString *)phone
+                       ycy_andPassword:(NSString *)password
+                       ycy_andLoadCode:(NSString *)loadCode
+                     ycy_andDomainName:(NSString *)domainName
+                        ycy_completion:(void(^)())completion;
 @end
 
 
@@ -52,11 +52,11 @@
  */
 @interface YCLoginFunction (FindAndResetPassword)
 
-+(void)doFindAndResetPasswordWithUserName:(NSString *)userName
-                                   newPwd:(NSString *)newPwd
-                                    phone:(NSString *)mobileNum
-                              vertifyCode:(NSString *)vertifyCode
-                               completion:(void(^)())completion;
++(void)ycy_doFindAndResetPasswordWithUserName:(NSString *)userName
+                                   ycy_newPwd:(NSString *)newPwd
+                                    ycy_phone:(NSString *)mobileNum
+                              ycy_vertifyCode:(NSString *)vertifyCode
+                               ycy_completion:(void(^)())completion;
 @end
 
 
@@ -65,12 +65,12 @@
  */
 @interface YCLoginFunction (AccountLogin)
 
-+(void)doLoginWithAccount:(NSString * _Nonnull)userName
-              andPassword:(NSString * _Nullable)password
-                      uid:(NSString * _Nullable)uid
-                  session:(NSString * _Nullable)sessionId
-            andDomainName:(NSString * _Nullable)domainName
-               completion:(void(^)())completion;
++(void)ycy_doLoginWithAccount:(NSString * _Nonnull)userName
+              ycy_andPassword:(NSString * _Nullable)password
+                      ycy_uid:(NSString * _Nullable)uid
+                  ycy_session:(NSString * _Nullable)sessionId
+            ycy_andDomainName:(NSString * _Nullable)domainName
+               ycy_completion:(void(^)())completion;
 
 @end
 

@@ -36,11 +36,11 @@
     if (self) {
         self.loginCallback  = loginHandler;
         self.changeCallback = changeHandler;
-        accountName = [self _handleLongName:name];
+        accountName = [self yca_handleLongName:name];
         
-        [self _propertyInit];
-        [self bgViewInit];
-        [self randerContent];
+        [self yca_propertyInit];
+        [self yca_bgViewInit];
+        [self yca_randerContent];
     }
     return self;
 }
@@ -49,20 +49,20 @@
 {
     self = [super init];
     if (self) {
-        [self _propertyInit];
-        [self bgViewInit];
-        [self randerLoginedContent];
+        [self yca_propertyInit];
+        [self yca_bgViewInit];
+        [self yca_randerLoginedContent];
     }
     return self;
 }
 
-- (void)_propertyInit
+- (void)yca_propertyInit
 {
     _isPortrait = UIInterfaceOrientationIsPortrait([[YCUser shareUser] gameOrientation]);
     _isNeedToDoMoreAction = _isPortrait && device_is_iPhoneX;
 }
 
-- (NSString *)_handleLongName:(NSString *)name
+- (NSString *)yca_handleLongName:(NSString *)name
 {
     if (name.length <= kMaxNameLength) {
         return name;
@@ -74,7 +74,7 @@
     return resultStr;
 }
 
-- (void)bgViewInit
+- (void)yca_bgViewInit
 {
     
     [self setFrame:CGRectMake(0, 0, winWidth, winHeight)];
@@ -107,7 +107,7 @@
                      }];
 }
 
-- (void)randerContent
+- (void)yca_randerContent
 {
     // 账号 xxx 正在登錄
 //    NSString *hintText = [NSString stringWithFormat:SP_GET_LOCALIZED(@"TXT_ACCOUNT_XXX_LOGINING"),accountName];
@@ -127,7 +127,7 @@
     }];
     
     // 倒計時 3s
-    UILabel *countingLabel = [self _startWithTime:3.0f
+    UILabel *countingLabel = [self yca_startWithTime:3.0f
                                             title:@""
                                    countDownTitle:@""
                                         mainColor:[UIColor clearColor]
@@ -144,7 +144,7 @@
     
     // 切換賬號按鈕
 //    UIButton *changeBtn = [HelloUtils initBtnWithTitle:SP_GET_LOCALIZED(@"BTN_TITLE_CHANGE_LOGIN_TYPE") tag:kYCAutoChangeBtnTag selector:@selector(_btnActions:) target:self];
-    UIButton *changeBtn = [HelloUtils ycu_initBtnWithTitle:@"切换账号" tag:kYCAutoChangeBtnTag selector:@selector(_btnActions:) target:self];
+    UIButton *changeBtn = [HelloUtils ycu_initBtnWithTitle:@"切换账号" tag:kYCAutoChangeBtnTag selector:@selector(yca_btnActions:) target:self];
     [changeBtn.layer setBorderWidth:0.0f];
     [changeBtn.layer setBorderColor:[UIColor clearColor].CGColor];
     [changeBtn.layer setCornerRadius:0.0f];
@@ -160,11 +160,11 @@
     }];
 }
 
-- (void)randerLoginedContent
+- (void)yca_randerLoginedContent
 {
     YCUserModel *curModel = [YCDataUtils ycd_unarchNormalUser][0];
 //    NSString *hintText = [NSString stringWithFormat:SP_GET_LOCALIZED(@"TXT_ACCOUNT_XXX_WELCOMEBACK"),[self _handleLongName:curModel.account]];
-    NSString *hintText = [NSString stringWithFormat:@"%@ 欢迎回来",[self _handleLongName:curModel.account]];
+    NSString *hintText = [NSString stringWithFormat:@"%@ 欢迎回来",[self yca_handleLongName:curModel.account]];
     UILabel *loadingLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     loadingLabel.text = hintText;
     loadingLabel.textAlignment = NSTextAlignmentCenter;
@@ -179,11 +179,11 @@
         make.height.equalTo(@(txtSize.height));
     }];
     
-    [self performSelector:@selector(_dismissView) withObject:nil afterDelay:tLoginedTimeInterval];
+    [self performSelector:@selector(yca_dismissView) withObject:nil afterDelay:tLoginedTimeInterval];
 }
 
 #pragma mark - Counting Label
-- (UILabel *)_startWithTime:(NSInteger)timeLine
+- (UILabel *)yca_startWithTime:(NSInteger)timeLine
                       title:(NSString *)title
              countDownTitle:(NSString *)subTitle
                   mainColor:(UIColor *)mColor
@@ -205,7 +205,7 @@
                 label.backgroundColor = mColor;
                 [label setText:@""];
                 
-                [self _pleaseGoonSir];
+                [self yca_pleaseGoonSir];
             });
         } else {
             int allTime = (int)timeLine + 1;
@@ -226,20 +226,20 @@
 
 #pragma mark - Action
 
-- (void)_pleaseGoonSir
+- (void)yca_pleaseGoonSir
 {
-    [self _dismissView];
+    [self yca_dismissView];
     self.loginCallback ? self.loginCallback():nil;
 }
 
-- (void)_btnActions:(UIButton *)sender
+- (void)yca_btnActions:(UIButton *)sender
 {
     dispatch_cancel(_timer);// 取消定时器事件, 同 dispatch_source_cancel(_timer);
-    [self _dismissView];
+    [self yca_dismissView];
     self.changeCallback ? self.changeCallback():nil;
 }
 
-- (void)_dismissView
+- (void)yca_dismissView
 {
     [UIView animateWithDuration:tRotaTomeInterval
                      animations:^{

@@ -33,10 +33,10 @@
 #define k_YC_URL_PAY          beatifulgirl_NSSTRING(((char []) {219, 202, 210, 244, 222, 217, 199, 0}))
 #define k_YC_URL_PLATFORM     beatifulgirl_NSSTRING(((char []) {219, 199, 202, 223, 205, 196, 217, 198, 244, 222, 217, 199, 0}))
 
-#define kDataDomain         [[YCDataUtils yc_getCDNGoods] objectForKey:k_YC_URL_DATA]
-#define kGeneralDomain      [[YCDataUtils yc_getCDNGoods] objectForKey:k_YC_URL_GENERAL]
-#define kPayDomain          [[YCDataUtils yc_getCDNGoods] objectForKey:k_YC_URL_PAY]
-#define kPlatformDomain     [[YCDataUtils yc_getCDNGoods] objectForKey:k_YC_URL_PLATFORM]
+#define kDataDomain         [[YCDataUtils ycy_getCDNGoods] objectForKey:k_YC_URL_DATA]
+#define kGeneralDomain      [[YCDataUtils ycy_getCDNGoods] objectForKey:k_YC_URL_GENERAL]
+#define kPayDomain          [[YCDataUtils ycy_getCDNGoods] objectForKey:k_YC_URL_PAY]
+#define kPlatformDomain     [[YCDataUtils ycy_getCDNGoods] objectForKey:k_YC_URL_PLATFORM]
 
 
 #define kSendCodeType_Login     beatifulgirl_NSSTRING(((char []) {199, 196, 204, 194, 197, 0}))

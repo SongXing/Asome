@@ -6,11 +6,11 @@
 @implementation YCLoginFunction (FindAndResetPassword)
 
 
-+(void)doFindAndResetPasswordWithUserName:(NSString *)userName
-                                   newPwd:(NSString *)newPwd
-                                    phone:(NSString *)mobileNum
-                              vertifyCode:(NSString *)vertifyCode
-                               completion:(void(^)())completion
++(void)ycy_doFindAndResetPasswordWithUserName:(NSString *)userName
+                                   ycy_newPwd:(NSString *)newPwd
+                                    ycy_phone:(NSString *)mobileNum
+                              ycy_vertifyCode:(NSString *)vertifyCode
+                               ycy_completion:(void(^)())completion
 {
     NSDictionary *dict = nil;
     dict = @{

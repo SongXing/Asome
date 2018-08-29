@@ -72,13 +72,13 @@
 
 #pragma mark - 输入正则
 
-+ (BOOL)validUserName:(NSString *)userName;
++ (BOOL)ycu_validUserName:(NSString *)userName;
 
-+ (BOOL)validEmailFormat:(UITextField *)textField;
++ (BOOL)ycu_validEmailFormat:(UITextField *)textField;
 
-+ (BOOL)validPassWord:(NSString *)pwd;
++ (BOOL)ycu_validPassWord:(NSString *)pwd;
 
-+ (BOOL)validCnMobileNumber:(NSString *)mobileNum;
++ (BOOL)ycu_validCnMobileNumber:(NSString *)mobileNum;
 
 #pragma mark - 正则不通过的提示语
 

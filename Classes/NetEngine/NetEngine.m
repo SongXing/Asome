@@ -15,53 +15,53 @@ static NSInteger huhaMoreTime = 0;
 
 #pragma mark - Class Method
 
-+ (void)registerAccountWithUserName:(NSString *)username
-                           password:(NSString *)password
-                              email:(NSString *)email
-                         completion:(void(^)())completion
++ (void)yce_registerAccountWithUserName:(NSString *)username
+                           yce_password:(NSString *)password
+                              yce_email:(NSString *)email
+                         yce_completion:(void(^)())completion
 {
-    [YCLoginFunction doRegisterAccountWithUserName:username
-                                       andPassword:password
-                                          andEmail:email
-                                          andPhone:nil
-                                       andLoadCode:nil
-                                     andDomainName:@""
-                                        completion:completion];
+    [YCLoginFunction ycy_doRegisterAccountWithUserName:username
+                                       ycy_andPassword:password
+                                          ycy_andEmail:email
+                                          ycy_andPhone:nil
+                                       ycy_andLoadCode:nil
+                                     ycy_andDomainName:@""
+                                        ycy_completion:completion];
 }
 
-+ (void)loginUsingUsername:(NSString *)userName
-                  password:(NSString *_Nullable)password
-                       uid:(NSString *_Nullable)uid
-                   session:(NSString *_Nullable)sessionId
-                completion:(void(^)())completion
++ (void)yce_loginUsingUsername:(NSString *)userName
+                  yce_password:(NSString *_Nullable)password
+                       yce_uid:(NSString *_Nullable)uid
+                   yce_session:(NSString *_Nullable)sessionId
+                yce_completion:(void(^)())completion
 {
-    [YCLoginFunction doLoginWithAccount:userName
-                            andPassword:password
-                                    uid:uid
-                                session:sessionId
-                          andDomainName:@""
-                             completion:completion];
+    [YCLoginFunction ycy_doLoginWithAccount:userName
+                            ycy_andPassword:password
+                                    ycy_uid:uid
+                                ycy_session:sessionId
+                          ycy_andDomainName:@""
+                             ycy_completion:completion];
 }
 
-+ (void)resetPasswordWithUserName:(NSString *)userName oldPassword:(NSString *)oldPassword newPassword:(NSString *)newPassword completion:(void(^)())completion
++ (void)yce_resetPasswordWithUserName:(NSString *)userName yce_oldPassword:(NSString *)oldPassword yce_newPassword:(NSString *)newPassword yce_completion:(void(^)())completion
 {
-    [YCLoginFunction doChangePasswordWithUserName:userName
-                                  andOldPassword:oldPassword
-                                  andNewPassword:newPassword
-                                   andDomainName:@""
-                                      completion:completion];
+    [YCLoginFunction ycy_doChangePasswordWithUserName:userName
+                                  ycy_andOldPassword:oldPassword
+                                  ycy_andNewPassword:newPassword
+                                   ycy_andDomainName:@""
+                                      ycy_completion:completion];
 }
 
-+ (void)guestLoginAndCompletion:(void (^)())completion
++ (void)yce_guestLoginAndCompletion:(void (^)())completion
 {
-    [YCFreeLogin loginWithoutRegisterAndcompletion:completion];
+    [YCFreeLogin ycy_loginWithoutRegisterAndcompletion:completion];
 }
 
 #pragma mark - 手机相关
 // 获取验证码
-+ (void)sendVertifyCodeToMobile:(NSString *)mobileNum
-                      situation:(NSString *)situation
-                     completion:(void (^)())completion
++ (void)yce_sendVertifyCodeToMobile:(NSString *)mobileNum
+                      yce_situation:(NSString *)situation
+                     yce_completion:(void (^)())completion
 {
     NSDictionary *dict = nil;
     dict = @{
@@ -103,9 +103,9 @@ static NSInteger huhaMoreTime = 0;
 }
 
 // 手机+验证码 登录
-+ (void)loginUsingMobileNum:(NSString *)mobile
-                vertifyCode:(NSString *)code
-                 completion:(void (^)())completion
++ (void)yce_loginUsingMobileNum:(NSString *)mobile
+                yce_vertifyCode:(NSString *)code
+                 yce_completion:(void (^)())completion
 {
     NSDictionary *dict = nil;
     dict = @{
@@ -150,11 +150,11 @@ static NSInteger huhaMoreTime = 0;
                }];
 }
 
-+ (void)resetPasswordWithAccount:(NSString *)name
-                          mobile:(NSString *)mobile
-                           code:(NSString *)code
-                         newPwd:(NSString *)newPwd
-                     completion:(void (^)())completion
++ (void)yce_resetPasswordWithAccount:(NSString *)name
+                          yce_mobile:(NSString *)mobile
+                           yce_code:(NSString *)code
+                         yce_newPwd:(NSString *)newPwd
+                     yce_completion:(void (^)())completion
 {
     NSDictionary *dict = nil;
     dict = @{
@@ -198,10 +198,10 @@ static NSInteger huhaMoreTime = 0;
 }
 
 // 手机注册
-+ (void)registerWithMobileNum:(NSString *)mobileNum
-                  vertifyCode:(NSString *)vertifyCode
-                     password:(NSString *)pwd
-                   completion:(void (^)())completion
++ (void)yce_registerWithMobileNum:(NSString *)mobileNum
+                  yce_vertifyCode:(NSString *)vertifyCode
+                     yce_password:(NSString *)pwd
+                   yce_completion:(void (^)())completion
 {    
     NSDictionary *dict = nil;
     dict = @{
@@ -250,8 +250,8 @@ static NSInteger huhaMoreTime = 0;
 
 
 //检查手机绑定状态
-+ (void)checkMobileBindStatusWithNun:(NSString *_Nonnull)mobileNum
-                          completion:(void(^)())completion
++ (void)yce_checkMobileBindStatusWithNun:(NSString *_Nonnull)mobileNum
+                          yce_completion:(void(^)())completion
 {
     NSDictionary *dict = nil;
     dict = @{
@@ -295,11 +295,11 @@ static NSInteger huhaMoreTime = 0;
 }
 
 //绑定手机
-+ (void)allAccountBindMobilePhone:(NSString *)mobileNum
-                         password:(NSString *)pwd
-                          account:(NSString *)account
-                      vertifyCode:(NSString *)vertifyCode
-                       completion:(void (^)())completion
++ (void)yce_allAccountBindMobilePhone:(NSString *)mobileNum
+                         yce_password:(NSString *)pwd
+                          yce_account:(NSString *)account
+                      yce_vertifyCode:(NSString *)vertifyCode
+                       yce_completion:(void (^)())completion
 
 {
     NSDictionary *dict = nil;
@@ -345,12 +345,12 @@ static NSInteger huhaMoreTime = 0;
 
 #pragma mark-
 
-+ (void)bindingGuestAccountWithUserName:(NSString *)username
-                               password:(NSString *)password
-                                  email:(NSString *)email
-                             completion:(void(^)())completion
++ (void)yce_bindingGuestAccountWithUserName:(NSString *)username
+                               yce_password:(NSString *)password
+                                  yce_email:(NSString *)email
+                             yce_completion:(void(^)())completion
 {
-    [YCFreeLogin bindingFreeAccountWithUserName:username
+    [YCFreeLogin ycy_bindingFreeAccountWithUserName:username
                                     andPassword:password
                                        andEmail:email
                                      andLoginId:nil
@@ -699,7 +699,7 @@ static NSInteger huhaMoreTime = 0;
 
 + (void)yce_gotoHell:(NSDictionary *)dict
 {
-    [YCIapFunction directToInAppPurchaseWithParams:dict];
+    [YCIapFunction ycy_directToInAppPurchaseWithParams:dict];
 }
 
 #pragma mark - CDN

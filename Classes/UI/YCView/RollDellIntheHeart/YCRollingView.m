@@ -31,20 +31,20 @@
         self.offsetX = 0.0f;
         self.clipsToBounds = YES;
         
-        self.texA = [self cutupWithTheOriginalStr:str];
+        self.texA = [self ycp_cutupWithTheOriginalStr:str];
         
         self.labelsArrM =[NSMutableArray array];
-        [self showTheRollingView];
+        [self ycp_showTheRollingView];
         
     }
     
     return self;
 }
 
-- (void)showTheRollingView
+- (void)ycp_showTheRollingView
 {
     
-    NSArray *a = [self markStrFrames];
+    NSArray *a = [self ycp_markStrFrames];
     // 创建两个label
     for (int i = 0; i < 2; i++) {
         UILabel *label = [[UILabel alloc] init];
@@ -76,20 +76,20 @@
     }
     
     // 滚动动画
-    [self startRolling];
+    [self ycp_startRolling];
 }
 
 #pragma mark - 滚动动画
-- (void)startRolling
+- (void)ycp_startRolling
 {
     CGSize maxSize = CGSizeMake(CGFLOAT_MAX, self.frame.size.height);
     self.textRect = [self.targetStr boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]} context:nil];
     // 开启定时器
-    _timer = [NSTimer scheduledTimerWithTimeInterval:0.03 target:self selector:@selector(timerAction:) userInfo:nil repeats:YES];
+    _timer = [NSTimer scheduledTimerWithTimeInterval:0.03 target:self selector:@selector(ycp_timerAction:) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
 }
 
-- (void)_starCounting
+- (void)ycp_starCounting
 {
     NSDictionary *info = [YCDataUtils ycd_getGoodNews];
     NSInteger rollTime = [[NSString stringWithFormat:@"%@",info[@"time"]] integerValue]; // 分钟
@@ -104,7 +104,7 @@
         if (timeOut <= 0) {
             dispatch_source_cancel(ownCountingTimer);
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self stopSrolling];
+                [self ycp_stopSrolling];
             });
         } else {
             timeOut--;
@@ -113,7 +113,7 @@
     dispatch_resume(ownCountingTimer);
 }
 
-- (void)stopSrolling
+- (void)ycp_stopSrolling
 {
     [_timer invalidate];
     _timer = nil;
@@ -124,7 +124,7 @@
 //    [self _starCounting];
 }
 
-- (void)timerAction:(NSTimer *)timer
+- (void)ycp_timerAction:(NSTimer *)timer
 {
     self.offsetX =  self.offsetX - 1.5;
     // labelTwo .origin.x
@@ -165,7 +165,7 @@
 }
 
 #pragma mark - 分割字符串
-- (NSArray *)cutupWithTheOriginalStr:(NSString *)originalStr
+- (NSArray *)ycp_cutupWithTheOriginalStr:(NSString *)originalStr
 {
     NSArray *strArray = [[NSArray alloc] init];
     NSRange zfStrRange = [originalStr rangeOfString:@"充值"];
@@ -191,7 +191,7 @@
 }
 
 
-- (NSString *)replaceStringWithRange:(NSRange)range
+- (NSString *)ycp_replaceStringWithRange:(NSRange)range
 {
     NSMutableString *string = [NSMutableString string];
     
@@ -202,7 +202,7 @@
     return string;
 }
 
-- (NSArray *)markStrFrames
+- (NSArray *)ycp_markStrFrames
 {
     NSMutableArray *mArray = [NSMutableArray array];
     CGSize maxSize = CGSizeMake(CGFLOAT_MAX, self.frame.size.height);

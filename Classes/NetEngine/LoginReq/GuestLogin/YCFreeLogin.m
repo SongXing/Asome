@@ -9,24 +9,24 @@
 @implementation YCFreeLogin
 
 #pragma mark - 免注册登陆
-+ (void)loginWithoutRegisterAndcompletion:(void (^)())block
++ (void)ycy_loginWithoutRegisterAndcompletion:(void (^)())block
 {
     NSString *loginId = [SPFunction getSpUUID];
-    [YCThirdFunction doThirdLoginWithThirdId:loginId
+    [YCThirdFunction ycy_doThirdLoginWithThirdId:loginId
                                andThirdPlate:@"mac"
                                andDomainName:SP_GET_INFO(@"thirdLoginProName")
                                andOtherBlock:block];
 }
 
 #pragma mark - 绑定免注册账号（added）
-+(void)bindingFreeAccountWithUserName:(NSString *)userName
++(void)ycy_bindingFreeAccountWithUserName:(NSString *)userName
                           andPassword:(NSString *)password
                              andEmail:(NSString *)email
                            andLoginId:(NSString *)loginId
                         andThirdPlate:(NSString *)thirdPlate
                            completion:(void (^)())block
 {
-    [YCThirdFunction doAccountBindingWithUserName:userName
+    [YCThirdFunction ycy_doAccountBindingWithUserName:userName
                                       andPassword:password
                                          andEmail:email
                                        andLoginId:loginId

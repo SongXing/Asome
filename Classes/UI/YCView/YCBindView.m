@@ -94,10 +94,10 @@
     self = [super init];
     if (self) {
         m_mode = mode;
-        [self _propertyInit];
-        [self _widgetInit];
+        [self ycb_propertyInit];
+        [self ycb_widgetInit];
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_bindNoteLisetner:) name:UIKeyboardWillShowNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ycb_bindNoteLisetner:) name:UIKeyboardWillShowNotification object:nil];
     }
     return self;
 }
@@ -110,19 +110,19 @@
         
         m_mode = mode;
         
-        [self _propertyInit];
+        [self ycb_propertyInit];
         
         // reset cur user
         m_tmpUser = [[YCUserModel alloc] initWithDict:dict];
         
-        [self _widgetInit];
+        [self ycb_widgetInit];
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_bindNoteLisetner:) name:UIKeyboardWillShowNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ycb_bindNoteLisetner:) name:UIKeyboardWillShowNotification object:nil];
     }
     return self;
 }
 
-- (void)_propertyInit
+- (void)ycb_propertyInit
 {
     rate = 0.8f; // 校对比值
     curWidth = winWidth;
@@ -176,28 +176,28 @@
     m_tmpUser = listModelArr.count > 0 ? listModelArr[0] : nil;
 }
 
-- (void)_widgetInit
+- (void)ycb_widgetInit
 {
     self.userInteractionEnabled = YES;
     
-    [self _bgViewInit];
+    [self ycb_bgViewInit];
     
     switch (m_mode) {
         case YCBind_WarningToBind:
         case YCBind_Default:
-            [self _catchMyWidget];
+            [self ycb_catchMyWidget];
             break;
         case YCBind_RealNameVertify:
-            [self _realNameVertifyModeInit];
+            [self ycb_realNameVertifyModeInit];
             break;
         case YCBind_GuestToMobileWarning:
-            [self _guestBindMobileWarningInit];
+            [self ycb_guestBindMobileWarningInit];
             break;
         case YCBind_Forget_CheckAccount:
-            [self _forgetCheckAccountModeInit];
+            [self ycb_forgetCheckAccountModeInit];
             break;
         case YCBind_Forget_ResetPwd:
-            [self _forgetResetPwdModeInit];
+            [self ycb_forgetResetPwdModeInit];
             break;
         default:
             break;
@@ -207,7 +207,7 @@
 
 #pragma mark - Bg init
 
-- (void)_bgViewInit
+- (void)ycb_bgViewInit
 {
     [self setFrame:CGRectMake(0, 0, winWidth, winHeight)];
     [self setBackgroundColor:[UIColor clearColor]];
@@ -242,7 +242,7 @@
 
 #pragma mark - Default Init
 
-- (void)_catchMyWidget
+- (void)ycb_catchMyWidget
 {
     CGFloat onCalHeight = rate*curHeight*0.8;
     CGFloat mTopPadding = 0;
@@ -263,10 +263,10 @@
         make.height.equalTo(@(heightOfImage));
     }];
     
-    [self _bindModeWidgetsInitWithTopPadding:mTopPadding];
+    [self ycb_bindModeWidgetsInitWithTopPadding:mTopPadding];
 }
 
-- (void)_bindModeWidgetsInitWithTopPadding:(CGFloat)mTopPadding
+- (void)ycb_bindModeWidgetsInitWithTopPadding:(CGFloat)mTopPadding
 {
     CGFloat onCalHeight = rate*curHeight*0.8;
     CGFloat firstGap = 26.0f/curWidth * onCalHeight;
@@ -274,7 +274,7 @@
     CGFloat heightOfImage   = 100*rate*curWidth/228.0f/440.0f*98.0f;
     
     // back btn
-    UIButton *backBtn = [HelloUtils ycu_initBtnWithNormalImage:backBtn_normal highlightedImage:backBtn_highlighted tag:kYCBindBackBtnTag selector:@selector(bindViewBtnAction:) target:self];
+    UIButton *backBtn = [HelloUtils ycu_initBtnWithNormalImage:backBtn_normal highlightedImage:backBtn_highlighted tag:kYCBindBackBtnTag selector:@selector(ycb_bindViewBtnAction:) target:self];
     [mainBg addSubview:backBtn];
     [backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding/2));
@@ -289,7 +289,7 @@
     CGFloat txtFieldWidth = loginBtnWidthOfBgWidth*rate*curWidth;
     CGFloat txtFieldHeight = textFieldHeightOfBgHeight*rate*curWidth;
     
-    userListBtn = [HelloUtils ycu_rightViewWithImage:userListBtn_down tag:kYCBindRightUserListBtnTag selector:@selector(bindViewBtnAction:) target:self];
+    userListBtn = [HelloUtils ycu_rightViewWithImage:userListBtn_down tag:kYCBindRightUserListBtnTag selector:@selector(ycb_bindViewBtnAction:) target:self];
     [userListBtn setFrame:CGRectMake(-10, 0, userListBtn.frame.size.width, userListBtn.frame.size.height)];
     
     nameTF = [HelloUtils ycu_customTextfieldWidgetWithLeftView:nil rightView:userListBtn placeholder:@"请输入登录账号" delegate:self];
@@ -313,7 +313,7 @@
     // ------------
     mTopPadding += secondGap + txtFieldHeight;
     
-    eyesBtn = [HelloUtils ycu_rightViewWithImage:eyeBtn_off tag:kYCBindEyeBtnTag selector:@selector(bindViewBtnAction:) target:self];
+    eyesBtn = [HelloUtils ycu_rightViewWithImage:eyeBtn_off tag:kYCBindEyeBtnTag selector:@selector(ycb_bindViewBtnAction:) target:self];
     [eyesBtn setFrame:CGRectMake(0, 0, eyesBtn.frame.size.width, eyesBtn.frame.size.height)];
     
     pwdTF = [HelloUtils ycu_customTextfieldWidgetWithLeftView:nil rightView:nil placeholder:@"请输入密码" delegate:self];
@@ -367,7 +367,7 @@
     // send vertify btn
     NSString *strFetchVertifyCode = @"获取验证码";
     NSInteger sendVertifyBtnTag = kYCBindGetVertifyBtnTag;
-    UIButton *sendVertifyBtn = [HelloUtils ycu_initBtnWithType:UIButtonTypeCustom title:strFetchVertifyCode tag:sendVertifyBtnTag selector:@selector(bindViewBtnAction:) target:self];
+    UIButton *sendVertifyBtn = [HelloUtils ycu_initBtnWithType:UIButtonTypeCustom title:strFetchVertifyCode tag:sendVertifyBtnTag selector:@selector(ycb_bindViewBtnAction:) target:self];
     [sendVertifyBtn setTitle:strFetchVertifyCode forState:0];
     [sendVertifyBtn.layer setCornerRadius:0.0f];
     [sendVertifyBtn.layer setBorderWidth:0.0f];
@@ -399,7 +399,7 @@
     mTopPadding += secondGap + txtFieldHeight;
     
     // login btn
-    loginComfirmBtn = [HelloUtils yc_initBtnWithTitle:@"确定" tag:kYCBindComfirmBtnTag selector:@selector(bindViewBtnAction:) target:self];
+    loginComfirmBtn = [HelloUtils yc_initBtnWithTitle:@"确定" tag:kYCBindComfirmBtnTag selector:@selector(ycb_bindViewBtnAction:) target:self];
     [mainBg addSubview:loginComfirmBtn];
     [loginComfirmBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding));
@@ -417,7 +417,7 @@
 
 #pragma mark - Vertify Mode
 
-- (void)_realNameVertifyModeInit
+- (void)ycb_realNameVertifyModeInit
 {
     CGFloat onCalHeight = rate*curHeight*0.8;
     CGFloat mTopPadding = 0;
@@ -439,7 +439,7 @@
     }];
     
     // back btn
-    UIButton *backBtn = [HelloUtils ycu_initBtnWithNormalImage:backBtn_normal highlightedImage:backBtn_highlighted tag:kYCBindBackBtnTag selector:@selector(bindViewBtnAction:) target:self];
+    UIButton *backBtn = [HelloUtils ycu_initBtnWithNormalImage:backBtn_normal highlightedImage:backBtn_highlighted tag:kYCBindBackBtnTag selector:@selector(ycb_bindViewBtnAction:) target:self];
     [mainBg addSubview:backBtn];
     [backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding/2));
@@ -492,7 +492,7 @@
     mTopPadding += secondGap + txtFieldHeight;
     
     // login btn
-    loginComfirmBtn = [HelloUtils yc_initBtnWithTitle:@"确定" tag:kYCBindComfirmBtnTag selector:@selector(bindViewBtnAction:) target:self];
+    loginComfirmBtn = [HelloUtils yc_initBtnWithTitle:@"确定" tag:kYCBindComfirmBtnTag selector:@selector(ycb_bindViewBtnAction:) target:self];
     [mainBg addSubview:loginComfirmBtn];
     [loginComfirmBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding));
@@ -510,7 +510,7 @@
 
 #pragma mark - Mobile Bind Warning
 
-- (void)_guestBindMobileWarningInit
+- (void)ycb_guestBindMobileWarningInit
 {
     CGFloat txtFieldWidth = loginBtnWidthOfBgWidth*rate*curWidth;
     CGFloat txtFieldHeight = textFieldHeightOfBgHeight*rate*curWidth;
@@ -535,7 +535,7 @@
     }];
     
     // back btn
-    UIButton *backBtn = [HelloUtils ycu_initBtnWithNormalImage:backBtn_normal highlightedImage:backBtn_highlighted tag:kYCBindWarningBackBtnTag selector:@selector(bindViewBtnAction:) target:self];
+    UIButton *backBtn = [HelloUtils ycu_initBtnWithNormalImage:backBtn_normal highlightedImage:backBtn_highlighted tag:kYCBindWarningBackBtnTag selector:@selector(ycb_bindViewBtnAction:) target:self];
     [mainBg addSubview:backBtn];
     [backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding/2));
@@ -571,7 +571,7 @@
     mTopPadding += secondGap*2 + txtSize.height;
     
     // login btn
-    loginComfirmBtn = [HelloUtils yc_initBtnWithTitle:@"绑定手机" tag:kYCBindWarningMobileBtnTag selector:@selector(bindViewBtnAction:) target:self];
+    loginComfirmBtn = [HelloUtils yc_initBtnWithTitle:@"绑定手机" tag:kYCBindWarningMobileBtnTag selector:@selector(ycb_bindViewBtnAction:) target:self];
     [mainBg addSubview:loginComfirmBtn];
     [loginComfirmBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding));
@@ -587,7 +587,7 @@
     [loginComfirmBtn.titleLabel setFont:[UIFont fontWithName:kTxtFontName size:kTxtFontBigSize]];
     
     // ---
-    UIButton *keepplayingBtn = [HelloUtils ycu_initBtnWithTitle:@"不，我要试玩" tag:kYCBindWarningKeepPlayBtnTag selector:@selector(bindViewBtnAction:) target:self];
+    UIButton *keepplayingBtn = [HelloUtils ycu_initBtnWithTitle:@"不，我要试玩" tag:kYCBindWarningKeepPlayBtnTag selector:@selector(ycb_bindViewBtnAction:) target:self];
     [keepplayingBtn.layer setBorderWidth:0.0f];
     [keepplayingBtn.layer setBorderColor:[UIColor clearColor].CGColor];
     [keepplayingBtn.layer setCornerRadius:0.0f];
@@ -607,7 +607,7 @@
 
 #pragma mark - Forget Input Mobile Number
 
-- (void)_forgetCheckAccountModeInit
+- (void)ycb_forgetCheckAccountModeInit
 {
     CGFloat txtFieldWidth = loginBtnWidthOfBgWidth*rate*curWidth;
     CGFloat txtFieldHeight = textFieldHeightOfBgHeight*rate*curWidth;
@@ -632,7 +632,7 @@
     }];
     
     // back btn
-    UIButton *backBtn = [HelloUtils ycu_initBtnWithNormalImage:backBtn_normal highlightedImage:backBtn_highlighted tag:kYCBindBackBtnTag selector:@selector(bindViewBtnAction:) target:self];
+    UIButton *backBtn = [HelloUtils ycu_initBtnWithNormalImage:backBtn_normal highlightedImage:backBtn_highlighted tag:kYCBindBackBtnTag selector:@selector(ycb_bindViewBtnAction:) target:self];
     [mainBg addSubview:backBtn];
     [backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding/2));
@@ -664,7 +664,7 @@
     mTopPadding += secondGap*2 + txtFieldHeight;
     
     // login btn
-    loginComfirmBtn = [HelloUtils yc_initBtnWithTitle:@"确定" tag:kYCBindForgetCheckComfirmBtnTag selector:@selector(bindViewBtnAction:) target:self];
+    loginComfirmBtn = [HelloUtils yc_initBtnWithTitle:@"确定" tag:kYCBindForgetCheckComfirmBtnTag selector:@selector(ycb_bindViewBtnAction:) target:self];
     [mainBg addSubview:loginComfirmBtn];
     [loginComfirmBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding));
@@ -680,7 +680,7 @@
     [loginComfirmBtn.titleLabel setFont:[UIFont fontWithName:kTxtFontName size:kTxtFontBigSize]];
     
     // 帮助中心按钮
-    UIButton *helpCenterBtn = [HelloUtils ycu_initBtnWithTitle:@"帮助中心" tag:kYCLoginHelpCenterBtnTag selector:@selector(bindViewBtnAction:) target:self];
+    UIButton *helpCenterBtn = [HelloUtils ycu_initBtnWithTitle:@"帮助中心" tag:kYCLoginHelpCenterBtnTag selector:@selector(ycb_bindViewBtnAction:) target:self];
     [helpCenterBtn.layer setBorderWidth:0.0f];
     [helpCenterBtn.layer setBorderColor:[UIColor clearColor].CGColor];
     [helpCenterBtn.layer setCornerRadius:0.0f];
@@ -699,14 +699,14 @@
 #pragma mark - Forget Reset Pwd Mode
 
 
-- (void)_changeToForgetResetPwdMode
+- (void)ycb_changeToForgetResetPwdMode
 {
     m_mode = YCBind_Forget_ResetPwd;    
-    [self _makeCheckViewInVisible];
+    [self ycb_makeCheckViewInVisible];
  
     if ([self viewWithTag:kYCBindForgetResetTipsLabelTag]) {
         
-        [self _openResetViewWidget];
+        [self ycb_openResetViewWidget];
         
         return;
     }
@@ -717,10 +717,10 @@
 //    CGFloat secondGap = 8.0f/curWidth * onCalHeight;
     mTopPadding += firstGap;
     
-    [self _makeForgetResetPwdWidgetWithTopPadding:mTopPadding];
+    [self ycb_makeForgetResetPwdWidgetWithTopPadding:mTopPadding];
 }
 
-- (void)_makeForgetResetPwdWidgetWithTopPadding:(CGFloat)mTopPadding
+- (void)ycb_makeForgetResetPwdWidgetWithTopPadding:(CGFloat)mTopPadding
 {
     CGFloat txtFieldWidth = loginBtnWidthOfBgWidth*rate*curWidth;
     CGFloat txtFieldHeight = textFieldHeightOfBgHeight*rate*curWidth;
@@ -778,7 +778,7 @@
     // send vertify btn
     NSString *strFetchVertifyCode = @"获取验证码";
     NSInteger sendVertifyBtnTag = kYCBindGetVertifyBtnTag;
-    UIButton *sendVertifyBtn = [HelloUtils ycu_initBtnWithType:UIButtonTypeCustom title:strFetchVertifyCode tag:sendVertifyBtnTag selector:@selector(bindViewBtnAction:) target:self];
+    UIButton *sendVertifyBtn = [HelloUtils ycu_initBtnWithType:UIButtonTypeCustom title:strFetchVertifyCode tag:sendVertifyBtnTag selector:@selector(ycb_bindViewBtnAction:) target:self];
     [sendVertifyBtn setTitle:strFetchVertifyCode forState:0];
     [sendVertifyBtn.layer setCornerRadius:0.0f];
     [sendVertifyBtn.layer setBorderWidth:0.0f];
@@ -812,7 +812,7 @@
     mTopPadding += secondGap*2 + txtFieldHeight;
  
     // login btn
-    UIButton * resetComfirmBtn = [HelloUtils yc_initBtnWithTitle:@"确定" tag:kYCBindForgetResetComfirmBtnTag selector:@selector(bindViewBtnAction:) target:self];
+    UIButton * resetComfirmBtn = [HelloUtils yc_initBtnWithTitle:@"确定" tag:kYCBindForgetResetComfirmBtnTag selector:@selector(ycb_bindViewBtnAction:) target:self];
     [mainBg addSubview:resetComfirmBtn];
     [resetComfirmBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding));
@@ -828,7 +828,7 @@
     [resetComfirmBtn.titleLabel setFont:[UIFont fontWithName:kTxtFontName size:kTxtFontBigSize]];
 }
 
-- (void)_forgetResetPwdModeInit
+- (void)ycb_forgetResetPwdModeInit
 {
     
     CGFloat onCalHeight = rate*curHeight*0.8;
@@ -851,7 +851,7 @@
     }];
 
     // back btn
-    UIButton *backBtn = [HelloUtils ycu_initBtnWithNormalImage:backBtn_normal highlightedImage:backBtn_highlighted tag:kYCBindBackBtnTag selector:@selector(bindViewBtnAction:) target:self];
+    UIButton *backBtn = [HelloUtils ycu_initBtnWithNormalImage:backBtn_normal highlightedImage:backBtn_highlighted tag:kYCBindBackBtnTag selector:@selector(ycb_bindViewBtnAction:) target:self];
     [mainBg addSubview:backBtn];
     [backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding/2));
@@ -861,19 +861,19 @@
     }];
     
     
-    [self _makeForgetResetPwdWidgetWithTopPadding:mTopPadding];
+    [self ycb_makeForgetResetPwdWidgetWithTopPadding:mTopPadding];
 }
 
 #pragma mark - CheckViewVisible
 
-- (void)_makeCheckViewInVisible
+- (void)ycb_makeCheckViewInVisible
 {
     [[self viewWithTag:kYCBindNameInputViewTag] setHidden:YES];
     [[self viewWithTag:kYCLoginHelpCenterBtnTag] setHidden:YES];
     [[self viewWithTag:kYCBindForgetCheckComfirmBtnTag] setHidden:YES];
 }
 
-- (void)_makeResetViewInVisible
+- (void)ycb_makeResetViewInVisible
 {
     [[self viewWithTag:kYCBindForgetResetTipsLabelTag] setHidden:YES];
     [[self viewWithTag:kYCBindPwdInputViewTag] setHidden:YES];
@@ -881,22 +881,22 @@
     [[self viewWithTag:kYCBindForgetResetComfirmBtnTag] setHidden:YES];
 }
 
-- (void)_openCheckViewWidget
+- (void)ycb_openCheckViewWidget
 {
     m_mode = YCBind_Forget_CheckAccount;
     
-    [self _makeResetViewInVisible];
+    [self ycb_makeResetViewInVisible];
     
     [[self viewWithTag:kYCBindNameInputViewTag] setHidden:NO];
     [[self viewWithTag:kYCLoginHelpCenterBtnTag] setHidden:NO];
     [[self viewWithTag:kYCBindForgetCheckComfirmBtnTag] setHidden:NO];
 }
 
-- (void)_openResetViewWidget
+- (void)ycb_openResetViewWidget
 {
     m_mode = YCBind_Forget_ResetPwd;
     
-    [self _makeCheckViewInVisible];
+    [self ycb_makeCheckViewInVisible];
     
     [[self viewWithTag:kYCBindForgetResetTipsLabelTag] setHidden:NO];
     [[self viewWithTag:kYCBindPwdInputViewTag] setHidden:NO];
@@ -906,21 +906,21 @@
 
 #pragma mark - Warning Visible
 
-- (void)_makeWarningInVisible
+- (void)ycb_makeWarningInVisible
 {
     [[self viewWithTag:kYCBindWarningContentTag] setHidden:YES];
     [[self viewWithTag:kYCBindWarningMobileBtnTag] setHidden:YES];
     [[self viewWithTag:kYCBindWarningKeepPlayBtnTag] setHidden:YES];
 }
 
-- (void)_makeWarningVisible
+- (void)ycb_makeWarningVisible
 {
     [[self viewWithTag:kYCBindWarningContentTag] setHidden:NO];
     [[self viewWithTag:kYCBindWarningMobileBtnTag] setHidden:NO];
     [[self viewWithTag:kYCBindWarningKeepPlayBtnTag] setHidden:NO];
 }
 
-- (void)_makeBindModeInVisible
+- (void)ycb_makeBindModeInVisible
 {
     [[self viewWithTag:kYCBindBackBtnTag] setHidden:YES];
     [[self viewWithTag:kYCLoginAccountLoginBtnTag] setHidden:YES];
@@ -930,7 +930,7 @@
     [[self viewWithTag:kYCBindComfirmBtnTag] setHidden:YES];
 }
 
-- (void)_makeBindModeVisible
+- (void)ycb_makeBindModeVisible
 {
     [[self viewWithTag:kYCBindBackBtnTag] setHidden:NO];
     [[self viewWithTag:kYCLoginAccountLoginBtnTag] setHidden:NO];
@@ -940,15 +940,15 @@
     [[self viewWithTag:kYCBindComfirmBtnTag] setHidden:NO];
 }
 
-- (void)_makeBindWidget
+- (void)ycb_makeBindWidget
 {
     m_mode = YCBind_WarningToBind;
     // make bg rect large
-    [self _largeMainBgSize];
+    [self ycb_largeMainBgSize];
     
     if ([self viewWithTag:kYCBindPhoneInputViewTag]) {
         
-        [self _makeBindModeVisible];
+        [self ycb_makeBindModeVisible];
         return;
     }
     
@@ -958,10 +958,10 @@
 //    CGFloat secondGap = 8.0f/curWidth * onCalHeight;
     mTopPadding += firstGap;
     
-    [self _bindModeWidgetsInitWithTopPadding:mTopPadding];
+    [self ycb_bindModeWidgetsInitWithTopPadding:mTopPadding];
 }
 
-- (void)_largeMainBgSize
+- (void)ycb_largeMainBgSize
 {
     CGFloat realWidth = rate*curWidth;
     CGFloat realHeight = realWidth*0.95;
@@ -974,7 +974,7 @@
     mainBg.center = self.center;
 }
 
-- (void)_zoomMainBgSize
+- (void)ycb_zoomMainBgSize
 {
     CGFloat realWidth = rate*curWidth;
     CGFloat realHeight = rate*curHeight*0.8;
@@ -990,7 +990,7 @@
 
 #pragma mark - Button Action
 
-- (void)bindViewBtnAction:(UIButton *)sender
+- (void)ycb_bindViewBtnAction:(UIButton *)sender
 {
     switch (sender.tag) {
         case kYCBindWarningBackBtnTag:
@@ -1005,18 +1005,18 @@
             break;
         case kYCBindBackBtnTag:
         {
-            [self _textFieldResignFirstResponer];
+            [self ycb_textFieldResignFirstResponer];
             switch (m_mode) {
                 case YCBind_Forget_ResetPwd:
                 {
-                    [self _openCheckViewWidget];
+                    [self ycb_openCheckViewWidget];
                 }
                     break;
                 case YCBind_WarningToBind:
                 {
-                    [self _makeBindModeInVisible];
-                    [self _makeWarningVisible];
-                    [self _zoomMainBgSize];
+                    [self ycb_makeBindModeInVisible];
+                    [self ycb_makeWarningVisible];
+                    [self ycb_zoomMainBgSize];
                 }
                     break;
 
@@ -1039,7 +1039,7 @@
             
             NSString *mobilePhoneNum = phoneInput.text;
             mobilePhoneNum = [HelloUtils ycu_triString:mobilePhoneNum];
-            if (![HelloUtils validCnMobileNumber:mobilePhoneNum]) {
+            if (![HelloUtils ycu_validCnMobileNumber:mobilePhoneNum]) {
                 [HelloUtils ycu_invalidPhoneToast];
                 return;
             }
@@ -1053,9 +1053,9 @@
                     break;
             }
             
-            [NetEngine sendVertifyCodeToMobile:mobilePhoneNum
-                                     situation:codeSendType
-                                    completion:^(id reslut){
+            [NetEngine yce_sendVertifyCodeToMobile:mobilePhoneNum
+                                     yce_situation:codeSendType
+                                    yce_completion:^(id reslut){
                                         if ([reslut isKindOfClass:[NSDictionary class]]) {
                                             [HelloUtils ycu_counttingButton:sender
                                                               startTime:59.0f
@@ -1077,21 +1077,21 @@
                     NSString *pwd = pwdTF.text;
                     NSString *mobile = phoneInput.text;
                     NSString *code = codeInput.text;
-                    if (![HelloUtils validUserName:name]) {
+                    if (![HelloUtils ycu_validUserName:name]) {
                         [HelloUtils ycu_invalidNameToast];
                         return;
                     }
-                    if (![HelloUtils validPassWord:pwd]) {
+                    if (![HelloUtils ycu_validPassWord:pwd]) {
                         [HelloUtils ycu_invalidPwdToast];return;
                     }
-                    if (![HelloUtils validCnMobileNumber:mobile]) {
+                    if (![HelloUtils ycu_validCnMobileNumber:mobile]) {
                         [HelloUtils ycu_invalidPhoneToast];return;
                     }
-                    [NetEngine allAccountBindMobilePhone:mobile
-                                                password:pwd
-                                                 account:name
-                                             vertifyCode:code
-                                              completion:^(id result){
+                    [NetEngine yce_allAccountBindMobilePhone:mobile
+                                                yce_password:pwd
+                                                 yce_account:name
+                                             yce_vertifyCode:code
+                                              yce_completion:^(id result){
                                                   
                                                   if ([result isKindOfClass:[NSDictionary class]]) {
                                                       
@@ -1123,18 +1123,18 @@
                 case YCBind_Forget_CheckAccount:
                 {
                     NSString *name = nameTF.text;// 或账号，或手机号
-                    if (![HelloUtils validUserName:name]) {
+                    if (![HelloUtils ycu_validUserName:name]) {
                         [HelloUtils ycu_invalidNameToast];
                         return;
                     }
-                    [NetEngine checkMobileBindStatusWithNun:name
-                                                 completion:^(id result){
+                    [NetEngine yce_checkMobileBindStatusWithNun:name
+                                                 yce_completion:^(id result){
                                                      if ([result isKindOfClass:[NSDictionary class]]) {
                                                          NSString *phoneNum = result[kRespStrData][kRespStrMobilephone];
                                                          NSString *account = result[kRespStrData][kRespStrUsername];
                                                          m_phoneNum = phoneNum.copy;
                                                          m_curAccount = account.copy;
-                                                         [self _changeToForgetResetPwdMode];
+                                                         [self ycb_changeToForgetResetPwdMode];
                                                      }
                                                  }];
                 }
@@ -1143,21 +1143,21 @@
                 {
                     NSString *newPwd = pwdTF.text;
                     NSString *code   = codeInput.text;
-                    if (![HelloUtils validPassWord:newPwd]) {
+                    if (![HelloUtils ycu_validPassWord:newPwd]) {
                         [HelloUtils ycu_invalidPwdToast];
                         return;
                     }
-                    if (![HelloUtils validUserName:code]) {
+                    if (![HelloUtils ycu_validUserName:code]) {
                         [HelloUtils ycu_invalidVertifyCodeToast];
                         return;
                     }
                     NSString *name      = m_curAccount;
                     NSString *mobile    = m_phoneNum;
-                    [NetEngine resetPasswordWithAccount:name
-                                                 mobile:mobile
-                                                   code:code
-                                                 newPwd:newPwd
-                                             completion:^(id result){
+                    [NetEngine yce_resetPasswordWithAccount:name
+                                                 yce_mobile:mobile
+                                                   yce_code:code
+                                                 yce_newPwd:newPwd
+                                             yce_completion:^(id result){
                                                  
                                                  [self.superview removeFromSuperview];
                                                  
@@ -1176,21 +1176,21 @@
         {
             NSString *newPwd = pwdTF.text;
             NSString *code   = codeInput.text;
-            if (![HelloUtils validPassWord:newPwd]) {
+            if (![HelloUtils ycu_validPassWord:newPwd]) {
                 [HelloUtils ycu_invalidPwdToast];
                 return;
             }
-            if (![HelloUtils validUserName:code]) {
+            if (![HelloUtils ycu_validUserName:code]) {
                 [HelloUtils ycu_invalidVertifyCodeToast];
                 return;
             }
             NSString *name      = m_curAccount;
             NSString *mobile    = m_phoneNum;
-            [NetEngine resetPasswordWithAccount:name
-                                         mobile:mobile
-                                           code:code
-                                         newPwd:newPwd
-                                     completion:^(id result){
+            [NetEngine yce_resetPasswordWithAccount:name
+                                         yce_mobile:mobile
+                                           yce_code:code
+                                         yce_newPwd:newPwd
+                                     yce_completion:^(id result){
                                          
                                          if ([result isKindOfClass:[NSDictionary class]]) {
                                              [self.superview removeFromSuperview];
@@ -1208,8 +1208,8 @@
             break;
         case kYCBindWarningMobileBtnTag:
         {
-            [self _makeWarningInVisible];
-            [self _makeBindWidget];
+            [self ycb_makeWarningInVisible];
+            [self ycb_makeBindWidget];
         }
             break;
         case kYCBindWarningKeepPlayBtnTag:
@@ -1230,9 +1230,9 @@
             
             userListShow = !userListShow;
             if (userListShow) {
-                [self _userListViewShow];
+                [self ycb_userListViewShow];
             } else {
-                [self _userListViewClose];
+                [self ycb_userListViewClose];
             }
         }
             break;
@@ -1240,7 +1240,7 @@
         {
             UITableViewCell *cell = (UITableViewCell *)[sender superview];
             NSIndexPath *indexPath = [uList indexPathForCell:cell];
-            [self _removeUserWithIndex:indexPath.row];
+            [self ycb_removeUserWithIndex:indexPath.row];
         }
             break;
         case kYCBindEyeBtnTag:
@@ -1261,9 +1261,9 @@
 
 #pragma mark - Account List Action
 
-- (void)_userListViewShow
+- (void)ycb_userListViewShow
 {
-    [self _userListBtnRotaToShow];
+    [self ycb_userListBtnRotaToShow];
     
     userListView = [[UIView alloc] initWithFrame:CGRectZero];
     userListView.backgroundColor = [UIColor whiteColor];
@@ -1272,7 +1272,7 @@
     userListView.backgroundColor = [UIColor clearColor];
     
     // 改用蒙版，添加手势
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cn_tapAction:)];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ycl_tapAction:)];
     tap.delegate = self;
     [userListView addGestureRecognizer:tap];
     
@@ -1312,20 +1312,20 @@
     uList.bounces = NO;
 }
 
-- (void)_userListViewClose
+- (void)ycb_userListViewClose
 {
     // close
     [userListView removeFromSuperview];
-    [self _userListBtnRotaToClose];
+    [self ycb_userListBtnRotaToClose];
     userListShow = !userListShow;
 }
 
-- (void)cn_tapAction:(UITapGestureRecognizer *)tap
+- (void)ycb_tapAction:(UITapGestureRecognizer *)tap
 {
-    [self _userListViewClose];
+    [self ycb_userListViewClose];
 }
 
-- (void)_userListBtnRotaToShow
+- (void)ycb_userListBtnRotaToShow
 {
     [UIView animateWithDuration:tRotaTomeInterval
                      animations:^{
@@ -1333,7 +1333,7 @@
                      }];
 }
 
-- (void)_userListBtnRotaToClose
+- (void)ycb_userListBtnRotaToClose
 {
     [UIView animateWithDuration:tRotaTomeInterval
                      animations:^{
@@ -1369,7 +1369,7 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier] ;
         
-        UIButton *delBtn = [HelloUtils ycu_initBtnWithNormalImage:user_list_close_btn_name highlightedImage:nil tag:kYCBindUserListDelBtnTag selector:@selector(bindViewBtnAction:) target:self];
+        UIButton *delBtn = [HelloUtils ycu_initBtnWithNormalImage:user_list_close_btn_name highlightedImage:nil tag:kYCBindUserListDelBtnTag selector:@selector(ycb_bindViewBtnAction:) target:self];
         [delBtn setFrame:CGRectMake(loginBtnWidthOfBgWidth*rate*curWidth-40, 0, uList.rowHeight, uList.rowHeight)];
         [cell addSubview:delBtn];
         
@@ -1401,11 +1401,11 @@
     }
     
     // close
-    [self _userListViewClose];
+    [self ycb_userListViewClose];
     
 }
 
-- (void)_removeUserWithIndex:(NSInteger)index
+- (void)ycb_removeUserWithIndex:(NSInteger)index
 {
     // remove in userdefault
     [YCDataUtils ycd_removeNormalUserWithIndex:index];
@@ -1415,7 +1415,7 @@
     
     if (listModelArr.count <= 0) {
         nameTF.text = @"";
-        [self _userListViewClose];
+        [self ycb_userListViewClose];
     }
 }
 
@@ -1423,10 +1423,10 @@
 // keybord down
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    [self _textFieldResignFirstResponer];
+    [self ycb_textFieldResignFirstResponer];
 }
 
-- (void)_textFieldResignFirstResponer
+- (void)ycb_textFieldResignFirstResponer
 {
     [nameTF resignFirstResponder];
     [pwdTF resignFirstResponder];
@@ -1484,7 +1484,7 @@
     if (textField.returnKeyType == UIReturnKeyDone) {
         [textField resignFirstResponder];
 
-        [self bindViewBtnAction:loginComfirmBtn];
+        [self ycb_bindViewBtnAction:loginComfirmBtn];
     }
     
     return YES;
@@ -1508,7 +1508,7 @@
     CGRect viewFrame = mainBg.frame;
     viewFrame.origin.y -= animatedDistance;
 //    [self _animationWithView:self frame:viewFrame duration:tRotaTomeInterval];
-    [self _animationWithView:mainBg frame:viewFrame duration:tRotaTomeInterval];//这里要改变的是mainbg的位置，如果改变self的位置，会导致mainbg变回原来大小
+    [self ycb_animationWithView:mainBg frame:viewFrame duration:tRotaTomeInterval];//这里要改变的是mainbg的位置，如果改变self的位置，会导致mainbg变回原来大小
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
@@ -1517,10 +1517,10 @@
     CGRect viewFrame = mainBg.frame;
     viewFrame.origin.y += animatedDistance;
 //    [self _animationWithView:self frame:viewFrame duration:tRotaTomeInterval];
-    [self _animationWithView:mainBg frame:viewFrame duration:tRotaTomeInterval];
+    [self ycb_animationWithView:mainBg frame:viewFrame duration:tRotaTomeInterval];
 }
 
-- (void)_animationWithView:(UIView *)view frame:(CGRect)viewFrame duration:(NSTimeInterval)duration
+- (void)ycb_animationWithView:(UIView *)view frame:(CGRect)viewFrame duration:(NSTimeInterval)duration
 {
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationBeginsFromCurrentState:YES];
@@ -1531,7 +1531,7 @@
 
 #pragma mark - Noti
 
-- (void)_bindNoteLisetner:(NSNotification *)note
+- (void)ycb_bindNoteLisetner:(NSNotification *)note
 {
     if ([note.name isEqualToString:UIKeyboardWillShowNotification]) {
         NSDictionary *userInfo = note.userInfo;

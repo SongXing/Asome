@@ -154,7 +154,7 @@
                     SP_IAP_LOG(@"paymentQueue start re_purchase,begin read data to memory from local(SKPaymentTransactionStatePurchased)")
                     SP_IAP_LOG(@"******************************")
                     //查看本地有没有上次的信息纪录，如果有上次的纪录，初始化成员变量返回YES，如果没有，返回NO
-                    BOOL DOES_HAVE_LOCAL_DATA = [YCIapFunction setDataFromLocal];
+                    BOOL DOES_HAVE_LOCAL_DATA = [YCIapFunction ycy_setDataFromLocal];
                     //如果有记录，并且初始化过数据了，开始下一步服务器验证
                     if (DOES_HAVE_LOCAL_DATA)
                     {
@@ -173,7 +173,7 @@
                         //移出交易
                         [[SKPaymentQueue defaultQueue] finishTransaction: transaction];
                         //清除数据
-                        [IapDataDog removeIapData];
+                        [IapDataDog ycy_removeIapData];
                     }
                 }
                 //如果是用户点击购买的情况。

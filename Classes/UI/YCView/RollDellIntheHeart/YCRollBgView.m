@@ -26,12 +26,12 @@ static float bgViewH = 44 * 0.6;
     return self;
 }
 
-- (BOOL)isShow;
+- (BOOL)ycp_isShow;
 {
     return _isShow;
 }
 
-- (void)show
+- (void)ycp_show
 {
     // 适配iPhoneX。横屏，所有各留44
     // 竖版，上方留44
@@ -49,11 +49,11 @@ static float bgViewH = 44 * 0.6;
     self.alpha = 0.6;
     
     // 添加左右UI
-    [self addLeftandRigthUI];
+    [self ycp_addLeftandRigthUI];
     
 }
 
-- (void)addLeftandRigthUI
+- (void)ycp_addLeftandRigthUI
 {
     self.iamgeV = [[UIImageView alloc] initWithImage:GetImage(@"p_horn.png")];
     self.iamgeV.frame = CGRectMake(0, 0, bgViewH, bgViewH);
@@ -83,7 +83,7 @@ static float bgViewH = 44 * 0.6;
     self.rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
 //    _rightBtn.frame = CGRectMake(bgViewH + self.rollingView.frame.size.width, 0, bgViewH, bgViewH);;
     [_rightBtn setBackgroundImage:GetImage(@"p_rollclose.png") forState:UIControlStateNormal];
-    [_rightBtn addTarget:self action:@selector(rightBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [_rightBtn addTarget:self action:@selector(ycp_rightBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_rightBtn];
     _rightBtn.adjustsImageWhenHighlighted = NO;
     [_rightBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -97,7 +97,7 @@ static float bgViewH = 44 * 0.6;
     
 }
 
-- (void)rightBtnClick:(UIButton *)sender
+- (void)ycp_rightBtnClick:(UIButton *)sender
 {
     _isShow = NO;
     [self.iamgeV removeFromSuperview];

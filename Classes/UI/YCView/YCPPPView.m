@@ -72,14 +72,14 @@
     self = [super init];
     if (self) {
         productInfo = dict.copy;
-        [self _propertyInit];
-        [self _bgViewInit];
-        [self _ojbkInit];
+        [self ycp_propertyInit];
+        [self ycp_bgViewInit];
+        [self ycp_ojbkInit];
     }
     return self;
 }
 
-- (void)_propertyInit
+- (void)ycp_propertyInit
 {
     rate = 0.8f; // 校对比值
     curWidth = winWidth;
@@ -132,7 +132,7 @@
     
 }
 
-- (void)_bgViewInit
+- (void)ycp_bgViewInit
 {
     [self setFrame:CGRectMake(0, 0, winWidth, winHeight)];
     [self setBackgroundColor:[UIColor clearColor]];
@@ -157,7 +157,7 @@
     mainBg.layer.cornerRadius = 5.0f;
 }
 
-- (void)_ojbkInit
+- (void)ycp_ojbkInit
 {
     CGFloat txtFieldWidth = loginBtnWidthOfBgWidth*rate*curWidth;
 //    CGFloat txtFieldHeight = textFieldHeightOfBgHeight*rate*curWidth;
@@ -169,7 +169,7 @@
     mTopPadding += firstGap/2;
     
     // back btn
-    UIButton *backBtn = [HelloUtils ycu_initBtnWithNormalImage:backBtn_normal highlightedImage:backBtn_highlighted tag:kPPPBackBtnTag selector:@selector(pppViewBtnAction:) target:self];
+    UIButton *backBtn = [HelloUtils ycu_initBtnWithNormalImage:backBtn_normal highlightedImage:backBtn_highlighted tag:kPPPBackBtnTag selector:@selector(ycp_pppViewBtnAction:) target:self];
     [mainBg addSubview:backBtn];
     [backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding/2));
@@ -240,7 +240,7 @@
 
 #pragma mark - Button Action
 
-- (void)pppViewBtnAction:(UIButton *)sender
+- (void)ycp_pppViewBtnAction:(UIButton *)sender
 {
     [self removeFromSuperview];
 }

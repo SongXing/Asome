@@ -17,7 +17,7 @@ static YCIapServerAccess *_instance;
     return [super init];
 }
 
-+ (instancetype)defaultInstance {
++ (instancetype)ycy_defaultInstance {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _instance = [[YCIapServerAccess alloc] init];
@@ -25,7 +25,7 @@ static YCIapServerAccess *_instance;
     return _instance;
 }
 
-+(void)postToServerCheckTransactionAndSentGameColdWithUserId:(NSString * _Nonnull)userId
++(void)ycy_postToServerCheckTransactionAndSentGameColdWithUserId:(NSString * _Nonnull)userId
                                                    andServerCode:(NSString * _Nonnull)serverCode
                                                   andOrderId:(NSString * _Nonnull)orderId
                                                  andCurrencyCode:(NSString * _Nonnull)currencyCode
@@ -33,11 +33,10 @@ static YCIapServerAccess *_instance;
                                                 andTransactionId:(NSString * _Nonnull)transactionId
                                                      receiptData:(NSData * _Nonnull)receiptData
 {
-//    dispatch_barrier_async(_instance.iapPostQueue,^{    
     dispatch_barrier_async(dispatch_queue_create("comv.py.iapPostBarrierQuere", DISPATCH_QUEUE_SERIAL),^{
         dispatch_async(dispatch_get_main_queue(), ^{
     
-            [self _postToServerCheckTransactionAndSentGameColdWithUserId:userId
+            [self yci_postToServerCheckTransactionAndSentGameColdWithUserId:userId
                                                            andServerCode:serverCode
                                                               andOrderId:orderId
                                                          andCurrencyCode:currencyCode
@@ -49,7 +48,7 @@ static YCIapServerAccess *_instance;
 }
 
 
-+(void)_postToServerCheckTransactionAndSentGameColdWithUserId:(NSString *)userId
++(void)yci_postToServerCheckTransactionAndSentGameColdWithUserId:(NSString *)userId
                                                 andServerCode:(NSString *)serverCode
                                                    andOrderId:(NSString *)orderId
                                               andCurrencyCode:(NSString *)currencyCode
@@ -66,12 +65,12 @@ static YCIapServerAccess *_instance;
                                    serverCode:serverCode
                          andComplitionHandler:^(NSString * _Nullable code, NSString * _Nullable orderID, NSDictionary * _Nullable dic, NSError * _Nullable error) {
                              NSLog(@"验证与发货过程客户端不需要管，等着服务端去发游戏币就完了事");
-                             [IapDataDog removeIapData];
+                             [IapDataDog ycy_removeIapData];
                          }];
 }
 
 // 程序自验证
-+ (void)_verifyTransactionBase64Str:(NSString *)base64Str
++ (void)yci_verifyTransactionBase64Str:(NSString *)base64Str
 {
 //    _verifyBase64Str = base64Str;
     static NSString *curReqUrl = @"https://buy.itunes.apple.com/verifyReceipt";
@@ -142,7 +141,7 @@ static YCIapServerAccess *_instance;
                                                // This receipt is from the test environment, but it was sent to the production environment for verification. Send it to the test environment instead.
                                                NSLog(@"沙盒环境的订单，将要前往沙盒环境服务器验证");
                                                curReqUrl = sandboxUrl;
-                                               [self _verifyTransactionBase64Str:base64Str];
+                                               [self yci_verifyTransactionBase64Str:base64Str];
                                            }
                                                break;
                                                case 21008:

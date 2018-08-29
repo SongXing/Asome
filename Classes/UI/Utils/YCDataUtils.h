@@ -10,17 +10,17 @@
 
 @interface YCDataUtils : NSObject
 
-+ (void)cn_saveUserInfo:(NSDictionary *)dic;
++ (void)ycc_saveUserInfo:(NSDictionary *)dic;
 
-+ (NSArray *)cn_getAllUserInfo;
++ (NSArray *)ycc_getAllUserInfo;
 
-+ (void)cn_saveLatestUserInfo:(NSDictionary *)dic;
++ (void)ycc_saveLatestUserInfo:(NSDictionary *)dic;
 
-+ (NSDictionary *)cn_getLatestUserInfo;
++ (NSDictionary *)ycc_getLatestUserInfo;
 
-+ (void)cn_removeUserWithKey:(NSString *)key;
++ (void)ycc_removeUserWithKey:(NSString *)key;
 
-+ (void)cn_removeUserWithIndex:(NSUInteger)idx;
++ (void)ycc_removeUserWithIndex:(NSUInteger)idx;
 
 #pragma mark - 处理请求返回的用户列表
 
@@ -52,7 +52,7 @@
 
 + (void)ycd_handleCDNGoods:(NSDictionary *)dict;
 
-+ (NSDictionary *)yc_getCDNGoods;
++ (NSDictionary *)ycy_getCDNGoods;
 
 
 @end
