@@ -413,14 +413,14 @@ static NSInteger huhaMoreTime = 0;
     @try {
         dict = @{
 
-                 kReqStrMac      : [SPFunction getMacaddress] ? : @"",
-                 kReqStrDevice   : [SPFunction getSpUUID],
+                 kReqStrMac             : [SPFunction getMacaddress] ? : @"",
+                 kReqStrDevice          : [SPFunction getSpUUID],
                  kReqStrModelType       : kReqValiOS,
                  kReqStrGameVersion     : [SPFunction getBundleVersion],
-                 kReqStrDeviceModel    : [SPFunction getDeviceType],
+                 kReqStrDeviceModel     : [SPFunction getDeviceType],
                  kReqStrDeviceResolution    :   @"",
-                 kReqStrDeviceVersion  :   [SPFunction getSystemVersion],
-                 kReqStrDeviceNet      : @"",
+                 kReqStrDeviceVersion   :   [SPFunction getSystemVersion],
+                 kReqStrDeviceNet       : @"",
                  
                  
                  kReqStrAdid     :   [SPFunction getSpUUID],
