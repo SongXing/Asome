@@ -4,14 +4,14 @@
 #import "YCFreeLogin.h"
 #import "SPCentreInfo.h"
 #import "YCThirdFunction.h"
-
+#import "HelloHeader.h"
 
 @implementation YCFreeLogin
 
 #pragma mark - 免注册登陆
 + (void)loginWithoutRegisterAndcompletion:(void (^)())block
 {
-    NSString *loginId = [SPFunction getSpUUID];
+    NSString *loginId = [YCOpenUDID ycu_getYcUdidValue];
     [YCThirdFunction doThirdLoginWithThirdId:loginId
                                andThirdPlate:@"mac"
                                andDomainName:SP_GET_INFO(@"thirdLoginProName")

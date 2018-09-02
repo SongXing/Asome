@@ -13,11 +13,11 @@
 {
     NSDictionary *dict = nil;
     dict = @{
-             @"mac"            : [SPFunction getMacaddress],
-             @"adid"           : [SPFunction getSpUUID],
-             @"sid"            : [YCUser shareUser].serverId?:@"",
-             @"aid"            : [YCUser shareUser].aid?:@"",
-             @"openudid"       : @"",
+             kReqStrMac            : [SPFunction getMacaddress],
+             kReqStrAdid           : [SPFunction getIdfa],
+             kReqStrSid            : [YCUser shareUser].serverId?:@"",
+             kReqStrAid            : [YCUser shareUser].aid?:@"",
+             kReqStrOpenUdid       : [YCOpenUDID ycu_getYcUdidValue],
              
              };
   
@@ -42,7 +42,7 @@
                            block(resultJsonDic);
                        }
                        else {
-                           [NSClassFromString(@"HelloUtils") ycu_sToastWithMsg:[resultJsonDic[kRespStrData] objectForKey:@"msg"]];
+                           [NSClassFromString(@"HelloUtils") ycu_sToastWithMsg:[resultJsonDic[kRespStrData] objectForKey:kRespStrMsg]];
                            block(nil);
                        }
                    }

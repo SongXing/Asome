@@ -47,9 +47,10 @@
 #import "SUPRSA.h"
 
 #import "YCConstantConstant.h"
+#import "YCOpenUDID.h"
 
 // interfaceview select
-#define bIsUseWeinanView        (@1)
+#define bIsUseWeinanView        (@0)
 
 // ---- constant
 #define winWidth                [HelloUtils ycu_getCurrentScreenFrame].size.width
