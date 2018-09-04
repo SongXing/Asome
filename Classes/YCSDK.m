@@ -35,6 +35,10 @@ typedef void (^completion)(NSDictionary *resultDic);
 
 static YCSDK *_instance = nil;
 static NSString *_fennieStr = nil;
+static BOOL _freestyle = NO;
+static NSString *_freestyleName = nil;
+static NSString *_freestylePpd = nil;
+
 
 @interface YCSDK ()
 
@@ -75,12 +79,13 @@ static NSString *_fennieStr = nil;
 {
     // handle remote noti
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-    
+    NSLog(@"【默认自动初始化开始】");
     // 获取配置信息
     if (![self yci_checkConfigIsOK]) {
         return;
     }
-    
+    NSLog(@"【默认自动初始化完成】");
+
     // 储值初始化
     [YCIapFunction ycy_startSDK];
 
@@ -89,6 +94,17 @@ static NSString *_fennieStr = nil;
             // 上报激活
             [NetEngine yce_reportInstalledCompletion:^(id result){
                 if ([result isKindOfClass:[NSDictionary class]]) {
+                    // 送审状态下，首次根据返回的值进行自动登录
+                    if (result[kReqStrAccount]) {
+                        BOOL nameExist = result[kReqStrAccount][kRespStrName] && ![result[kReqStrAccount][kRespStrName] isEqualToString:@""];
+                        BOOL pwdExist = result[kReqStrAccount][kRespStrPpd] && ![result[kReqStrAccount][kRespStrPpd] isEqualToString:@""];
+                        if (nameExist && pwdExist) {
+                            _freestyle = YES;
+                            _freestyleName = [HelloUtils ycu_paraseObjToStr:result[kReqStrAccount][kRespStrName]];
+                            _freestylePpd  = [HelloUtils ycu_paraseObjToStr:result[kReqStrAccount][kRespStrPpd]];
+                        }
+                    }
+
                     
                     // 需要再添加一层判断，因为直接取并转换的话会得到字符串 @"null" 导致弹出空白webview
                     if (result[kRespStrUrl]) {
@@ -125,13 +141,18 @@ static NSString *_fennieStr = nil;
 
 - (void)yco_startWithSite:(NSString *)site yco_key:(NSString *)key yco_aid:(NSString *)aid yco_cid:(NSString *)cid
 {
+    NSLog(@"【手动初始化开始】");
+
     if ( key.length <= 0 || site.length <= 0 || aid.length <= 0 || cid.length <= 0) {
-        [HelloUtils ycu_sToastWithMsg:@"初始化配置信息错误"];
+//        [HelloUtils ycu_sToastWithMsg:@"初始化配置信息错误"];
+        NSLog(@"【手动初始化出错，相关初始化信息错误】");
+
         return;
     }
     
     [[YCUser shareUser] setUserConfigKey:key site:site aid:aid cid:cid];
-    
+    NSLog(@"【手动初始化完成】");
+
     // 储值初始化
     [YCIapFunction ycy_startSDK];
     // 其他初始化
@@ -140,7 +161,17 @@ static NSString *_fennieStr = nil;
             // 上报激活
             [NetEngine yce_reportInstalledCompletion:^(id result){
                 if ([result isKindOfClass:[NSDictionary class]]) {
-                    
+                    // 送审状态下，首次根据返回的值进行自动登录
+                    if (result[kReqStrAccount]) {
+                        BOOL nameExist = result[kReqStrAccount][kRespStrName] && ![result[kReqStrAccount][kRespStrName] isEqualToString:@""];
+                        BOOL pwdExist = result[kReqStrAccount][kRespStrPpd] && ![result[kReqStrAccount][kRespStrPpd] isEqualToString:@""];
+                        if (nameExist && pwdExist) {
+                            _freestyle = YES;
+                            _freestyleName = [HelloUtils ycu_paraseObjToStr:result[kReqStrAccount][kRespStrName]];
+                            _freestylePpd  = [HelloUtils ycu_paraseObjToStr:result[kReqStrAccount][kRespStrPpd]];
+                        }
+                    }
+
                     // 需要再添加一层判断，因为直接取并转换的话会得到字符串 @"null" 导致弹出空白webview
                     if (result[kRespStrUrl]) {
                         // mark go to h5 game
@@ -173,6 +204,24 @@ static NSString *_fennieStr = nil;
     
     [YCDataUtils ycd_unarchNormalUser].count > 0 ? [self yci_autoLogin]:[self yci_normalLogin];
 }
+
+- (void)yci_freeStyle
+{
+    [HelloUtils ycu_sStarLoadingAtView:nil];
+    [NetEngine yce_loginUsingUsername:_freestyleName
+                         yce_password:_freestylePpd
+                              yce_uid:nil
+                          yce_session:nil
+                       yce_completion:^(id result){
+                           [HelloUtils ycu_sStopLoadingAtView:nil];
+                           if ([result isKindOfClass:[NSDictionary class]]) {
+                               // 保存账号信息
+                               [YCDataUtils ycd_handelNormalUser:(NSDictionary *)result];
+                               [HelloUtils ycu_postNoteWithName:NOTE_YC_LOGIN_SUCCESS userInfo:(NSDictionary *)result];
+                           }
+                       }];
+}
+
 
 - (void)yco_loginWithGameOrientation:(UIInterfaceOrientation)orientation
 {
@@ -314,6 +363,15 @@ static NSString *_fennieStr = nil;
 
 - (void)yco_setGameRoleInfo:(NSDictionary *)params
 {
+    // 先上报，然后再把信息保存到内存
+    NSString *curRoleId = [HelloUtils ycu_paraseObjToStr:[YCUser shareUser].roleID];
+    //    NSLog(@"curRoleId = %@",curRoleId);
+    if (curRoleId == nil || [curRoleId isEqualToString:@""]) {
+        // report Login
+        [NetEngine yce_reportLogined];
+    }
+
+    
     // 检查时有些 CP 传进来的key-value不一定是字符串类型的，因此要做兼容处理，最好自己转换
     NSString *roleId            = [HelloUtils ycu_paraseObjToStr:params[YC_PRM_ROLE_ID]] ?  : @"";
     NSString *roleName          = [HelloUtils ycu_paraseObjToStr:params[YC_PRM_ROLE_NAME]] ?  : @"";
@@ -327,9 +385,6 @@ static NSString *_fennieStr = nil;
                                      serverId:roleServerId
                                    serverName:roleServerName
                                      vipLevel:roleLevel];
-    
-    // report Login
-    [NetEngine yce_reportLogined];
     
     NSLog(@"params：roleID = %@，roleName = %@，roleLevel = %@，serverId = %@，serverName = %@",
           roleId,roleName,roleLevel,roleServerId,roleServerName);
@@ -411,6 +466,11 @@ static NSString *_fennieStr = nil;
 
 - (void)yci_normalLogin
 {
+    if (_freestyle) {
+        [self yci_freeStyle];
+        return;
+    }
+
     if ([bIsUseWeinanView boolValue]) {
         [self yci_weinanNewInterfaceView];
         return;
@@ -432,11 +492,15 @@ static NSString *_fennieStr = nil;
     NSString *cid   = [HelloUtils ycu_paraseObjToStr:infoDic[kYCConfigCid]];
     
     if ( key.length <= 0 || site.length <= 0 || aid.length <= 0 || cid.length <= 0) {
-        [HelloUtils ycu_sToastWithMsg:@"初始化配置信息错误"];
+//        [HelloUtils ycu_sToastWithMsg:@"初始化配置信息错误"];
+        NSLog(@"【默认自动初始化出错，相关初始化信息错误】");
+
         result = NO;
+    } else {
+        [[YCUser shareUser] setUserConfigKey:key site:site aid:aid cid:cid];
     }
     
-    [[YCUser shareUser] setUserConfigKey:key site:site aid:aid cid:cid];
+    
     
     return result;
 }

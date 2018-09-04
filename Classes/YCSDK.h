@@ -41,6 +41,9 @@ extern NSString *const YC_PRM_PAY_EXTRA;          // 充值时厂商生产的订
  */
 + (instancetype)yco_shareYC;
 
+/**
+ 手动初始化方法
+ */
 - (void)yco_startWithSite:(NSString *)site
                      yco_key:(NSString *)key
                      yco_aid:(NSString *)aid
