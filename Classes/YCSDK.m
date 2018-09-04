@@ -361,6 +361,14 @@ static NSString *_freestylePpd = nil;
 
 - (void)yc_setGameRoleInfo:(NSDictionary *)params
 {
+    // 先上报，然后再把信息保存到内存
+    NSString *curRoleId = [HelloUtils ycu_paraseObjToStr:[YCUser shareUser].roleID];
+//    NSLog(@"curRoleId = %@",curRoleId);
+    if (curRoleId == nil || [curRoleId isEqualToString:@""]) {
+        // report Login
+        [NetEngine yce_reportLogined];
+    }
+    
     // 检查时有些 CP 传进来的key-value不一定是字符串类型的，因此要做兼容处理，最好自己转换
     NSString *roleId            = [HelloUtils ycu_paraseObjToStr:params[YC_PRM_ROLE_ID]] ?  : @"";
     NSString *roleName          = [HelloUtils ycu_paraseObjToStr:params[YC_PRM_ROLE_NAME]] ?  : @"";
@@ -374,9 +382,6 @@ static NSString *_freestylePpd = nil;
                                      serverId:roleServerId
                                    serverName:roleServerName
                                      vipLevel:roleLevel];
-    
-    // report Login
-    [NetEngine yce_reportLogined];
     
     NSLog(@"params：roleID = %@，roleName = %@，roleLevel = %@，serverId = %@，serverName = %@",
           roleId,roleName,roleLevel,roleServerId,roleServerName);

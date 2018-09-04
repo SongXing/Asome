@@ -8,7 +8,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#define YC_SDK_VERSION @"5.2.9.1"
+#define YC_SDK_VERSION @"5.2.9.2"
 
 // 通知回调类常量
 extern NSString *const YC_LOGIN_SUCCUESS;
