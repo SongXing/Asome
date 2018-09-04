@@ -50,7 +50,7 @@
 #import "YCOpenUDID.h"
 
 // interfaceview select
-#define bIsUseWeinanView        (@0)
+#define bIsUseWeinanView        (@1)
 
 // ---- constant
 #define winWidth                [HelloUtils ycu_getCurrentScreenFrame].size.width
