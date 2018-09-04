@@ -112,9 +112,9 @@ static NSInteger huhaMoreTime = 0;
              kReqStrAccount            : mobile,
              kReqStrCode               : code,
              kReqStrAid               : [YCUser shareUser].aid ?:@"",
-             kReqStrUdid              : [SPFunction getSpUUID],
+             kReqStrUdid              : [YCOpenUDID ycu_getYcUdidValue],
              kReqStrMac               : [SPFunction getMacaddress]?:@"",
-             kReqStrAdid              : [SPFunction getSpUUID],
+             kReqStrAdid              : [SPFunction getIdfa],
              };
     
     NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 219, 195, 196, 197, 206, 231, 196, 204, 194, 197, 0})),kPlatformDomain];
@@ -162,6 +162,7 @@ static NSInteger huhaMoreTime = 0;
              kReqStrMobile            : mobile,
              kReqStrCode              : code,
              kReqStrPassword          : newPwd,
+             kReqStrUdid              : [YCOpenUDID ycu_getYcUdidValue],
              };
     
     NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 197, 206, 220, 217, 206, 216, 206, 223, 219, 202, 216, 216, 220, 207, 0})),kPlatformDomain];
@@ -210,9 +211,9 @@ static NSInteger huhaMoreTime = 0;
              kReqStrCode              : vertifyCode,
              kReqStrSid               : @"",
              kReqStrAid               : [YCUser shareUser].aid ?:@"",
-             kReqStrUdid              : [SPFunction getSpUUID],
+             kReqStrUdid              : [YCOpenUDID ycu_getYcUdidValue],
              kReqStrMac               : [SPFunction getMacaddress]?:@"",
-             kReqStrAdid              : [SPFunction getSpUUID],
+             kReqStrAdid              : [SPFunction getIdfa],
              };
     
     NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 198, 196, 201, 194, 199, 206, 199, 196, 204, 194, 197, 0})),kPlatformDomain];
@@ -413,8 +414,8 @@ static NSInteger huhaMoreTime = 0;
     @try {
         dict = @{
 
-                 kReqStrMac      : [SPFunction getMacaddress] ? : @"",
-                 kReqStrDevice   : [SPFunction getSpUUID],
+                 kReqStrMac             : [SPFunction getMacaddress] ? : @"",
+                 kReqStrDevice          : [SPFunction getIdfa],
                  kReqStrModelType       : kReqValiOS,
                  kReqStrGameVersion     : [SPFunction getBundleVersion],
                  kReqStrDeviceModel    : [SPFunction getDeviceType],
@@ -423,9 +424,9 @@ static NSInteger huhaMoreTime = 0;
                  kReqStrDeviceNet      : @"",
                  
                  
-                 kReqStrAdid     :   [SPFunction getSpUUID],
+                 kReqStrAdid     :   [SPFunction getIdfa],
                  kReqStrAid      :   [YCUser shareUser].aid ? : @"",
-                 kReqStrIndex    :   [SPFunction getSpUUID],
+                 kReqStrIndex    :   [YCOpenUDID ycu_getYcUdidValue],
                  
                  };
     }
@@ -489,7 +490,7 @@ static NSInteger huhaMoreTime = 0;
                  kReqStrLevel    : [YCUser shareUser].roleLevel ?:@"",
                  kReqStrGold     : @"",
                  kReqStrMac      : [SPFunction getMacaddress] ? : @"",
-                 kReqStrDevice   : [SPFunction getSpUUID],
+                 kReqStrDevice   : [SPFunction getIdfa],
                  kReqStrModelType       : kReqValiOS,
                  kReqStrGameVersion     : [SPFunction getBundleVersion],
                  kReqStrDeviceModel    : [SPFunction getDeviceType],
@@ -498,9 +499,9 @@ static NSInteger huhaMoreTime = 0;
                  kReqStrDeviceNet      : @"",
                  kReqStrOnlinetime  : @"",
                  
-                 kReqStrAdid     :   [SPFunction getSpUUID],
+                 kReqStrAdid     :   [SPFunction getIdfa],
                  kReqStrAid      :   [YCUser shareUser].aid ? : @"",
-                 kReqStrIndex    :   [SPFunction getSpUUID],
+                 kReqStrIndex    :   [YCOpenUDID ycu_getYcUdidValue],
                  
                  };
     }
@@ -538,7 +539,7 @@ static NSInteger huhaMoreTime = 0;
 + (void)yce_getAccountList
 {
     NSDictionary * dict = @{
-                            kReqStrAdid     :   [SPFunction getSpUUID],             // must
+                            kReqStrAdid     :   [SPFunction getIdfa],             // must
                             };    
     
     NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 204, 206, 223, 234, 199, 199, 254, 216, 206, 217, 0})),kPlatformDomain];
@@ -628,7 +629,7 @@ static NSInteger huhaMoreTime = 0;
                             kReqStrRoleName     :   [YCUser shareUser].roleName ? :@"",
                             kReqStrServerId     :   [YCUser shareUser].serverId ? :@"",
                             kReqStrMoney        :   [HelloUtils ycu_paraseObjToStr:dict[YC_PRM_PAY_PRODUCT_PRICE]] ? :@"",
-                            kReqStrAdid         :   [SPFunction getSpUUID],
+                            kReqStrAdid         :   [SPFunction getIdfa],
                             kReqStrMac          :   [SPFunction getMacaddress],
                             kReqStrDeviceType  :   [SPFunction getDeviceType],
                             kReqStrProductId    :   [HelloUtils ycu_paraseObjToStr:dict[YC_PRM_PAY_PRODUCT_ID]],

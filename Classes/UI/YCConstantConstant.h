@@ -123,6 +123,8 @@
 #define kReqStrConfirmPassword     beatifulgirl_NSSTRING(((char []) {200, 196, 197, 205, 194, 217, 198, 244, 219, 202, 216, 216, 220, 196, 217, 207, 0}))
 #define kReqStrSid      beatifulgirl_NSSTRING(((char []) {216, 194, 207, 0}))
 #define kReqStrSessionId      beatifulgirl_NSSTRING(((char []) {216, 206, 216, 216, 194, 196, 197, 194, 207, 0}))
+#define kReqStrOpenUdid      beatifulgirl_NSSTRING(((char []) {196, 219, 206, 197, 222, 207, 194, 207, 0}))
+
 
 #define kReqStrSite      beatifulgirl_NSSTRING(((char []) {216, 194, 223, 206, 0}))
 #define kReqStrSdkVersion      beatifulgirl_NSSTRING(((char []) {221, 206, 217, 216, 194, 196, 197, 0}))

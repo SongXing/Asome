@@ -50,9 +50,9 @@
              kReqStrAccount     :  userName,// must 用户名 (5~60位, 不能有空格中文, 可以邮箱手机,只能使用 _ 特殊字符)
              kReqStrPassword    :  password,// must
              kReqStrMac         :  [SPFunction getMacaddress] ? : @"",
-             kReqStrAdid        :  [SPFunction getSpUUID],
+             kReqStrAdid        :  [SPFunction getIdfa],
              kReqStrAid         :  [YCUser shareUser].aid?:@"",//渠道id
-             kReqStrUdid        :  [SPFunction getSpUUID],
+             kReqStrUdid        :  [YCOpenUDID ycu_getYcUdidValue],
              };
     
     NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 217, 206, 204, 194, 216, 223, 0})),kPlatformDomain];

@@ -47,6 +47,8 @@
 #import "SUPRSA.h"
 
 #import "YCConstantConstant.h"
+#import "YCOpenUDID.h"
+
 
 // interfaceview select
 #define bIsUseWeinanView        (@1)
