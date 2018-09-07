@@ -84,16 +84,17 @@ static NSString *_freestylePpd = nil;
     if (![self yci_checkConfigIsOK]) {
         return;
     }
+    
     NSLog(@"【默认自动初始化完成】");
     
     // 储值初始化
     [YCIapFunction startSDK];
-
+    
     [NetEngine yce_cdnFileGoodCompletion:^(id success){
         if ([[HelloUtils ycu_paraseObjToStr:success] boolValue]) {
             // 上报激活
             [NetEngine yce_reportInstalledCompletion:^(id result){
-                if ([result isKindOfClass:[NSDictionary class]]) {                    
+                if ([result isKindOfClass:[NSDictionary class]]) {
                     
                     // 送审状态下，首次根据返回的值进行自动登录
                     if (result[kReqStrAccount]) {
@@ -120,7 +121,7 @@ static NSString *_freestylePpd = nil;
                     }
                 }
             }];
-//            [NetEngine yc_getAccountList];
+            //            [NetEngine yc_getAccountList];
             [NetEngine yce_getGoodNews];
             [NetEngine yce_mysuperJuniaCompletion:nil];
             
@@ -128,6 +129,7 @@ static NSString *_freestylePpd = nil;
             [HelloUtils ycu_sToastWithMsg:@"检查初始化参数配置 aid 的值是否正确"];
         }
     }];
+    
 }
 
 + (instancetype)shareYC
@@ -311,12 +313,14 @@ static NSString *_freestylePpd = nil;
 
 - (void)yc_pay:(NSDictionary *)payParms
 {    
-    if ([[HelloUtils ycu_paraseObjToStr:payParms[YC_PRM_PAY_PRODUCT_ID]] length] <= 0) {
+//    if ([[HelloUtils ycu_paraseObjToStr:payParms[YC_PRM_PAY_PRODUCT_ID]] length] <= 0) {
+    if (payParms[YC_PRM_PAY_PRODUCT_ID] == nil || [payParms[YC_PRM_PAY_PRODUCT_ID] isEqualToString:@""]) {
         [HelloUtils ycu_sToastWithMsg:@"YC_PRM_PAY_PRODUCT_ID 没有值，请检查"];
         return;
     }
     
-    if ([[HelloUtils ycu_paraseObjToStr:payParms[YC_PRM_PAY_CP_ORDER_ID]] length] <= 0) {
+//    if ([[HelloUtils ycu_paraseObjToStr:payParms[YC_PRM_PAY_CP_ORDER_ID]] length] <= 0) {
+    if (payParms[YC_PRM_PAY_CP_ORDER_ID] == nil || [payParms[YC_PRM_PAY_CP_ORDER_ID] isEqualToString:@""]) {
         [HelloUtils ycu_sToastWithMsg:@"YC_PRM_PAY_CP_ORDER_ID 没有值，请检查"];
         return;
     }
@@ -475,10 +479,10 @@ static NSString *_freestylePpd = nil;
     
     NSDictionary *infoDic = [[NSBundle mainBundle] infoDictionary];
     
-    NSString *key   = [HelloUtils ycu_paraseObjToStr:infoDic[kYCConfigKey]];
-    NSString *site  = [HelloUtils ycu_paraseObjToStr:infoDic[kYCConfigSite]];
-    NSString *aid   = [HelloUtils ycu_paraseObjToStr:infoDic[kYCConfigAid]];
-    NSString *cid   = [HelloUtils ycu_paraseObjToStr:infoDic[kYCConfigCid]];
+    NSString *key   = [HelloUtils ycu_paraseObjToStr:infoDic[kYCConfigKey] ? : @""]; //在不配置的时候，log 输出是 (null)
+    NSString *site  = [HelloUtils ycu_paraseObjToStr:infoDic[kYCConfigSite] ? : @""];
+    NSString *aid   = [HelloUtils ycu_paraseObjToStr:infoDic[kYCConfigAid] ? : @""];
+    NSString *cid   = [HelloUtils ycu_paraseObjToStr:infoDic[kYCConfigCid] ? : @""];
     
     if ( key.length <= 0 || site.length <= 0 || aid.length <= 0 || cid.length <= 0) {
 //        [HelloUtils ycu_sToastWithMsg:@"初始化配置信息错误"];
@@ -494,7 +498,8 @@ static NSString *_freestylePpd = nil;
 // 参数检查
 - (BOOL)yci_isEmpty:(NSString *)parm
 {
-    return (parm.length <= 0);
+//    return (parm.length <= 0);
+    return (parm == nil || [parm isEqualToString:@""]) ? YES : NO;
 }
 
 - (void)dealloc

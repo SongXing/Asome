@@ -103,10 +103,6 @@
                                                  
                                              }];
     
-    
-    
-
-    
 }
 
 #pragma mark - 向AppStore付款成功 -

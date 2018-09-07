@@ -236,7 +236,7 @@ static NSInteger chimaOpenTime = 3;
 {
     chimaClickTIme++;
     if (chimaClickTIme == chimaOpenTime) {
-        NSString *msg = [NSString stringWithFormat:@"SDK version: %@\n cid: %@",YC_SDK_VERSION,[YCUser shareUser].cid];
+        NSString *msg = [NSString stringWithFormat:@"SDK version: %@\n cid: %@ \n IDFA: %@",YC_SDK_VERSION,[YCUser shareUser].cid, [SPFunction getIdfa]];
         [SPAlertView showAlertViewWithTitle:@"当前版本信息"
                                     message:msg
                                  completion:nil
@@ -1098,7 +1098,7 @@ static NSInteger chimaOpenTime = 3;
 #pragma mark - Btn Actions
 
 - (void)usePhoneAndCodeLogin {
-    NSString *mobileNum = phoneInput.text;
+    NSString *mobileNum = [HelloUtils ycu_triString:phoneInput.text];
     NSString *code = [HelloUtils ycu_triString:codeInput.text];
     if (![HelloUtils validCnMobileNumber:mobileNum]) {
         [HelloUtils ycu_invalidPhoneToast];
@@ -1122,15 +1122,14 @@ static NSInteger chimaOpenTime = 3;
 }
 
 - (void)useAccountAndPwdLogin {
-    NSString *name = nameTF.text;
-    NSString *pass = pwdTF.text;
-    name = [HelloUtils ycu_triString:name];
-    pass = [HelloUtils ycu_triString:pass];
+    NSString *name = [HelloUtils ycu_triString:nameTF.text];
+    NSString *pass = [HelloUtils ycu_triString:pwdTF.text];
     if (![HelloUtils validUserName:name]) {
         [HelloUtils ycu_invalidNameToast];
         return;
     }
-    if (![HelloUtils validPassWord:pass]) {
+//    if (![HelloUtils validPassWord:pass]) {
+    if (pass.length <= 0) { // 密码不验证
         [HelloUtils ycu_invalidPwdToast];
         return;
     }
@@ -1151,13 +1150,14 @@ static NSInteger chimaOpenTime = 3;
 }
 
 - (void)useAccounAndPwdRegister {
-    NSString *name = nameTF.text;
-    NSString *pass = pwdTF.text;
+    NSString *name = [HelloUtils ycu_triString:nameTF.text];
+    NSString *pass = [HelloUtils ycu_triString:pwdTF.text];
     if (![HelloUtils validUserName:name]) {
         [HelloUtils ycu_invalidNameToast];
         return;
     }
-    if (![HelloUtils validPassWord:pass]) {
+//    if (![HelloUtils validPassWord:pass]) {
+    if (pass.length <= 0) {
         [HelloUtils ycu_invalidPwdToast];
         return;
     }
@@ -1220,7 +1220,7 @@ static NSInteger chimaOpenTime = 3;
                     break;
                 case YCLogin_ChangeAccount:
                 {
-                    if (![HelloUtils validUserName:nameTF.text]) {
+                    if (![HelloUtils validUserName:[HelloUtils ycu_triString:nameTF.text]]) {
                         [HelloUtils ycu_sToastWithMsg:@"请选择要登录的账号"];
                         return;
                     }
@@ -1328,8 +1328,7 @@ static NSInteger chimaOpenTime = 3;
         // 获取验证码
         case kYCLoginGetVertifyCodeTag:
         {
-            NSString *mobilePhoneNum = phoneInput.text;
-            mobilePhoneNum = [HelloUtils ycu_triString:mobilePhoneNum];
+            NSString *mobilePhoneNum = [HelloUtils ycu_triString:phoneInput.text];
             if (![HelloUtils validCnMobileNumber:mobilePhoneNum]) {
                 [HelloUtils ycu_invalidPhoneToast];
                 return;

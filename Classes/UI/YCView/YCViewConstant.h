@@ -96,4 +96,8 @@
 #define userListBtn_down                @"btn_arrow_down.png"
 #define user_list_close_btn_name        @"btn_list_close.png"
 
+#define btn_wn_guest_login               @"wn_btn_guest.png"
+#define btn_wn_accout_login              @"wn_btn_account_login.png"
+#define btn_wn_accout_reg                @"wn_btn_account_reg"
+
 #endif /* YCViewConstant_h */

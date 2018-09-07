@@ -1037,8 +1037,7 @@
         case kYCBindGetVertifyBtnTag:
         {
             
-            NSString *mobilePhoneNum = phoneInput.text;
-            mobilePhoneNum = [HelloUtils ycu_triString:mobilePhoneNum];
+            NSString *mobilePhoneNum = [HelloUtils ycu_triString:phoneInput.text];
             if (![HelloUtils validCnMobileNumber:mobilePhoneNum]) {
                 [HelloUtils ycu_invalidPhoneToast];
                 return;
@@ -1073,19 +1072,23 @@
                 case YCBind_WarningToBind:
                 case YCBind_Default:
                 {
-                    NSString *name = nameTF.text;
-                    NSString *pwd = pwdTF.text;
-                    NSString *mobile = phoneInput.text;
-                    NSString *code = codeInput.text;
+                    NSString *name      = [HelloUtils ycu_triString:nameTF.text];
+                    NSString *pwd       = [HelloUtils ycu_triString:pwdTF.text];
+                    NSString *mobile    = [HelloUtils ycu_triString:phoneInput.text];
+                    NSString *code      = [HelloUtils ycu_triString:codeInput.text];
                     if (![HelloUtils validUserName:name]) {
                         [HelloUtils ycu_invalidNameToast];
                         return;
                     }
-                    if (![HelloUtils validPassWord:pwd]) {
+//                    if (![HelloUtils validPassWord:pwd]) {
+                    if (pwd.length <= 0) {
                         [HelloUtils ycu_invalidPwdToast];return;
                     }
                     if (![HelloUtils validCnMobileNumber:mobile]) {
                         [HelloUtils ycu_invalidPhoneToast];return;
+                    }
+                    if (code.length <= 0) {
+                        [HelloUtils ycu_invalidVertifyCodeToast];
                     }
                     [NetEngine allAccountBindMobilePhone:mobile
                                                 password:pwd
@@ -1122,7 +1125,7 @@
             switch (m_mode) {
                 case YCBind_Forget_CheckAccount:
                 {
-                    NSString *name = nameTF.text;// 或账号，或手机号
+                    NSString *name = [HelloUtils ycu_triString:nameTF.text];// 或账号，或手机号
                     if (![HelloUtils validUserName:name]) {
                         [HelloUtils ycu_invalidNameToast];
                         return;
@@ -1141,13 +1144,15 @@
                     break;
                 case YCBind_Forget_ResetPwd:
                 {
-                    NSString *newPwd = pwdTF.text;
-                    NSString *code   = codeInput.text;
-                    if (![HelloUtils validPassWord:newPwd]) {
+                    NSString *newPwd = [HelloUtils ycu_triString:pwdTF.text];
+                    NSString *code   = [HelloUtils ycu_triString:codeInput.text];
+//                    if (![HelloUtils validPassWord:newPwd]) {
+                    if (newPwd.length <= 0) {
                         [HelloUtils ycu_invalidPwdToast];
                         return;
                     }
-                    if (![HelloUtils validUserName:code]) {
+//                    if (![HelloUtils validUserName:code]) {
+                    if (code.length <= 0) {
                         [HelloUtils ycu_invalidVertifyCodeToast];
                         return;
                     }
@@ -1174,13 +1179,15 @@
             break;
         case kYCBindForgetResetComfirmBtnTag:
         {
-            NSString *newPwd = pwdTF.text;
-            NSString *code   = codeInput.text;
-            if (![HelloUtils validPassWord:newPwd]) {
+            NSString *newPwd = [HelloUtils ycu_triString:pwdTF.text];
+            NSString *code   = [HelloUtils ycu_triString:codeInput.text];
+//            if (![HelloUtils validPassWord:newPwd]) {
+            if (newPwd.length <= 0) {
                 [HelloUtils ycu_invalidPwdToast];
                 return;
             }
-            if (![HelloUtils validUserName:code]) {
+//            if (![HelloUtils validUserName:code]) {
+            if (code.length <= 0) {
                 [HelloUtils ycu_invalidVertifyCodeToast];
                 return;
             }

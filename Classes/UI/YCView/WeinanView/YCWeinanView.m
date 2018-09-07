@@ -52,7 +52,7 @@
     
     // btns
     NSArray *tags = @[@kWeinanGuestBtnTag, @kWeinanAccountLoginBtnTag, @kWeinanAccountRegBtnTag];
-    NSArray *imgNames = @[@"wn_btn_guest.png", @"wn_btn_account_login.png", @"wn_btn_account_reg"];
+    NSArray *imgNames = @[btn_wn_guest_login, btn_wn_accout_login, btn_wn_accout_reg];
     NSArray *titles = @[@"游客模式", @"账号登录", @"账号注册"];
     for (int i = 0; i < tags.count; i++) {
         
