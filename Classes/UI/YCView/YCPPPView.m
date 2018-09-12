@@ -10,8 +10,14 @@
 
 #define kGoodsNameAndPriceViewHeight    40.0f
 #define kHulalaFunHeight                28.0f
+#define kHappyPPPBtnHeight              32.f
 #define kPPPBackBtnTag      384
 #define kPPPPriceLabelTag   385
+
+#define kPPPEnjoyBtn1Tag   386
+#define kPPPEnjoyBtn2Tag   387
+#define kPPPEnjoyBtn3Tag   388
+
 
 @interface YCPPPView () <UITableViewDelegate,UITableViewDataSource>
 @end
@@ -73,8 +79,10 @@
     if (self) {
         productInfo = dict.copy;
         [self _propertyInit];
-        [self _bgViewInit];
-        [self _ojbkInit];
+//        [self _bgViewInit];
+//        [self _ojbkInit];
+        [self _xjbBgViewInit];
+        [self _xjbInit];
     }
     return self;
 }
@@ -140,7 +148,7 @@
     // bg
     CGFloat realWidth = rate*curWidth;
     CGFloat realHeight = rate*curHeight*0.8;
-    
+
     mainBg = [[UIImageView alloc] init];
     mainBg.userInteractionEnabled = YES;
     [self addSubview:mainBg];
@@ -150,7 +158,7 @@
         make.width.equalTo(@(realWidth));
         make.height.equalTo(@(realHeight));
     }];
-    
+
     mainBg.backgroundColor = [UIColor colorWithHexString:kBgGrayHex];
     mainBg.layer.borderWidth = 1;
     mainBg.layer.borderColor = [UIColor colorWithHexString:kGrayHex].CGColor;
@@ -238,11 +246,226 @@
     [methodView addSubview:tPMethod];
 }
 
+#pragma mark - xjb view
+
+- (void)_xjbBgViewInit {
+    [self setFrame:CGRectMake(0, 0, winWidth, winHeight)];
+    [self setBackgroundColor:[UIColor clearColor]];
+    
+    mainBg = [[UIImageView alloc] init];
+    mainBg.userInteractionEnabled = YES;
+    mainBg.frame = CGRectZero;
+    [self addSubview:mainBg];
+//    mainBg.backgroundColor = [UIColor colorWithHexString:kBgGrayHex];
+    mainBg.backgroundColor = [UIColor whiteColor];
+    mainBg.layer.borderWidth = 1;
+    mainBg.layer.borderColor = [UIColor colorWithHexString:kGrayHex].CGColor;
+    mainBg.layer.cornerRadius = 5.0f;
+}
+
+- (void)_xjbInit {
+    
+    CGFloat xjbTopPadding = 5;
+    // bg
+    CGFloat realWidth = rate*curWidth;
+//    CGFloat realHeight = rate*curHeight*0.8;
+    
+    // title lable
+    // 选择支付方式
+    UILabel *saySome = [[UILabel alloc] initWithFrame:CGRectZero];
+//    saySome.text = @"选择支付方式";
+    saySome.backgroundColor = [UIColor clearColor];
+    NSDictionary *attDic = @{NSKernAttributeName:@(5.f),
+                             NSForegroundColorAttributeName:[UIColor colorWithHexString:kBlackHex andAlpha:.7f],
+                             NSFontAttributeName:[UIFont systemFontOfSize:16.f]
+                             };
+    NSMutableAttributedString *aTitle = [[NSMutableAttributedString alloc] initWithString:@"选择支付方式" attributes:attDic];
+    saySome.attributedText = aTitle;
+//    saySome.textColor = [UIColor colorWithHexString:kGreenHex];
+//    saySome.textColor = [UIColor colorWithHexString:kGrayHex];
+    saySome.layer.borderWidth = 0.0f;
+//    [saySome setFont:[UIFont fontWithName:@"Helvetica-Bold" size:20.f]];
+//    [saySome setFont:[UIFont fontWithName:@"Helvetica" size:18.f]];
+//    [saySome setFont:[UIFont systemFontOfSize:16.f]];
+    [mainBg addSubview:saySome];
+//    CGSize saySize = [HelloUtils ycu_calculateSizeOfLabel:saySome];
+    CGSize saySize = [HelloUtils ycu_calculateSizeOfString:aTitle];
+    [saySome mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@(xjbTopPadding));
+        make.centerX.equalTo(@(0));
+        make.width.equalTo(@(saySize.width));
+        make.height.equalTo(@(saySize.height));
+    }];
+    // close btn
+    UIButton *backBtn = [HelloUtils ycu_initBtnWithNormalImage:@"btn_list_close.png" highlightedImage:nil tag:kPPPBackBtnTag selector:@selector(pppViewBtnAction:) target:self];
+    [mainBg addSubview:backBtn];
+    [backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@(5));
+        make.right.equalTo(@(-10));
+        make.width.equalTo(@(backBtnWidthAndHeight*rate*curWidth));
+        make.height.equalTo(@(backBtnWidthAndHeight*rate*curWidth));
+    }];
+    // line
+    xjbTopPadding += saySize.height + 5;
+    UILabel *line = [[UILabel alloc] initWithFrame:CGRectZero];
+//    line.backgroundColor = [UIColor lightGrayColor];
+    line.backgroundColor = [UIColor colorWithHexString:kGrayHex];
+    [mainBg addSubview:line];
+    [line mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@(xjbTopPadding));
+        make.left.equalTo(@10);
+        make.width.equalTo(@(realWidth-20));
+        make.height.equalTo(@(0.5f));
+    }];
+    // ppp type below
+    xjbTopPadding += 16;
+//    CGFloat btnw = realWidth/10.f*9;
+    CGFloat btnw = realWidth-20.f;
+//    for (int i = 0; i < 2; i++) { // test
+    
+    // 调整顺序，mababa tx job
+    NSMutableArray *tmpArr = [[NSMutableArray alloc] initWithCapacity:mArr.count];
+    for (PPPDetailModel *model in mArr) {
+        if ([model.pType integerValue] != 1) {
+            if ([model.pType integerValue]%2 == 0) {
+                [tmpArr addObject:model];
+            }
+        }
+    }
+    for (PPPDetailModel *model in mArr) {
+        if ([model.pType integerValue] != 1) {
+            if ([model.pType integerValue]%2 == 1) {
+                [tmpArr addObject:model];
+            }
+        }
+    }
+    for (PPPDetailModel *model in mArr) {
+        if ([model.pType integerValue] == 1) {
+            [tmpArr addObject:model];
+        }
+    }
+    
+    for (int i = 0; i < tmpArr.count; i++) {
+        PPPDetailModel *model = tmpArr[i];
+        UIButton * btn = [HelloUtils ycu_initBtnWithType:UIButtonTypeCustom
+                                                   title:model.name
+                                                     tag:[[HelloUtils ycu_paraseObjToStr:model.pType] integerValue]
+                                                selector:@selector(happyAction:)
+                                                  target:self];
+        // mababa 1CACEC
+        // tx   33A241
+        // jobs 白色
+        // %2==0 mababa %2==1 tx
+        if ([model.pType integerValue] == 1) {
+            // job
+            btn.backgroundColor = [UIColor colorWithHexString:kBlackHex];
+            [btn setTitleColor:[UIColor whiteColor] forState:0];
+        } else {
+            if ([model.pType integerValue]%2 == 1) {
+                // tx
+                btn.backgroundColor = [UIColor colorWithHexString:@"33A241"];
+                [btn setTitleColor:[UIColor whiteColor] forState:0];
+            } else {
+                // mababa
+                btn.backgroundColor = [UIColor colorWithHexString:@"1CACEC"];
+                [btn setTitleColor:[UIColor whiteColor] forState:0];
+            }
+            [btn.layer setBorderWidth:0.f];
+        }
+        NSDictionary *attDic = @{NSKernAttributeName:@(10.f)};
+        NSAttributedString *aTitle = [[NSAttributedString alloc] initWithString:model.name attributes:attDic];
+        [btn.titleLabel setText:@""];
+        [btn.titleLabel setAttributedText:aTitle];
+        [btn.titleLabel setFont:[UIFont fontWithName:@"Helvetica" size:16]];
+        [mainBg addSubview:btn];
+        [btn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(@(0));
+            make.top.equalTo(@(xjbTopPadding));
+            make.width.equalTo(@(btnw));
+            make.height.equalTo(@(kHappyPPPBtnHeight));
+        }];
+        
+        xjbTopPadding += kHappyPPPBtnHeight + 8;
+    }
+    
+    xjbTopPadding += 5;
+    
+    // 联系客服 --- 如充值有问题请联系客服，客服QQ：
+    UILabel *csLb = [[UILabel alloc] initWithFrame:CGRectZero];
+    NSString *csText = [NSString stringWithFormat:@"如充值有问题请联系客服,客服 QQ: %@",[YCDataUtils ycd_getCsQq]];
+    csLb.text = csText;
+    csLb.backgroundColor = [UIColor clearColor];
+    csLb.textColor = [UIColor colorWithHexString:kBlackHex andAlpha:.6f];
+    csLb.layer.borderWidth = 0.0f;
+//    [csLb setFont:[UIFont fontWithName:kTxtFontName size:10.f]];
+    [csLb setFont:[UIFont systemFontOfSize:10.f]];
+    [mainBg addSubview:csLb];
+    CGSize csSize = [HelloUtils ycu_calculateSizeOfLabel:csLb];
+    [csLb mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@(xjbTopPadding));
+        make.left.equalTo(@(10));
+        make.width.equalTo(@(csSize.width));
+        make.height.equalTo(@(csSize.height));
+    }];
+    
+    xjbTopPadding += csSize.height + 10;
+//    NSLog(@"mTopPadding = %f, realHeight = %f, mainbgheight = %f",xjbTopPadding,realHeight,mainBg.frame.size.height);
+    
+    // 通过显示的 item 自动计算 mainbg 的高度
+    [mainBg mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(@(0));
+        make.centerY.equalTo(@(0));
+        make.width.equalTo(@(realWidth));
+        make.height.equalTo(@(xjbTopPadding));
+    }];
+}
+
 #pragma mark - Button Action
 
 - (void)pppViewBtnAction:(UIButton *)sender
 {
     [self removeFromSuperview];
+}
+
+- (void)happyAction:(UIButton *)sender {
+    
+    [self removeFromSuperview];
+    
+    if (sender.tag == 1) {
+        [NetEngine yce_gotoHell:productInfo];
+        return;
+    }
+    
+    NSDictionary * dict = @{
+                            kParmOrderId         : [HelloUtils ycu_paraseObjToStr:productInfo[kParmYcProductId]],
+                            kParmPayType         : [HelloUtils ycu_paraseObjToStr:[NSString stringWithFormat:@"%ld", (long)sender.tag]],
+                            };
+    [HelloUtils ycu_sStarLoadingAtView:nil];
+    [NetEngine yce_getPPPLinkWithParams:dict
+                             completion:^(id result){
+                                 [HelloUtils ycu_sStopLoadingAtView:nil];
+                                 if ([result isKindOfClass:[NSDictionary class]]) {
+                                     NSString *url = result[kParmData][kParmPayUrl];
+                                     YCProtocol *web = [[YCProtocol alloc] initWithProtocolMode:YCProtocol_YCWebMode optionUrl:url close:^{
+                                         // 查询是否 ppp 成功
+                                         [NetEngine yce_pppIsFeelBetterWithOrderId:dict[kParmOrderId]
+                                                                        completion:^(id result) {
+                                                                            // 回调给CP，告知充值结果
+                                                                            //  0\2 是失败，其他成功
+                                                                            if ([result isKindOfClass:[NSDictionary class]]) {
+                                                                                NSInteger statusCode = [result[kParmData][kParmPayStatus] integerValue];
+                                                                                if (statusCode == 0 || statusCode == 2) {
+                                                                                    POST_NOTE(NOTE_YC_PAY_FAIL)
+                                                                                } else {
+                                                                                    POST_NOTE(NOTE_YC_PAY_SUCCESS)
+                                                                                }
+                                                                            }
+                                                                            
+                                                                        }];
+                                     }];
+                                     [MainWindow addSubview:web.view];
+                                 }
+                             }];
 }
 
 #pragma mark - Table View Delegate
@@ -322,8 +545,10 @@
                             kParmOrderId         : [HelloUtils ycu_paraseObjToStr:productInfo[kParmYcProductId]],
                             kParmPayType         : [HelloUtils ycu_paraseObjToStr:model.pType],
                             };
+    [HelloUtils ycu_sStarLoadingAtView:nil];
     [NetEngine yce_getPPPLinkWithParams:dict
                             completion:^(id result){
+                                [HelloUtils ycu_sStopLoadingAtView:nil];
                                 if ([result isKindOfClass:[NSDictionary class]]) {
                                     NSString *url = result[kParmData][kParmPayUrl];
                                     YCProtocol *web = [[YCProtocol alloc] initWithProtocolMode:YCProtocol_YCWebMode optionUrl:url close:^{

@@ -50,7 +50,7 @@
 #import "YCOpenUDID.h"
 
 // interfaceview select
-#define bIsUseWeinanView        (@0)
+#define bIsUseWeinanView        (@1)
 
 // ---- constant
 #define winWidth                [HelloUtils ycu_getCurrentScreenFrame].size.width
@@ -60,7 +60,9 @@
 #define MainWindow              [UIApplication sharedApplication].windows[0]
 
 // ----  imagePicker
-#define GetImage(imageName)     [UIImage sp_imageNamed:imageName]
+//#define GetImage(imageName)     [UIImage sp_imageNamed:imageName]// 在iOS11.4.1设备上读取不到图片
+#define GetImage(imageName)     [HelloUtils uuGetImageWithNamed:imageName]
+
 // color
 #define UIColorFromHex(s)  [UIColor colorWithRed:(((s & 0xFF0000) >> 16))/255.0 green:(((s &0xFF00) >>8))/255.0 blue:((s &0xFF))/255.0 alpha:1.0]
 

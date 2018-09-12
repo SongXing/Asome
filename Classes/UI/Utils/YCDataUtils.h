@@ -54,5 +54,10 @@
 
 + (NSDictionary *)yc_getCDNGoods;
 
+#pragma mark - 处理 CS 信息
+
++ (void)ycd_handleCsData:(NSDictionary *)dict;
++ (NSString *)ycd_getCsQq;
++ (NSString *)ycd_getCsTel;
 
 @end

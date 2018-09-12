@@ -55,6 +55,9 @@
 #define kYCCDNDomains                       beatifulgirl_NSSTRING(((char []) {242, 232, 244, 232, 239, 229, 244, 239, 196, 198, 202, 194, 197, 216, 0}))
 #define kYCGoodNewsKey                      beatifulgirl_NSSTRING(((char []) {242, 232, 244, 236, 196, 196, 207, 244, 229, 206, 220, 216, 244, 224, 206, 210, 0}))
 
+#define kYCCSQqKey                      beatifulgirl_NSSTRING(((char []) {242, 232, 244, 232, 248, 244, 250, 250, 244, 224, 206, 210, 0}))
+#define kYCCSTelKey                      beatifulgirl_NSSTRING(((char []) {242, 232, 244, 232, 248, 244, 255, 238, 231, 244, 224, 206, 210, 0}))
+
 #define kYCConfigKey        beatifulgirl_NSSTRING(((char []) {242, 232, 224, 206, 210, 0}))
 #define kYCConfigSite       beatifulgirl_NSSTRING(((char []) {242, 232, 248, 194, 223, 206, 0}))
 #define kYCConfigAid        beatifulgirl_NSSTRING(((char []) {242, 232, 234, 194, 207, 0}))
@@ -108,6 +111,8 @@
 #define kRespStrUsername     beatifulgirl_NSSTRING(((char []) {222, 216, 206, 217, 197, 202, 198, 206, 0}))
 #define kRespStrPpd     beatifulgirl_NSSTRING(((char []) {219, 220, 207, 0}))
 #define kRespStrName     beatifulgirl_NSSTRING(((char []) {197, 202, 198, 206, 0}))
+#define kRespStrServiceQq     beatifulgirl_NSSTRING(((char []) {216, 206, 217, 221, 194, 200, 206, 244, 218, 218, 0}))
+#define kRespStrServiceTel     beatifulgirl_NSSTRING(((char []) {216, 206, 217, 221, 194, 200, 206, 244, 223, 206, 199, 0}))
 
 #define kReqStrMobile   beatifulgirl_NSSTRING(((char []) {198, 196, 201, 194, 199, 206, 0}))
 #define kReqStrSendtype beatifulgirl_NSSTRING(((char []) {216, 206, 197, 207, 223, 210, 219, 206, 0}))

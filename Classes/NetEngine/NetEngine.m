@@ -10,6 +10,7 @@ static NSInteger cndMoreTime = 0;
 static NSInteger installMoreTime = 0;
 static NSInteger niceMoreTime = 0;
 static NSInteger huhaMoreTime = 0;
+static NSInteger csReqMoreTime = 0;
 
 @implementation NetEngine
 
@@ -562,6 +563,50 @@ static NSInteger huhaMoreTime = 0;
 
                        } else {
 //                           NSLog(@"---获取用户列表失败--- \n resultDic = %@",resultJsonDic);
+                       }
+                   }
+                   
+               }];
+}
+
+#pragma mark - 获取帮助信息
+
++ (void)yce_getCsData
+{
+    NSDictionary * dict = @{
+                            kReqStrAdid     :   [SPFunction getIdfa],             // must
+                            kReqStrAid      :   [YCUser shareUser].aid ? : @"",
+                            };
+    
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 204, 206, 223, 195, 206, 199, 219, 194, 197, 205, 196, 0})),kPlatformDomain];
+    
+    [SPRequestor requestByParams:dict
+                additionalParams:nil
+                   requestDomain:mainDomain
+             requestSecondDomain:mainDomain
+      expectResponseDicKeysArray:nil
+                      retryTimes:1
+                  isReqestByPost:YES
+               ComplitionHandler:^(NSURLResponse *response, NSDictionary *resultJsonDic, NSError *jsonParseErr, NSString *resultStr, NSData *resultRawData, NSError *error) {
+                   
+                   csReqMoreTime++;
+                   
+                   if (!error && !jsonParseErr) {
+                       NSString *result = [NSString stringWithFormat:@"%@",resultJsonDic[kRespStrResult]];
+                       if (0 == [result intValue]) {
+//                           NSLog(@"---获取帮助信息成功---\n %@",resultJsonDic);
+                           [YCDataUtils ycd_handleCsData:resultJsonDic];                           
+                       } else {
+                           
+                       }
+                       csReqMoreTime = 0;
+                   } else {
+                       if (csReqMoreTime <= totolTryTimeMax) {
+                           // 再次请求
+                           NSLog(@"request more %ld",(long)csReqMoreTime);
+                           [NetEngine yce_getCsData];
+                       } else {
+                           csReqMoreTime = 0;
                        }
                    }
                    

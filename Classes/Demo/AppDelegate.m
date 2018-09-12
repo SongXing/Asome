@@ -44,7 +44,7 @@
 //#endif
     
     
-//    [[WSPlatformManager sharedPlatform] startWithSite:@"testadads_ios" key:@"489445b1f7a61270d31c0ea2b130497d" aid:@"910077090078118" cid:@"5"];
+    [[YCSDK shareYC] yc_startWithSite:@"testadads_ios" key:@"489445b1f7a61270d31c0ea2b130497d" aid:@"910077090078118" cid:@"5"];
 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     

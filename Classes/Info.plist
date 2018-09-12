@@ -75,13 +75,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>YCAid</key>
-	<string>910077090078118</string>
-	<key>YCCid</key>
-	<string>5</string>
-	<key>YCKey</key>
-	<string>489445b1f7a61270d31c0ea2b130497d</string>
-	<key>YCSite</key>
-	<string>testadads_ios</string>
 </dict>
 </plist>

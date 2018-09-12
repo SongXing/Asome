@@ -121,7 +121,8 @@ static NSString *_freestylePpd = nil;
                     }
                 }
             }];
-            //            [NetEngine yc_getAccountList];
+//            [NetEngine yce_getAccountList];
+            [NetEngine yce_getCsData];
             [NetEngine yce_getGoodNews];
             [NetEngine yce_mysuperJuniaCompletion:nil];
             
@@ -188,7 +189,8 @@ static NSString *_freestylePpd = nil;
                     }
                 }
             }];
-            //            [NetEngine yc_getAccountList];
+//            [NetEngine yce_getAccountList];
+            [NetEngine yce_getCsData];
             [NetEngine yce_getGoodNews];
             [NetEngine yce_mysuperJuniaCompletion:nil];
             

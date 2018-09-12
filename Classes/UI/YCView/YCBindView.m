@@ -1038,8 +1038,10 @@
         {
             
             NSString *mobilePhoneNum = [HelloUtils ycu_triString:phoneInput.text];
-            if (![HelloUtils validCnMobileNumber:mobilePhoneNum]) {
-                [HelloUtils ycu_invalidPhoneToast];
+//            if (![HelloUtils validCnMobileNumber:mobilePhoneNum]) {
+            if (mobilePhoneNum.length == 0) {
+//                [HelloUtils ycu_invalidPhoneToast];
+                [HelloUtils ycu_sToastWithMsg:@"请输入您的手机号"];
                 return;
             }
             NSString *codeSendType = @"";
@@ -1076,19 +1078,20 @@
                     NSString *pwd       = [HelloUtils ycu_triString:pwdTF.text];
                     NSString *mobile    = [HelloUtils ycu_triString:phoneInput.text];
                     NSString *code      = [HelloUtils ycu_triString:codeInput.text];
-                    if (![HelloUtils validUserName:name]) {
-                        [HelloUtils ycu_invalidNameToast];
-                        return;
+//                    if (![HelloUtils validUserName:name]) {
+                    if (name.length <= 0) {
+                        [HelloUtils ycu_invalidNameToast];return;
                     }
 //                    if (![HelloUtils validPassWord:pwd]) {
                     if (pwd.length <= 0) {
                         [HelloUtils ycu_invalidPwdToast];return;
                     }
-                    if (![HelloUtils validCnMobileNumber:mobile]) {
+//                    if (![HelloUtils validCnMobileNumber:mobile]) {
+                    if (mobile.length <= 0) {
                         [HelloUtils ycu_invalidPhoneToast];return;
                     }
                     if (code.length <= 0) {
-                        [HelloUtils ycu_invalidVertifyCodeToast];
+                        [HelloUtils ycu_invalidVertifyCodeToast];return;
                     }
                     [NetEngine allAccountBindMobilePhone:mobile
                                                 password:pwd
@@ -1126,7 +1129,8 @@
                 case YCBind_Forget_CheckAccount:
                 {
                     NSString *name = [HelloUtils ycu_triString:nameTF.text];// 或账号，或手机号
-                    if (![HelloUtils validUserName:name]) {
+//                    if (![HelloUtils validUserName:name]) {
+                    if (name.length <= 0) {
                         [HelloUtils ycu_invalidNameToast];
                         return;
                     }

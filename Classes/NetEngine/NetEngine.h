@@ -95,6 +95,10 @@ typedef void (^IapAppstoreCallBack)(NSString * _Nullable code, NSString * _Nulla
 
 + (void)yce_getAccountList;
 
+#pragma mark - 获取帮助信息
+
++ (void)yce_getCsData;
+
 #pragma mark - 获取公告信息
 
 + (void)yce_getGoodNews;

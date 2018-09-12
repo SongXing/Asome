@@ -308,4 +308,24 @@
     return [HelloUtils ycu_userdefault_getObjforKey:kYCCDNDomains];
 }
 
+#pragma mark - 处理 CS 信息
+
++ (void)ycd_handleCsData:(NSDictionary *)dict {
+    NSDictionary *info = dict[kRespStrData];
+    if (info[kRespStrServiceQq]) {
+        [HelloUtils ycu_userdefault_setObj:info[kRespStrServiceQq] key:kYCCSQqKey];
+    }
+    if (info[kRespStrServiceTel]) {
+        [HelloUtils ycu_userdefault_setObj:info[kRespStrServiceTel] key:kYCCSTelKey];
+    }
+}
+
++ (NSString *)ycd_getCsQq {
+    return [HelloUtils ycu_userdefault_getObjforKey:kYCCSQqKey] ? : @"";
+}
+
++ (NSString *)ycd_getCsTel {
+    return [HelloUtils ycu_userdefault_getObjforKey:kYCCSTelKey] ? : @"";
+}
+
 @end

@@ -28,7 +28,7 @@
 #pragma mark - 直接请求Iap
 
 + (void)directToInAppPurchaseWithParams:(NSDictionary *)params
-{
+{    
 //    NSLog(@"开始购买：");
 //    NSLog(@"开始检查购买环境");
     //1 初始化 iapdata 单例数据

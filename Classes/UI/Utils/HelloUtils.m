@@ -651,4 +651,31 @@
     return ipStr?:@"";
 }
 
+#pragma mark - 获取指定 bundle 图片
+
++ (UIImage *)uuGetImageWithNamed:(NSString *)name
+{
+    UIImage *result = nil;
+    
+    // 优先使用的方式
+    result = [UIImage imageNamed:[@"YCResources.bundle" stringByAppendingPathComponent:name]];
+    if (result) {
+        return result;
+    }
+    
+    // 然后使用旧的方式读取 bundle （以下方法在某些CP打出来的包上面出现在 iOS 11.4.1 上面读不到图片的问题）
+    NSURL *bundleUrl = [[NSBundle mainBundle] URLForResource:@"YCResources" withExtension:@"bundle"];
+    if (!bundleUrl) {
+        result = [UIImage imageNamed:name];
+        return result;
+    }
+    
+    NSBundle *bundle = [NSBundle bundleWithURL:bundleUrl];
+    NSString *imgPath = [bundle.resourcePath stringByAppendingPathComponent:name];
+//    NSLog(@"\n name:%@ \n imgPath: %@",name,imgPath);
+    result = [UIImage imageWithContentsOfFile:imgPath];    
+    
+    return result ? : [UIImage imageNamed:name];
+}
+
 @end

@@ -124,4 +124,8 @@
 
 + (NSString *)ycu_deviceIpAddress;
 
+#pragma mark - 获取指定 bundle 图片
+
++ (UIImage *)uuGetImageWithNamed:(NSString *)name;
+
 @end

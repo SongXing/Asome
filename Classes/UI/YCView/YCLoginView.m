@@ -1100,7 +1100,8 @@ static NSInteger chimaOpenTime = 3;
 - (void)usePhoneAndCodeLogin {
     NSString *mobileNum = [HelloUtils ycu_triString:phoneInput.text];
     NSString *code = [HelloUtils ycu_triString:codeInput.text];
-    if (![HelloUtils validCnMobileNumber:mobileNum]) {
+//    if (![HelloUtils validCnMobileNumber:mobileNum]) {
+    if (mobileNum.length == 0) {
         [HelloUtils ycu_invalidPhoneToast];
         return;
     }
@@ -1124,7 +1125,8 @@ static NSInteger chimaOpenTime = 3;
 - (void)useAccountAndPwdLogin {
     NSString *name = [HelloUtils ycu_triString:nameTF.text];
     NSString *pass = [HelloUtils ycu_triString:pwdTF.text];
-    if (![HelloUtils validUserName:name]) {
+//    if (![HelloUtils validUserName:name]) {
+    if (name.length <= 0) {
         [HelloUtils ycu_invalidNameToast];
         return;
     }
@@ -1152,7 +1154,8 @@ static NSInteger chimaOpenTime = 3;
 - (void)useAccounAndPwdRegister {
     NSString *name = [HelloUtils ycu_triString:nameTF.text];
     NSString *pass = [HelloUtils ycu_triString:pwdTF.text];
-    if (![HelloUtils validUserName:name]) {
+//    if (![HelloUtils validUserName:name]) {
+    if (name.length <= 0) {
         [HelloUtils ycu_invalidNameToast];
         return;
     }
@@ -1220,7 +1223,8 @@ static NSInteger chimaOpenTime = 3;
                     break;
                 case YCLogin_ChangeAccount:
                 {
-                    if (![HelloUtils validUserName:[HelloUtils ycu_triString:nameTF.text]]) {
+//                    if (![HelloUtils validUserName:[HelloUtils ycu_triString:nameTF.text]]) {
+                    if ([HelloUtils ycu_triString:nameTF.text].length <= 0) {
                         [HelloUtils ycu_sToastWithMsg:@"请选择要登录的账号"];
                         return;
                     }
@@ -1329,20 +1333,29 @@ static NSInteger chimaOpenTime = 3;
         case kYCLoginGetVertifyCodeTag:
         {
             NSString *mobilePhoneNum = [HelloUtils ycu_triString:phoneInput.text];
-            if (![HelloUtils validCnMobileNumber:mobilePhoneNum]) {
-                [HelloUtils ycu_invalidPhoneToast];
+//            if (![HelloUtils validCnMobileNumber:mobilePhoneNum]) {
+            if (mobilePhoneNum.length == 0) {
+//                [HelloUtils ycu_invalidPhoneToast];
+                [HelloUtils ycu_sToastWithMsg:@"请输入您的手机号"];
                 return;
             }
             [NetEngine sendVertifyCodeToMobile:mobilePhoneNum
                                      situation:kSendCodeType_Login
                                     completion:^(id reslut){
                                         if ([reslut isKindOfClass:[NSDictionary class]]) {
-                                            [HelloUtils ycu_counttingButton:sender
-                                                              startTime:59.0f
-                                                                  title:@""
-                                                         countDownTitle:@"s"
-                                                              mainColor:[UIColor whiteColor]
-                                                             countColor:[UIColor lightGrayColor]];
+//                                            [HelloUtils ycu_counttingButton:sender
+//                                                              startTime:59.0f
+//                                                                  title:@""
+//                                                         countDownTitle:@"s"
+//                                                              mainColor:[UIColor whiteColor]
+//                                                             countColor:[UIColor lightGrayColor]];
+                                            
+                                            [self counttingButton:sender
+                                                                  startTime:59.0f
+                                                                      title:@""
+                                                             countDownTitle:@"s"
+                                                                  mainColor:[UIColor whiteColor]
+                                                                 countColor:[UIColor lightGrayColor]];
                                         }
                                     }];
         }
@@ -1832,6 +1845,49 @@ static NSInteger chimaOpenTime = 3;
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+}
+
+#pragma mark - Private
+
+- (void)         counttingButton:(UIButton *)sender
+                       startTime:(NSInteger)timeLine
+                           title:(NSString *)title
+                  countDownTitle:(NSString *)subTitle
+                       mainColor:(UIColor *)mColor
+                      countColor:(UIColor *)countColor
+{
+    //倒计时时间
+    __block NSInteger timeOut = timeLine;
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_source_t _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
+    //每秒执行一次
+    dispatch_source_set_timer(_timer, dispatch_walltime(NULL, 0), 1.0 * NSEC_PER_SEC, 0);
+    dispatch_source_set_event_handler(_timer, ^{
+        //倒计时结束，关闭
+        if (timeOut <= 0) {
+            dispatch_source_cancel(_timer);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //                sender.backgroundColor = mColor;
+                [sender setTitle:@"获取验证码" forState:0];
+                sender.enabled = YES;
+            });
+        } else {
+            int allTime = (int)timeLine + 1;
+            int seconds = timeOut % allTime;
+            NSString *timeStr = [NSString stringWithFormat:@" %.1d ", seconds];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                sender.backgroundColor = mColor;
+                [sender setTitle:[NSString stringWithFormat:@"%@%@",timeStr,subTitle] forState:UIControlStateDisabled];
+                
+                [sender setTitleColor:countColor forState:UIControlStateDisabled];
+                sender.enabled = NO;
+            });
+            timeOut--;
+        }
+    });
+    dispatch_resume(_timer);
 }
 
 @end
