@@ -657,7 +657,12 @@
 {
     UIImage *result = nil;
     
+    if (!name) {
+        return result;
+    }
+    
     // 优先使用的方式
+//    NSLog(@"==%@",[@"YCResources.bundle" stringByAppendingPathComponent:name]);//YCResources.bundle/logo.png
     result = [UIImage imageNamed:[@"YCResources.bundle" stringByAppendingPathComponent:name]];
     if (result) {
         return result;

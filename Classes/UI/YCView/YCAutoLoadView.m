@@ -235,6 +235,8 @@
 - (void)_btnActions:(UIButton *)sender
 {
     dispatch_cancel(_timer);// 取消定时器事件, 同 dispatch_source_cancel(_timer);
+    _timer = nil;
+    
     [self _dismissView];
     self.changeCallback ? self.changeCallback():nil;
 }

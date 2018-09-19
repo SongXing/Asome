@@ -73,10 +73,6 @@
         [v_btnbg addSubview:btn];
         CGFloat btnWidth = self.rate*self.curHeight* 0.4f * 1/2.0f;
         [btn mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.top.equalTo(@(0));
-//            make.left.equalTo(@(i * mbgW/3));
-//            make.width.equalTo(@(mbgW/3));
-//            make.height.equalTo(@(mbgH));
             make.centerX.equalTo(@(0));
             make.centerY.equalTo(@(-10));
             make.width.equalTo(@(btnWidth));

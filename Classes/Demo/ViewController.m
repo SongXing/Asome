@@ -40,11 +40,22 @@ static NSInteger _level = 30;
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];    
+    [super viewDidLoad];
 
-    self.buttonsTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, winHeight, winHeight)] ;
-    _buttonsTable.delegate = self;
-    _buttonsTable.dataSource = self;
+    NSLog(@"wh = %@",NSStringFromCGSize([UIScreen mainScreen].bounds.size));
+    CGSize boundSize = [UIScreen mainScreen].bounds.size;
+//    CGSize tableSize;
+//    if (boundSize.width > boundSize.height) { // lan
+//        tableSize = CGSizeMake(boundSize.width, boundSize.height);
+//    } else {
+//        tableSize = CGSizeMake(boundSize.height, boundSize.width);
+//    }
+    
+    UITableView *table = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, boundSize.width, boundSize.height)] ;
+    table.delegate = self;
+    table.dataSource = self;
+    self.buttonsTable = table;
+    NSLog(@"grame = %@",NSStringFromCGRect(table.frame));
     [self.view addSubview:self.buttonsTable];
     
     // Reachability wifi
@@ -58,8 +69,8 @@ static NSInteger _level = 30;
                           @"商店",
                           @"切换账号",
                           @"保存、更新角色信息",
-                          @"这是公告你敢信？",
-                          @"协议，来呀，who 怕 who",
+//                          @"这是公告你敢信？",
+//                          @"协议，来呀，who 怕 who",
                           ];
     
     /*********************************************
@@ -137,8 +148,7 @@ static NSInteger _level = 30;
             break;            
             
         case 1:
-        {
-            
+        {            
             // 随机生成10位大写字母 字符串
             char data[10];
             for (NSInteger i = 0; i < 10; data[i++] = (char)('A' + (arc4random_uniform(26))));

@@ -7,6 +7,8 @@
 
 #import "IapDataDog.h"
 #import "YCIapInfo.h"
+#import "HelloHeader.h"
+
 
 @implementation IapDataDog
 
@@ -86,6 +88,26 @@
 + (NSString *)_iapDecodeFromString:(NSString *)aString
 {
     return [SPSecurity getDecryptStringFromString:aString withKey:@"YC_IAP" iv:@"iap"];
+}
+
++ (void)saveLostReceiveDataWithDict:(NSDictionary *)dict {
+    NSArray *localAngles = [HelloUtils ycu_userdefault_getObjforKey:kLostAngles];
+    NSMutableArray *mArr = @[].mutableCopy;
+    !localAngles?:[mArr addObjectsFromArray:localAngles];
+    [mArr addObject:dict];
+    [HelloUtils ycu_userdefault_setObj:mArr key:kLostAngles];
+}
+
++ (void)removeSuccessLostWithTransId:(NSString *)trs {
+    NSArray *localAngles = [HelloUtils ycu_userdefault_getObjforKey:kLostAngles];
+    NSMutableArray *mArr = [[NSMutableArray alloc] initWithArray:localAngles];
+    for (NSDictionary *dict in localAngles) {
+        if ([dict[@"transactionId"] isEqualToString:trs]) {
+            NSLog(@"正在清除tranid: %@",trs);
+            [mArr removeObject:dict];
+        }
+    }
+    [HelloUtils ycu_userdefault_setObj:mArr key:kLostAngles];
 }
 
 @end

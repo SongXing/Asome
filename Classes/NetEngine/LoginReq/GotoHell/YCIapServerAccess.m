@@ -8,6 +8,9 @@
 @synthesize iapGetCurrencyQueue;
 @synthesize iapPostQueue;
 
+static NSInteger postTryTimeMax = 3;
+static NSInteger postMoreTime = 0;
+
 static YCIapServerAccess *_instance;
 
 - (instancetype)init
@@ -64,9 +67,33 @@ static YCIapServerAccess *_instance;
                                   receiptData:receiptData
                                        userId:userId
                                    serverCode:serverCode
-                         andComplitionHandler:^(NSString * _Nullable code, NSString * _Nullable orderID, NSDictionary * _Nullable dic, NSError * _Nullable error) {
-                             NSLog(@"验证与发货过程客户端不需要管，等着服务端去发游戏币就完了事");
-                             [IapDataDog removeIapData];
+                         andComplitionHandler:^(NSURLResponse *response, NSString * _Nullable code, NSString * _Nullable orderID, NSDictionary * _Nullable dic, NSError * _Nullable error) {
+                             
+                             postMoreTime++;
+                             
+                             // 客户端要处理请求不通的情况，及 dic 是否存在的问题
+                             if (!dic) {
+                                 // 当下网络有问题，请求无数据返回，尝试发多次请求你，
+                                 // 连续请求 6 次仍旧无数据返回，则保存当前订单，然后在下次启动后再次请求验证
+                                 if (postMoreTime <= postTryTimeMax) {
+                                     // 再次请求
+                                     NSLog(@"postMoreTime %ld",(long)postMoreTime);
+                                     [YCIapServerAccess _postToServerCheckTransactionAndSentGameColdWithUserId:userId andServerCode:serverCode andOrderId:orderId andCurrencyCode:currencyCode andLocalPrice:localPrice andTransactionId:transactionId receiptData:receiptData];
+                                 } else {
+                                     postMoreTime = 0;
+//                                     NSLog(@"多次发数据给服务端，仍旧无回应");
+                                     
+                                     // 再把当前数据状态删除
+                                    [IapDataDog removeIapData];
+                                 }
+                                 
+                             } else {
+                                 postMoreTime = 0;
+                                 [IapDataDog removeIapData];
+                                 // remove the success one
+                                 [IapDataDog removeSuccessLostWithTransId:transactionId];
+                             }
+                             
                          }];
 }
 

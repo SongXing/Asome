@@ -10,6 +10,9 @@
 //检查没有完成的交易
 +(void)checkTransactionUnfinished;
 
+// 补发
++ (void)checkLostAngles ;
+
 #pragma mark - 订单已经创建好，直接请求内购
 
 + (void)directToInAppPurchaseWithParams:(NSDictionary *)params;
@@ -22,6 +25,5 @@
 
 //开启游戏，初始化paymentQueue代理以后，自动补单了，就开始初始化数据0
 +(BOOL)setDataFromLocal;
-
 
 @end

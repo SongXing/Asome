@@ -785,7 +785,7 @@ static NSInteger csReqMoreTime = 0;
                            [NetEngine yce_cdnFileGoodCompletion:nil];
                        } else {
                            cndMoreTime = 0;
-                           [HelloUtils ycu_sToastWithMsg:@"请求超时"];
+//                           [HelloUtils ycu_sToastWithMsg:@"请求超时"];
                            completion ? completion(@"NO"):nil;
                        }
                    }
@@ -835,7 +835,13 @@ static NSInteger csReqMoreTime = 0;
       expectResponseDicKeysArray:expectResponseDicKeysArray
                       retryTimes:1
                   isReqestByPost:YES
-               ComplitionHandler:^(NSURLResponse *response, NSDictionary *resultJsonDic, NSError *jsonParseErr, NSString *resultStr, NSData *resultRawData, NSError *error) {                   
+               ComplitionHandler:^(NSURLResponse *response, NSDictionary *resultJsonDic, NSError *jsonParseErr, NSString *resultStr, NSData *resultRawData, NSError *error) {
+                   
+//                   data =     {
+//                       msg = "验证成功";
+//                   };
+//                   result = 0;
+                   NSLog(@"直接提交验证,接口返回 : %@ msg=%@" , resultJsonDic,resultJsonDic[kRespStrData][kRespStrMsg]);
                    
                    NSString *tmpResultCode = nil;
                    NSString *tmpOrderID = nil;
@@ -847,7 +853,9 @@ static NSInteger csReqMoreTime = 0;
                        
                        if ( 0 == codeStr.intValue )// 成功
                        {
-//                           NSLog(@"-----验证、发货成功-------");
+//                           NSLog(@"-----验证成功，发货服务端处理-------");
+                       } else {
+//                           NSLog(@"-----验证失败，服务端处理-------");
                        }
 
 //                       NSLog(@"---直接提交验证完了，发货成功或不成功服务器去处理就完了----");
@@ -859,7 +867,82 @@ static NSInteger csReqMoreTime = 0;
                    }
                    
                    if (handler) {
-                       handler(tmpResultCode, tmpOrderID, resultJsonDic, error);
+                       handler(response, tmpResultCode, tmpOrderID, resultJsonDic, error);
+                       // test
+//                       handler(response, tmpResultCode, tmpOrderID, nil, error);
+                   }
+               }];
+}
+
++ (void)yce_postLostDataToValiteWithOrderID:(NSString * _Nonnull)orderID
+                           currencyCode:(NSString * _Nonnull)currencyCode
+                             localPrice:(NSString * _Nonnull)localPrice
+                          transactionId:(NSString * _Nonnull)transactionId
+                            receiptDataBase64Str:(NSString * _Nonnull)receiptDataBase64Str
+                                 userId:(NSString * _Nonnull)userId
+                             serverCode:(NSString * _Nonnull)serverCode
+                   andComplitionHandler:(IapAppstoreCallBack _Nullable)handler
+{
+    
+    NSDictionary *dic;
+    @try
+    {
+        dic = @{
+                kReqStrUid              : userId,
+                kReqStrOrderId         : orderID,
+                kReqStrTransactionId   : transactionId,
+                kReqStrReceipt    : receiptDataBase64Str,
+                };
+    }
+    @catch (NSException *exception)
+    {
+        SP_FUNCTION_LOG(exception.description);
+        dispatch_async(dispatch_get_main_queue(), ^
+                       {
+                           [HelloUtils ycu_sToastWithMsg:[NSString stringWithFormat:@"!!!ERROR Dic At postDataToValiteWithOrderID:\n %@ \n %@", dic, exception.description]];
+                       });
+    }
+    
+    NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 221, 206, 217, 194, 205, 210, 249, 206, 200, 206, 194, 219, 223, 0})),kPayDomain];
+    NSArray * expectResponseDicKeysArray = nil;
+    
+    [SPRequestor requestByParams:dic
+                additionalParams:nil
+                   requestDomain:mainDomain
+             requestSecondDomain:mainDomain
+      expectResponseDicKeysArray:expectResponseDicKeysArray
+                      retryTimes:1
+                  isReqestByPost:YES
+               ComplitionHandler:^(NSURLResponse *response, NSDictionary *resultJsonDic, NSError *jsonParseErr, NSString *resultStr, NSData *resultRawData, NSError *error) {
+                   
+                   //                   data =     {
+                   //                       msg = "验证成功";
+                   //                   };
+                   //                   result = 0;
+                   NSLog(@"直接提交验证,接口返回 : %@ msg=%@" , resultJsonDic,resultJsonDic[kRespStrData][kRespStrMsg]);
+                   
+                   NSString *tmpResultCode = nil;
+                   NSString *tmpOrderID = nil;
+                   
+                   if (!error && !jsonParseErr)
+                   {
+                       //获取code参数
+                       NSString * codeStr= [NSString stringWithFormat:@"%@",resultJsonDic[kRespStrResult]];
+                       
+                       if ( 0 == codeStr.intValue )// 成功
+                       {
+//                           NSLog(@"-----验证成功，发货服务端处理-------");
+                       } else {
+//                           NSLog(@"-----验证失败，服务端处理-------");
+                       }
+                   }
+                   
+                   if (error) {
+                       //                       NSLog(@"%@",error.description);
+                   }
+                   
+                   if (handler) {
+                       handler(response, tmpResultCode, tmpOrderID, resultJsonDic, error);
                    }
                }];
 }

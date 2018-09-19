@@ -45,8 +45,7 @@
                         andDomainName:(NSString *)domainName
                            completion:(void(^)())completion
 {    
-    NSDictionary *dict = nil;
-    dict = @{
+    NSDictionary *dict = @{
              kReqStrAccount     :  userName,// must 用户名 (5~60位, 不能有空格中文, 可以邮箱手机,只能使用 _ 特殊字符)
              kReqStrPassword    :  password,// must
              kReqStrMac         :  [SPFunction getMacaddress] ? : @"",

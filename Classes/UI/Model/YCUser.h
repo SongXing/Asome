@@ -69,4 +69,6 @@
 
 - (void)cleanModel;
 
+- (void)cleanInfo;
+
 @end

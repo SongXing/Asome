@@ -81,4 +81,22 @@
     self.cid            = @"";
 }
 
+- (void)cleanInfo {
+    self.uid            = nil;
+    self.thirdId        = nil;
+    self.roleID         = nil;
+    self.roleLevel      = nil;
+    self.roleName       = nil;
+    self.serverId       = nil;
+    self.serverName     = nil;
+    self.vipLevel       = nil;
+    self.account        = nil;
+    self.loginTypeStr   = nil;
+    self.istemp         = nil;
+    self.nickname       = nil;
+    self.password       = nil;
+    self.sessionid      = nil;
+    self.sessiontime    = nil;
+}
+
 @end

@@ -20,7 +20,10 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         [YCIapServerAccess defaultInstance];
+        // 检查项
         [YCIapFunction checkTransactionUnfinished];
+        [YCIapFunction checkLostAngles];
+        // 开始监听内购代理
         [YCIapData defaultData];
     });
 }
@@ -160,6 +163,19 @@
 
         // 3 纪录购买历史纪录
         [IapDataDog saveParameterDictionaryWithDictionary:baseInfo];
+//        未避免充值完边立马退出导致未请求发货接口导致数据无法再追踪，此处现将当比数据缓存
+        NSString *base64Str = [SPFunction encode:(uint8_t *)receiptData.bytes length:[baseInfo[kLocalTran_transactionReciptData] length]];
+        NSDictionary *curTempLost =
+          @{
+              @"orderId"               : baseInfo[kLocalTran_orderId],
+              @"currencyCode"          : @"currencyCode",
+              @"localPrice"         : @"localPrice",
+              @"transactionId"           : baseInfo[kLocalTran_transactionID],
+              @"receiptData"          : base64Str ,
+              @"userId"  : baseInfo[kLocalTran_uid],
+              @"serverCode"  : baseInfo[kLocalTran_serverId],
+              };
+        [IapDataDog saveLostReceiveDataWithDict:curTempLost];
         
         NSLog(@"finish transaction");
         [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
@@ -183,7 +199,7 @@
     }
     else
     {
-        [HelloUtils ycu_sToastWithMsg:@"跟当前单例eoi不相同，需要保存本次信息"];        
+        [HelloUtils ycu_sToastWithMsg:@"跟当前单例orderId不相同，需要保存本次信息"];
         // 临时
         [IapDataDog removeIapData];
         [YCIapData defaultData].ISPURCHASING = NO;
@@ -332,5 +348,49 @@
     }
 }
 
+// 补发本地没有收到服务器响应的数据
++ (void)checkLostAngles {
+    NSLog(@"checkLostAngles");
+    
+    NSArray *localLostAngles = (NSArray *)[HelloUtils ycu_userdefault_getObjforKey:kLostAngles];
+    
+    if (localLostAngles.count > 0) {
+        
+        NSMutableArray *tmpArr = [[NSMutableArray alloc] initWithArray:localLostAngles];
+        
+        for (NSDictionary *dict in localLostAngles) {
+            
+            // 避免数据竞争
+            dispatch_barrier_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                [NetEngine yce_postLostDataToValiteWithOrderID:dict[@"orderId"]
+                                                  currencyCode:dict[@"currencyCode"]
+                                                    localPrice:dict[@"localPrice"]
+                                                 transactionId:dict[@"transactionId"]
+                                          receiptDataBase64Str:dict[@"receiptData"]
+                                                        userId:dict[@"userId"]
+                                                    serverCode:dict[@"serverCode"]
+                                          andComplitionHandler:^(NSURLResponse *response, NSString * _Nullable code, NSString * _Nullable orderID, NSDictionary * _Nullable dic, NSError * _Nullable error) {
+                                              //                                              NSString * codeStr= [NSString stringWithFormat:@"%@",dic[kRespStrResult]];
+                                              
+                                              if ( dic )// 成功
+                                              {
+//                                                  NSLog(@"-----补发收到服务端响应，剩下的服务端处理-------");
+                                                  [tmpArr removeObject:dict];
+                                                  
+                                                  // [tmpArr removeObject:dict]; 是在 block 里面的，因此需要在里面处理才能消除已经补单过的
+                                                  // 如果有哪些没有补发完成的，等到下次启动再补发了
+                                                  if (tmpArr.count <= 0) {
+                                                      [[NSUserDefaults standardUserDefaults] removeObjectForKey:kLostAngles];
+                                                      [[NSUserDefaults standardUserDefaults] synchronize];
+                                                  } else {
+                                                      [HelloUtils ycu_userdefault_setObj:tmpArr key:kLostAngles];
+                                                  }
+                                              }
+                                              
+                                          }];
+            });
+        }
+    }
+}
 
 @end

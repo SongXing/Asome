@@ -24,7 +24,7 @@
 #define kYCLoginAgreeViewTag        121
 #define kYCLoginCheckBoxBtnTag      122
 #define kYCLoginWowBtnTag           123
-#define kYCLoginPhoneRegBtnTag           124
+#define kYCLoginPhoneRegBtnTag      124
 
 #define kListCellIdentifier             @"cn_list_identifier"
 
@@ -34,6 +34,20 @@
 static NSInteger chimaClickTIme = 0;
 static NSInteger chimaOpenTime = 3;
 
+@interface YCLoginView ()
+@property (nonatomic, strong) UIButton *loginComfirmBtn;
+@property (nonatomic, strong) UIButton *eyesBtn;
+@property (nonatomic, strong) UIButton *forgetPwdBtn;
+@property (nonatomic, strong) UIButton *userListBtn;
+@property (nonatomic, strong) UIButton *checkBoxBtn;
+
+@property (nonatomic, strong) HelloTextField *nameTF;
+@property (nonatomic, strong) HelloTextField *pwdTF;
+@property (nonatomic, strong) HelloTextField *phoneInput;
+@property (nonatomic, strong) HelloTextField *codeInput;
+
+@end
+
 @implementation YCLoginView
 {
     CGFloat rate ; // 校对比值
@@ -42,40 +56,20 @@ static NSInteger chimaOpenTime = 3;
     CGFloat originBgWidthOfHeight;// 背景图片宽高比
     CGFloat loginBtnWidthOfBgWidth;
     CGFloat loginBtnHeightOfBgHeight;
-    CGFloat findPwdBtnWidthOfBgWidth;
-    CGFloat findPwdBtnHeightOfBgHeight;
     CGFloat textFieldHeightOfBgHeight;
-    CGFloat topPadding;
     CGFloat leftPadding;
-    CGFloat findBtnLeftPadding;
     CGFloat anotherLeftPadding;
-    CGFloat gapPadding;
-    CGFloat anotherGapPadding;
-    CGFloat thirdGapPadding;
-    CGFloat lineTopPadding;
     CGFloat backBtnWidthAndHeight;
     
     CGFloat keyboarHeight;
     CGFloat animatedDistance;
     
     UIImageView *mainBg;
-
-
-    HelloTextField *nameTF;
-    HelloTextField *pwdTF;
-    HelloTextField *phoneInput;
-    HelloTextField *codeInput;
     
     BOOL pwdEntity;
     BOOL userListShow;
     BOOL needToWarning;
     BOOL checkboxStatus;
-    
-    UIButton *loginComfirmBtn;
-    UIButton *eyesBtn;
-    UIButton *forgetPwdBtn;
-    UIButton *userListBtn;
-    UIButton *checkBoxBtn;
     
     UIView *userListView;
     UITableView *uList;
@@ -84,7 +78,7 @@ static NSInteger chimaOpenTime = 3;
     NSArray *listModelArr;
     
     YCLoginMode m_mode;
-    YCLoginMode ori_mode;
+    
     YCUserModel *curLoginUser;
     
     CGFloat onCalWidth;
@@ -97,7 +91,6 @@ static NSInteger chimaOpenTime = 3;
     if (self) {
         
         m_mode = mode;
-        ori_mode = mode;
         
         [self propertyPrapare];
         [self helloInit];
@@ -134,17 +127,10 @@ static NSInteger chimaOpenTime = 3;
     
     loginBtnWidthOfBgWidth = 914/1070.0f;
     loginBtnHeightOfBgHeight = 172/1130.0f;
-    findPwdBtnWidthOfBgWidth = 300/1070.0f;
-    findPwdBtnHeightOfBgHeight = 62/1130.0f;
+    
     textFieldHeightOfBgHeight = 140/1130.0f;//150/1130.0f;//
-    topPadding = 24/1130.0f;
     leftPadding = 24/1070.0f;
     anotherLeftPadding = 78/1130.0f;
-    findBtnLeftPadding = (78+80)/1130.0f;
-    gapPadding = 30/1130.0f;
-    anotherGapPadding = 50/1130.0f;// origin 80
-    thirdGapPadding = 64/1130.0f; // origin 34
-    lineTopPadding = (156+172*4+50*3+70)/1130.0f;
     backBtnWidthAndHeight = 100.0f/1130.0f;
     
     pwdEntity = YES;
@@ -184,6 +170,10 @@ static NSInteger chimaOpenTime = 3;
             [self wnDirectRegWidget];
         }
             break;
+//        case YCLogin_Default:{
+//            [self catchMyWidget];
+//        }
+//            break;
         default:
             [self catchMyWidget];
             break;
@@ -254,18 +244,23 @@ static NSInteger chimaOpenTime = 3;
     CGFloat secondGap = 8.0f/curWidth * onCalHeight;
     mTopPadding += firstGap;
     
-    // title image
-    UIImageView *titleImage = [[UIImageView alloc] initWithImage:GetImage(@"logo.png")];
-    [mainBg addSubview:titleImage];
     // 440x98
     CGFloat widthOfImage    = 100*rate*curWidth/228.0f;
     CGFloat heightOfImage   = 100*rate*curWidth/228.0f/440.0f*98.0f;
-    [titleImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(mTopPadding));
-        make.centerX.equalTo(@(0));
-        make.width.equalTo(@(widthOfImage));
-        make.height.equalTo(@(heightOfImage));
-    }];
+    
+    UIImage *logoImage = GetImage(@"logo.png");
+    if (logoImage != nil) {
+        // logo image
+        UIImageView *titleImage = [[UIImageView alloc] initWithImage:logoImage];
+        [mainBg addSubview:titleImage];
+        [titleImage mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(@(mTopPadding));
+            make.centerX.equalTo(@(0));
+            make.width.equalTo(@(widthOfImage));
+            make.height.equalTo(@(heightOfImage));
+        }];
+    }
+    
     
     // back btn
     UIButton *backBtn = [HelloUtils ycu_initBtnWithNormalImage:backBtn_normal highlightedImage:backBtn_highlighted tag:kLoginDamnBackBtnTag selector:@selector(loginViewBtnAction:) target:self];
@@ -327,11 +322,11 @@ static NSInteger chimaOpenTime = 3;
         make.height.equalTo(@(30-10));
     }];
     
-    phoneInput = [HelloUtils ycu_customTextfieldWidgetWithLeftView:nil rightView:nil placeholder:@"请输入您的手机号码" delegate:self];
-    [HelloUtils ycu_makeTextFieldPlaceHolderProperty:phoneInput];
-    phoneInput.returnKeyType = UIReturnKeyNext;
-    [phoneView addSubview:phoneInput];
-    [phoneInput mas_makeConstraints:^(MASConstraintMaker *make) {
+    self.phoneInput = [HelloUtils ycu_customTextfieldWidgetWithLeftView:nil rightView:nil placeholder:@"请输入您的手机号码" delegate:self];
+    [HelloUtils ycu_makeTextFieldPlaceHolderProperty:_phoneInput];
+    _phoneInput.returnKeyType = UIReturnKeyNext;
+    [phoneView addSubview:self.phoneInput];
+    [_phoneInput mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(0));
         make.left.equalTo(@(loginBtnWidthOfBgWidth*rate*curWidth*0.2+5));
         make.bottom.equalTo(@(0));
@@ -344,8 +339,7 @@ static NSInteger chimaOpenTime = 3;
     
     // send vertify btn
     NSString *strFetchVertifyCode = @"获取验证码";
-    NSInteger sendVertifyBtnTag = kYCLoginGetVertifyCodeTag;
-    UIButton *sendVertifyBtn = [HelloUtils ycu_initBtnWithType:UIButtonTypeCustom title:strFetchVertifyCode tag:sendVertifyBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    UIButton *sendVertifyBtn = [HelloUtils ycu_initBtnWithType:UIButtonTypeCustom title:strFetchVertifyCode tag:kYCLoginGetVertifyCodeTag selector:@selector(loginViewBtnAction:) target:self];
     [sendVertifyBtn setTitle:strFetchVertifyCode forState:0];
     [sendVertifyBtn.layer setCornerRadius:0.0f];
     [sendVertifyBtn.layer setBorderWidth:0.0f];
@@ -357,43 +351,42 @@ static NSInteger chimaOpenTime = 3;
                                         )];
     
     // input
-
-    codeInput = [HelloUtils ycu_customTextfieldWidgetWithLeftView:nil rightView:sendVertifyBtn placeholder:@"请输入验证码" delegate:self];
-    codeInput.endEditDistance = sendVertifyCodeBtnSize.width - 25 + 10.0f;
-    codeInput.rightViewDistance = 10.0f;
-    [HelloUtils ycu_makeTextFieldPlaceHolderProperty:codeInput];
-    codeInput.returnKeyType = UIReturnKeyDone;
-    [mainBg addSubview:codeInput];
-    [codeInput mas_makeConstraints:^(MASConstraintMaker *make) {
+    self.codeInput = [HelloUtils ycu_customTextfieldWidgetWithLeftView:nil rightView:sendVertifyBtn placeholder:@"请输入验证码" delegate:self];
+    _codeInput.endEditDistance = sendVertifyCodeBtnSize.width - 25 + 10.0f;
+    _codeInput.rightViewDistance = 10.0f;
+    [HelloUtils ycu_makeTextFieldPlaceHolderProperty:_codeInput];
+    _codeInput.returnKeyType = UIReturnKeyDone;
+    [mainBg addSubview:self.codeInput];
+    [_codeInput mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding));
         make.centerX.equalTo(@(0));
         make.width.equalTo(@(loginBtnWidthOfBgWidth*rate*curWidth));
         make.height.equalTo(@(textFieldHeightOfBgHeight*rate*curWidth));
     }];
-    codeInput.backgroundColor = [UIColor whiteColor];
-    codeInput.layer.cornerRadius = 5.0f;
-    codeInput.layer.borderWidth = 1.0f;
-    codeInput.layer.borderColor = [UIColor colorWithHexString:kGrayHex].CGColor;
+    _codeInput.backgroundColor = [UIColor whiteColor];
+    _codeInput.layer.cornerRadius = 5.0f;
+    _codeInput.layer.borderWidth = 1.0f;
+    _codeInput.layer.borderColor = [UIColor colorWithHexString:kGrayHex].CGColor;
     
     // --------------
     mTopPadding += secondGap + textFieldHeightOfBgHeight*rate*curWidth;
     
     // login btn
-    loginComfirmBtn = [HelloUtils yc_initBtnWithTitle:@"进入游戏" tag:kYCLoginMobileFastLoginBtnTag selector:@selector(loginViewBtnAction:) target:self];
-    [mainBg addSubview:loginComfirmBtn];
-    [loginComfirmBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    UIButton *loginBtn = [HelloUtils yc_initBtnWithTitle:@"进入游戏" tag:kYCLoginMobileFastLoginBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    loginBtn.layer.cornerRadius = 5.0f;
+    loginBtn.backgroundColor = [UIColor colorWithHexString:kGreenHex];
+    loginBtn.titleLabel.textColor = [UIColor colorWithHexString:kWhiteHex];
+    loginBtn.layer.borderWidth = 1.0f;
+    loginBtn.layer.borderColor = [UIColor colorWithHexString:kGrayHex].CGColor;
+    [loginBtn.titleLabel setFont:[UIFont fontWithName:kTxtFontName size:kTxtFontBigSize]];
+    self.loginComfirmBtn = loginBtn;
+    [mainBg addSubview:self.loginComfirmBtn];
+    [loginBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding));
         make.left.equalTo(@(anotherLeftPadding*rate*curWidth));
         make.width.equalTo(@(loginBtnWidthOfBgWidth*rate*curWidth));
         make.height.equalTo(@(textFieldHeightOfBgHeight*rate*curWidth));
     }];
-    loginComfirmBtn.layer.cornerRadius = 5.0f;
-    loginComfirmBtn.backgroundColor = [UIColor colorWithHexString:kGreenHex];
-    loginComfirmBtn.titleLabel.textColor = [UIColor colorWithHexString:kWhiteHex];
-    loginComfirmBtn.layer.borderWidth = 1.0f;
-    loginComfirmBtn.layer.borderColor = [UIColor colorWithHexString:kGrayHex].CGColor;
-    [loginComfirmBtn.titleLabel setFont:[UIFont fontWithName:kTxtFontName size:kTxtFontBigSize]];
-    
     
     CGSize txtSize = CGSizeZero;
     // 游客登录按钮
@@ -407,7 +400,7 @@ static NSInteger chimaOpenTime = 3;
     txtSize = [HelloUtils ycu_calculateSizeOfLabel:guestBtn.titleLabel];
     [guestBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(@(-textFieldHeightOfBgHeight/3*rate*curWidth));
-        make.left.equalTo(loginComfirmBtn.mas_left);
+        make.left.equalTo(self.loginComfirmBtn.mas_left);
         make.width.equalTo(@(txtSize.width));
         make.height.equalTo(@(txtSize.height));
     }];
@@ -440,7 +433,7 @@ static NSInteger chimaOpenTime = 3;
     txtSize = [HelloUtils ycu_calculateSizeOfLabel:helpCenterBtn.titleLabel];
     [helpCenterBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(@(-textFieldHeightOfBgHeight/3*rate*curWidth));
-        make.right.equalTo(loginComfirmBtn.mas_right);
+        make.right.equalTo(self.loginComfirmBtn.mas_right);
         make.width.equalTo(@(txtSize.width));
         make.height.equalTo(@(txtSize.height));
     }];
@@ -454,18 +447,22 @@ static NSInteger chimaOpenTime = 3;
     CGFloat secondGap = 8.0f/curWidth * onCalHeight;
     mTopPadding += firstGap;
     
-    // title image
-    UIImageView *titleImage = [[UIImageView alloc] initWithImage:GetImage(@"logo.png")];
-    [mainBg addSubview:titleImage];
     // 440x98
     CGFloat widthOfImage    = 100*rate*curWidth/228.0f;
     CGFloat heightOfImage   = 100*rate*curWidth/228.0f/440.0f*98.0f;
-    [titleImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(mTopPadding));
-        make.centerX.equalTo(@(0));
-        make.width.equalTo(@(widthOfImage));
-        make.height.equalTo(@(heightOfImage));
-    }];
+    
+    UIImage *logoImage = GetImage(@"logo.png");
+    if (logoImage != nil) {
+        // logo image
+        UIImageView *titleImage = [[UIImageView alloc] initWithImage:logoImage];
+        [mainBg addSubview:titleImage];
+        [titleImage mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(@(mTopPadding));
+            make.centerX.equalTo(@(0));
+            make.width.equalTo(@(widthOfImage));
+            make.height.equalTo(@(heightOfImage));
+        }];
+    }
     
     // back btn
     UIButton *backBtn = [HelloUtils ycu_initBtnWithNormalImage:backBtn_normal highlightedImage:backBtn_highlighted tag:kLoginDamnBackBtnTag selector:@selector(loginViewBtnAction:) target:self];
@@ -481,20 +478,23 @@ static NSInteger chimaOpenTime = 3;
     
     mTopPadding += firstGap + heightOfImage;
     
+//    self.userListBtn = [HelloUtils ycu_rightViewWithImage:userListBtn_down tag:kTVRightUserListBtnTag selector:@selector(loginViewBtnAction:) target:self];
+//    [_userListBtn setFrame:CGRectMake(-10, 0, _userListBtn.frame.size.width, _userListBtn.frame.size.height)];
+    
     // text input
-    nameTF = [HelloUtils ycu_customTextfieldWidgetWithLeftView:nil
-                                                 rightView:userListBtn
-                                               placeholder:@"请输入登录账号"
+    self.nameTF = [HelloUtils ycu_customTextfieldWidgetWithLeftView:nil
+                                                 rightView:nil
+                                               placeholder:@"账号"
                                                   delegate:self];
-    [HelloUtils ycu_makeTextFieldPlaceHolderProperty:nameTF];
-    nameTF.returnKeyType = UIReturnKeyNext;
-    nameTF.tag = kYCLoginNameInputViewTag;
-    nameTF.backgroundColor = [UIColor whiteColor];
-    nameTF.layer.cornerRadius = 5.0f;
-    nameTF.layer.borderWidth = 1.0f;
-    nameTF.layer.borderColor = [UIColor colorWithHexString:kGrayHex].CGColor;
-    [mainBg addSubview:nameTF];
-    [nameTF mas_makeConstraints:^(MASConstraintMaker *make) {
+    [HelloUtils ycu_makeTextFieldPlaceHolderProperty:_nameTF];
+    _nameTF.returnKeyType = UIReturnKeyNext;
+    _nameTF.tag = kYCLoginNameInputViewTag;
+    _nameTF.backgroundColor = [UIColor whiteColor];
+    _nameTF.layer.cornerRadius = 5.0f;
+    _nameTF.layer.borderWidth = 1.0f;
+    _nameTF.layer.borderColor = [UIColor colorWithHexString:kGrayHex].CGColor;
+    [mainBg addSubview:self.nameTF];
+    [_nameTF mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding));
         make.centerX.equalTo(@(0));
         make.width.equalTo(@(loginBtnWidthOfBgWidth*rate*curWidth));
@@ -504,24 +504,24 @@ static NSInteger chimaOpenTime = 3;
     // ------------
     mTopPadding += secondGap + textFieldHeightOfBgHeight*rate*curWidth;
     
-    eyesBtn = [HelloUtils ycu_rightViewWithImage:eyeBtn_off tag:kYCLoginEyeBtnTag selector:@selector(loginViewBtnAction:) target:self];
-    [eyesBtn setFrame:CGRectMake(0, 0, eyesBtn.frame.size.width, eyesBtn.frame.size.height)];
+    self.eyesBtn = [HelloUtils ycu_rightViewWithImage:eyeBtn_off tag:kYCLoginEyeBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    [_eyesBtn setFrame:CGRectMake(0, 0, _eyesBtn.frame.size.width, _eyesBtn.frame.size.height)];
     
-    pwdTF = [HelloUtils ycu_customTextfieldWidgetWithLeftView:nil
-                                                rightView:eyesBtn
-                                              placeholder:@"请输入密码"
+    self.pwdTF = [HelloUtils ycu_customTextfieldWidgetWithLeftView:nil
+                                                rightView:_eyesBtn
+                                              placeholder:@"请设置密码"
                                                  delegate:self];
-    pwdTF.endEditDistance = eyesBtn.frame.size.width - 25;
-    [HelloUtils ycu_makeTextFieldPlaceHolderProperty:pwdTF];
-    pwdTF.returnKeyType = UIReturnKeyDone;
-    pwdTF.tag = kYCLoginPwdInputViewTag;
-    pwdTF.secureTextEntry = pwdEntity;
-    pwdTF.backgroundColor = [UIColor whiteColor];
-    pwdTF.layer.cornerRadius = 5.0f;
-    pwdTF.layer.borderWidth = 1.0f;
-    pwdTF.layer.borderColor = [UIColor colorWithHexString:kGrayHex].CGColor;
-    [mainBg addSubview:pwdTF];
-    [pwdTF mas_makeConstraints:^(MASConstraintMaker *make) {
+    _pwdTF.endEditDistance = _eyesBtn.frame.size.width - 25;
+    [HelloUtils ycu_makeTextFieldPlaceHolderProperty:_pwdTF];
+    _pwdTF.returnKeyType = UIReturnKeyDone;
+    _pwdTF.tag = kYCLoginPwdInputViewTag;
+    _pwdTF.secureTextEntry = pwdEntity;
+    _pwdTF.backgroundColor = [UIColor whiteColor];
+    _pwdTF.layer.cornerRadius = 5.0f;
+    _pwdTF.layer.borderWidth = 1.0f;
+    _pwdTF.layer.borderColor = [UIColor colorWithHexString:kGrayHex].CGColor;
+    [mainBg addSubview:self.pwdTF];
+    [_pwdTF mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding));
         make.centerX.equalTo(@(0));
         make.width.equalTo(@(loginBtnWidthOfBgWidth*rate*curWidth));
@@ -532,20 +532,20 @@ static NSInteger chimaOpenTime = 3;
     mTopPadding += secondGap + textFieldHeightOfBgHeight*rate*curWidth;
     
     // login btn
-    loginComfirmBtn = [HelloUtils yc_initBtnWithTitle:@"进入游戏" tag:kYCLoginMobileFastLoginBtnTag selector:@selector(loginViewBtnAction:) target:self];
-    [mainBg addSubview:loginComfirmBtn];
-    [loginComfirmBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    self.loginComfirmBtn = [HelloUtils yc_initBtnWithTitle:@"注册" tag:kYCWeinanAccoutRegBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    [mainBg addSubview:_loginComfirmBtn];
+    [_loginComfirmBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding));
         make.left.equalTo(@(anotherLeftPadding*rate*curWidth));
         make.width.equalTo(@(loginBtnWidthOfBgWidth*rate*curWidth));
         make.height.equalTo(@(textFieldHeightOfBgHeight*rate*curWidth));
     }];
-    loginComfirmBtn.layer.cornerRadius = 5.0f;
-    loginComfirmBtn.backgroundColor = [UIColor colorWithHexString:kGreenHex];
-    loginComfirmBtn.titleLabel.textColor = [UIColor colorWithHexString:kWhiteHex];
-    loginComfirmBtn.layer.borderWidth = 1.0f;
-    loginComfirmBtn.layer.borderColor = [UIColor colorWithHexString:kGrayHex].CGColor;
-    [loginComfirmBtn.titleLabel setFont:[UIFont fontWithName:kTxtFontName size:kTxtFontBigSize]];
+    _loginComfirmBtn.layer.cornerRadius = 5.0f;
+    _loginComfirmBtn.backgroundColor = [UIColor colorWithHexString:kGreenHex];
+    _loginComfirmBtn.titleLabel.textColor = [UIColor colorWithHexString:kWhiteHex];
+    _loginComfirmBtn.layer.borderWidth = 1.0f;
+    _loginComfirmBtn.layer.borderColor = [UIColor colorWithHexString:kGrayHex].CGColor;
+    [_loginComfirmBtn.titleLabel setFont:[UIFont fontWithName:kTxtFontName size:kTxtFontBigSize]];
     
     [self _makeAgreeViewContent];
     
@@ -590,41 +590,45 @@ static NSInteger chimaOpenTime = 3;
     CGFloat secondGap = 8.0f/curWidth * onCalHeight;
     mTopPadding += firstGap;
     
-    // title image
-    UIImageView *titleImage = [[UIImageView alloc] initWithImage:GetImage(@"logo.png")];
-    [mainBg addSubview:titleImage];
     // 440x98
     CGFloat widthOfImage    = 100*rate*curWidth/228.0f;
     CGFloat heightOfImage   = 100*rate*curWidth/228.0f/440.0f*98.0f;
-    [titleImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@(mTopPadding));
-        make.centerX.equalTo(@(0));
-        make.width.equalTo(@(widthOfImage));
-        make.height.equalTo(@(heightOfImage));
-    }];
+    
+    UIImage *logoImage = GetImage(@"logo.png");
+    if (logoImage != nil) {
+        // logo image
+        UIImageView *titleImage = [[UIImageView alloc] initWithImage:logoImage];
+        [mainBg addSubview:titleImage];
+        [titleImage mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(@(mTopPadding));
+            make.centerX.equalTo(@(0));
+            make.width.equalTo(@(widthOfImage));
+            make.height.equalTo(@(heightOfImage));
+        }];
+    }
     
     // ----------------------------
     
     mTopPadding += firstGap + heightOfImage;
     
     // 账号下拉
-    userListBtn = [HelloUtils ycu_rightViewWithImage:userListBtn_down tag:kTVRightUserListBtnTag selector:@selector(loginViewBtnAction:) target:self];
-    [userListBtn setFrame:CGRectMake(-10, 0, userListBtn.frame.size.width, userListBtn.frame.size.height)];
+    self.userListBtn = [HelloUtils ycu_rightViewWithImage:userListBtn_down tag:kTVRightUserListBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    [_userListBtn setFrame:CGRectMake(-10, 0, _userListBtn.frame.size.width, _userListBtn.frame.size.height)];
     
     // text input
-    nameTF = [HelloUtils ycu_customTextfieldWidgetWithLeftView:nil
-                                                 rightView:userListBtn
+    self.nameTF = [HelloUtils ycu_customTextfieldWidgetWithLeftView:nil
+                                                 rightView:_userListBtn
                                                placeholder:@"请输入登录账号"
                                                   delegate:self];
-    [HelloUtils ycu_makeTextFieldPlaceHolderProperty:nameTF];
-    nameTF.returnKeyType = UIReturnKeyNext;
-    nameTF.tag = kYCLoginNameInputViewTag;
-    nameTF.backgroundColor = [UIColor whiteColor];
-    nameTF.layer.cornerRadius = 5.0f;
-    nameTF.layer.borderWidth = 1.0f;
-    nameTF.layer.borderColor = [UIColor colorWithHexString:kGrayHex].CGColor;
-    [mainBg addSubview:nameTF];
-    [nameTF mas_makeConstraints:^(MASConstraintMaker *make) {
+    [HelloUtils ycu_makeTextFieldPlaceHolderProperty:_nameTF];
+    _nameTF.returnKeyType = UIReturnKeyNext;
+    _nameTF.tag = kYCLoginNameInputViewTag;
+    _nameTF.backgroundColor = [UIColor whiteColor];
+    _nameTF.layer.cornerRadius = 5.0f;
+    _nameTF.layer.borderWidth = 1.0f;
+    _nameTF.layer.borderColor = [UIColor colorWithHexString:kGrayHex].CGColor;
+    [mainBg addSubview:self.nameTF];
+    [_nameTF mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding));
         make.centerX.equalTo(@(0));
         make.width.equalTo(@(txtFieldWidth));
@@ -632,7 +636,7 @@ static NSInteger chimaOpenTime = 3;
     }];
     // 填充最近登录的账号
     YCUserModel *firObj = listModelArr.count > 0 ? listModelArr[0] : nil;
-    nameTF.text = firObj ? firObj.account : @"";
+    _nameTF.text = firObj ? firObj.account : @"";
     // 只提供下拉选项，不提供编辑选项
 //    m_mode == YCLogin_ChangeAccount ?
 //    nameTF.userInteractionEnabled = NO;
@@ -642,20 +646,20 @@ static NSInteger chimaOpenTime = 3;
     mTopPadding += secondGap*6 + txtFieldHeight;
     
     // login btn
-    loginComfirmBtn = [HelloUtils yc_initBtnWithTitle:@"进入游戏" tag:kYCLoginMobileFastLoginBtnTag selector:@selector(loginViewBtnAction:) target:self];
-    [mainBg addSubview:loginComfirmBtn];
-    [loginComfirmBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    self.loginComfirmBtn = [HelloUtils yc_initBtnWithTitle:@"进入游戏" tag:kYCLoginMobileFastLoginBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    [mainBg addSubview:_loginComfirmBtn];
+    [_loginComfirmBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding));
         make.left.equalTo(@(anotherLeftPadding*rate*curWidth));
         make.width.equalTo(@(loginBtnWidthOfBgWidth*rate*curWidth));
         make.height.equalTo(@(textFieldHeightOfBgHeight*rate*curWidth));
     }];
-    loginComfirmBtn.layer.cornerRadius = 5.0f;
-    loginComfirmBtn.backgroundColor = [UIColor colorWithHexString:kGreenHex];
-    loginComfirmBtn.titleLabel.textColor = [UIColor colorWithHexString:kWhiteHex];
-    loginComfirmBtn.layer.borderWidth = 1.0f;
-    loginComfirmBtn.layer.borderColor = [UIColor colorWithHexString:kGrayHex].CGColor;
-    [loginComfirmBtn.titleLabel setFont:[UIFont fontWithName:kTxtFontName size:kTxtFontBigSize]];
+    _loginComfirmBtn.layer.cornerRadius = 5.0f;
+    _loginComfirmBtn.backgroundColor = [UIColor colorWithHexString:kGreenHex];
+    _loginComfirmBtn.titleLabel.textColor = [UIColor colorWithHexString:kWhiteHex];
+    _loginComfirmBtn.layer.borderWidth = 1.0f;
+    _loginComfirmBtn.layer.borderColor = [UIColor colorWithHexString:kGrayHex].CGColor;
+    [_loginComfirmBtn.titleLabel setFont:[UIFont fontWithName:kTxtFontName size:kTxtFontBigSize]];
     
     
     CGSize txtSize = CGSizeZero;
@@ -674,7 +678,6 @@ static NSInteger chimaOpenTime = 3;
         make.width.equalTo(@(txtSize.width));
         make.height.equalTo(@(txtSize.height));
     }];
-    
 }
 
 
@@ -686,16 +689,16 @@ static NSInteger chimaOpenTime = 3;
     
     [[self viewWithTag:kYCLoginPhoneInputViewTag] setHidden:YES];
     [[self viewWithTag:kYCLoginGetVertifyCodeTag] setHidden:YES];
-    phoneInput.hidden = YES;
-    codeInput.hidden = YES;
+    self.phoneInput.hidden = YES;
+    self.codeInput.hidden = YES;
 }
 
 - (void)_justShowGeneratedPhoneRegElements
 {
     [[self viewWithTag:kYCLoginPhoneInputViewTag] setHidden:NO];
     [[self viewWithTag:kYCLoginGetVertifyCodeTag] setHidden:NO];
-    phoneInput.hidden = NO;
-    codeInput.hidden = NO;
+    self.phoneInput.hidden = NO;
+    self.codeInput.hidden = NO;
 }
 
 - (void)_weinanPhoneRegMode
@@ -762,11 +765,11 @@ static NSInteger chimaOpenTime = 3;
         make.height.equalTo(@(30-10));
     }];
     
-    phoneInput = [HelloUtils ycu_customTextfieldWidgetWithLeftView:nil rightView:nil placeholder:@"请输入您的手机号码" delegate:self];
-    [HelloUtils ycu_makeTextFieldPlaceHolderProperty:phoneInput];
-    phoneInput.returnKeyType = UIReturnKeyNext;
-    [phoneView addSubview:phoneInput];
-    [phoneInput mas_makeConstraints:^(MASConstraintMaker *make) {
+    self.phoneInput = [HelloUtils ycu_customTextfieldWidgetWithLeftView:nil rightView:nil placeholder:@"请输入您的手机号码" delegate:self];
+    [HelloUtils ycu_makeTextFieldPlaceHolderProperty:_phoneInput];
+    _phoneInput.returnKeyType = UIReturnKeyNext;
+    [phoneView addSubview:self.phoneInput];
+    [_phoneInput mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(0));
         make.left.equalTo(@(loginBtnWidthOfBgWidth*rate*curWidth*0.2+5));
         make.bottom.equalTo(@(0));
@@ -779,8 +782,7 @@ static NSInteger chimaOpenTime = 3;
     
     // send vertify btn
     NSString *strFetchVertifyCode = @"获取验证码";
-    NSInteger sendVertifyBtnTag = kYCLoginGetVertifyCodeTag;
-    UIButton *sendVertifyBtn = [HelloUtils ycu_initBtnWithType:UIButtonTypeCustom title:strFetchVertifyCode tag:sendVertifyBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    UIButton *sendVertifyBtn = [HelloUtils ycu_initBtnWithType:UIButtonTypeCustom title:strFetchVertifyCode tag:kYCLoginGetVertifyCodeTag selector:@selector(loginViewBtnAction:) target:self];
     [sendVertifyBtn setTitle:strFetchVertifyCode forState:0];
     [sendVertifyBtn.layer setCornerRadius:0.0f];
     [sendVertifyBtn.layer setBorderWidth:0.0f];
@@ -788,27 +790,26 @@ static NSInteger chimaOpenTime = 3;
     [sendVertifyBtn setTitleColor:[UIColor colorWithHexString:kBlackHex] forState:0];
     [sendVertifyBtn.titleLabel setFont:[UIFont fontWithName:kTxtFontName size:kTxtFontSize]];
     CGSize sendVertifyCodeBtnSize = [HelloUtils ycu_calculateSizeOfLabel:sendVertifyBtn.titleLabel andWidth:1000];
-    [sendVertifyBtn setFrame:CGRectMake(0, 0, sendVertifyCodeBtnSize.width, textFieldHeightOfBgHeight*rate*curWidth
-                                        )];
+    [sendVertifyBtn setFrame:CGRectMake(0, 0, sendVertifyCodeBtnSize.width, textFieldHeightOfBgHeight*rate*curWidth)];
     
     // input
     
-    codeInput = [HelloUtils ycu_customTextfieldWidgetWithLeftView:nil rightView:sendVertifyBtn placeholder:@"请输入验证码" delegate:self];
-    codeInput.endEditDistance = sendVertifyCodeBtnSize.width - 25 + 10.0f;
-    codeInput.rightViewDistance = 10.0f;
-    [HelloUtils ycu_makeTextFieldPlaceHolderProperty:codeInput];
-    codeInput.returnKeyType = UIReturnKeyDone;
-    [mainBg addSubview:codeInput];
-    [codeInput mas_makeConstraints:^(MASConstraintMaker *make) {
+    self.codeInput = [HelloUtils ycu_customTextfieldWidgetWithLeftView:nil rightView:sendVertifyBtn placeholder:@"请输入验证码" delegate:self];
+    _codeInput.endEditDistance = sendVertifyCodeBtnSize.width - 25 + 10.0f;
+    _codeInput.rightViewDistance = 10.0f;
+    [HelloUtils ycu_makeTextFieldPlaceHolderProperty:_codeInput];
+    _codeInput.returnKeyType = UIReturnKeyDone;
+    [mainBg addSubview:self.codeInput];
+    [_codeInput mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding));
         make.centerX.equalTo(@(0));
         make.width.equalTo(@(loginBtnWidthOfBgWidth*rate*curWidth));
         make.height.equalTo(@(textFieldHeightOfBgHeight*rate*curWidth));
     }];
-    codeInput.backgroundColor = [UIColor whiteColor];
-    codeInput.layer.cornerRadius = 5.0f;
-    codeInput.layer.borderWidth = 1.0f;
-    codeInput.layer.borderColor = [UIColor colorWithHexString:kGrayHex].CGColor;
+    _codeInput.backgroundColor = [UIColor whiteColor];
+    _codeInput.layer.cornerRadius = 5.0f;
+    _codeInput.layer.borderWidth = 1.0f;
+    _codeInput.layer.borderColor = [UIColor colorWithHexString:kGrayHex].CGColor;
 }
 
 #pragma mark - 切换模式
@@ -856,27 +857,27 @@ static NSInteger chimaOpenTime = 3;
 - (void)_forgetBtnShow
 {
     // ----- 忘记密码
-    forgetPwdBtn = [HelloUtils ycu_initBtnWithTitle:@"忘记密码？" tag:kYCLoginForgetPwdBtnTag selector:@selector(loginViewBtnAction:) target:self];
-    [forgetPwdBtn.layer setBorderWidth:0.0f];
-    [forgetPwdBtn.layer setBorderColor:[UIColor clearColor].CGColor];
-    [forgetPwdBtn.layer setCornerRadius:0.0f];
-    [forgetPwdBtn setTitleColor:[UIColor colorWithHexString:kGreenHex] forState:0];
-    [forgetPwdBtn.titleLabel setFont:[UIFont fontWithName:kTxtFontName size:kTxtFontSize]];
-    CGSize forgetPwdBtnSize = [HelloUtils ycu_calculateSizeOfLabel:forgetPwdBtn.titleLabel andWidth:1000];
+    self.forgetPwdBtn = [HelloUtils ycu_initBtnWithTitle:@"忘记密码？" tag:kYCLoginForgetPwdBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    [_forgetPwdBtn.layer setBorderWidth:0.0f];
+    [_forgetPwdBtn.layer setBorderColor:[UIColor clearColor].CGColor];
+    [_forgetPwdBtn.layer setCornerRadius:0.0f];
+    [_forgetPwdBtn setTitleColor:[UIColor colorWithHexString:kGreenHex] forState:0];
+    [_forgetPwdBtn.titleLabel setFont:[UIFont fontWithName:kTxtFontName size:kTxtFontSize]];
+    CGSize forgetPwdBtnSize = [HelloUtils ycu_calculateSizeOfLabel:_forgetPwdBtn.titleLabel andWidth:1000];
     // 使用HelloTextField的右视图
-    [forgetPwdBtn setFrame:CGRectMake(0, 0, forgetPwdBtnSize.width, forgetPwdBtnSize.height)];
+    [_forgetPwdBtn setFrame:CGRectMake(0, 0, forgetPwdBtnSize.width, forgetPwdBtnSize.height)];
     
-    pwdTF.rightView = forgetPwdBtn;
-    pwdTF.endEditDistance = forgetPwdBtn.frame.size.width - 25;
+    self.pwdTF.rightView = _forgetPwdBtn;
+    self.pwdTF.endEditDistance = _forgetPwdBtn.frame.size.width - 25;
 }
 
 // 编辑清空
 - (void)_clearTextfield
 {
-    nameTF.text     = @"";
-    pwdTF.text      = @"";
-    phoneInput.text = @"";
-    codeInput.text  = @"";
+    self.nameTF.text     = @"";
+    self.pwdTF.text      = @"";
+    self.phoneInput.text = @"";
+    self.codeInput.text  = @"";
 }
 
 - (void)_doSomeMagicToRegister
@@ -900,11 +901,11 @@ static NSInteger chimaOpenTime = 3;
         return;
     }
     
-    eyesBtn = [HelloUtils ycu_rightViewWithImage:eyeBtn_off tag:kYCLoginEyeBtnTag selector:@selector(loginViewBtnAction:) target:self];
-    [eyesBtn setFrame:CGRectMake(0, 0, eyesBtn.frame.size.width, eyesBtn.frame.size.height)];
-    pwdTF.rightView = eyesBtn;
-    pwdTF.secureTextEntry = pwdEntity;
-    pwdTF.endEditDistance = eyesBtn.frame.size.width - 25;
+    self.eyesBtn = [HelloUtils ycu_rightViewWithImage:eyeBtn_off tag:kYCLoginEyeBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    [_eyesBtn setFrame:CGRectMake(0, 0, _eyesBtn.frame.size.width, _eyesBtn.frame.size.height)];
+    self.pwdTF.rightView = _eyesBtn;
+    self.pwdTF.secureTextEntry = pwdEntity;
+    self.pwdTF.endEditDistance = _eyesBtn.frame.size.width - 25;
 }
 
 - (void)_makeAgreeViewContent
@@ -981,23 +982,24 @@ static NSInteger chimaOpenTime = 3;
     
     mTopPadding += firstGap + heightOfImage;
     
-    userListBtn = [HelloUtils ycu_rightViewWithImage:userListBtn_down tag:kTVRightUserListBtnTag selector:@selector(loginViewBtnAction:) target:self];
-    [userListBtn setFrame:CGRectMake(-10, 0, userListBtn.frame.size.width, userListBtn.frame.size.height)];
+    UIButton * tmpuserListBtn = [HelloUtils ycu_rightViewWithImage:userListBtn_down tag:kTVRightUserListBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    [tmpuserListBtn setFrame:CGRectMake(-10, 0, tmpuserListBtn.frame.size.width, tmpuserListBtn.frame.size.height)];
+    self.userListBtn = tmpuserListBtn;
     
     // text input
-    nameTF = [HelloUtils ycu_customTextfieldWidgetWithLeftView:nil
-                                                 rightView:userListBtn
+    self.nameTF = [HelloUtils ycu_customTextfieldWidgetWithLeftView:nil
+                                                 rightView:self.userListBtn
                                                placeholder:@"请输入登录账号"
                                                   delegate:self];
-    [HelloUtils ycu_makeTextFieldPlaceHolderProperty:nameTF];
-    nameTF.returnKeyType = UIReturnKeyNext;
-    nameTF.tag = kYCLoginNameInputViewTag;
-    nameTF.backgroundColor = [UIColor whiteColor];
-    nameTF.layer.cornerRadius = 5.0f;
-    nameTF.layer.borderWidth = 1.0f;
-    nameTF.layer.borderColor = [UIColor colorWithHexString:kGrayHex].CGColor;
-    [mainBg addSubview:nameTF];
-    [nameTF mas_makeConstraints:^(MASConstraintMaker *make) {
+    [HelloUtils ycu_makeTextFieldPlaceHolderProperty:_nameTF];
+    _nameTF.returnKeyType = UIReturnKeyNext;
+    _nameTF.tag = kYCLoginNameInputViewTag;
+    _nameTF.backgroundColor = [UIColor whiteColor];
+    _nameTF.layer.cornerRadius = 5.0f;
+    _nameTF.layer.borderWidth = 1.0f;
+    _nameTF.layer.borderColor = [UIColor colorWithHexString:kGrayHex].CGColor;
+    [mainBg addSubview:self.nameTF];
+    [self.nameTF mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding));
         make.centerX.equalTo(@(0));
         make.width.equalTo(@(loginBtnWidthOfBgWidth*rate*curWidth));
@@ -1005,37 +1007,37 @@ static NSInteger chimaOpenTime = 3;
     }];
     
     YCUserModel *firstUser = listModelArr.count > 0 ? listModelArr[0] : nil;
-    nameTF.text = firstUser ? firstUser.account : @"";
+    _nameTF.text = firstUser ? firstUser.account : @"";
     
     // ------------
     mTopPadding += secondGap + textFieldHeightOfBgHeight*rate*curWidth;
     
     // ----- 忘记密码
-    forgetPwdBtn = [HelloUtils ycu_initBtnWithTitle:@"忘记密码？" tag:kYCLoginForgetPwdBtnTag selector:@selector(loginViewBtnAction:) target:self];
-    [forgetPwdBtn.layer setBorderWidth:0.0f];
-    [forgetPwdBtn.layer setBorderColor:[UIColor clearColor].CGColor];
-    [forgetPwdBtn.layer setCornerRadius:0.0f];
-    [forgetPwdBtn setTitleColor:[UIColor colorWithHexString:kGreenHex] forState:0];
-    [forgetPwdBtn.titleLabel setFont:[UIFont fontWithName:kTxtFontName size:kTxtFontSize]];
-    CGSize forgetPwdBtnSize = [HelloUtils ycu_calculateSizeOfLabel:forgetPwdBtn.titleLabel andWidth:1000];
+    self.forgetPwdBtn = [HelloUtils ycu_initBtnWithTitle:@"忘记密码？" tag:kYCLoginForgetPwdBtnTag selector:@selector(loginViewBtnAction:) target:self];
+    [_forgetPwdBtn.layer setBorderWidth:0.0f];
+    [_forgetPwdBtn.layer setBorderColor:[UIColor clearColor].CGColor];
+    [_forgetPwdBtn.layer setCornerRadius:0.0f];
+    [_forgetPwdBtn setTitleColor:[UIColor colorWithHexString:kGreenHex] forState:0];
+    [_forgetPwdBtn.titleLabel setFont:[UIFont fontWithName:kTxtFontName size:kTxtFontSize]];
+    CGSize forgetPwdBtnSize = [HelloUtils ycu_calculateSizeOfLabel:_forgetPwdBtn.titleLabel andWidth:1000];
     // 使用HelloTextField的右视图
-    [forgetPwdBtn setFrame:CGRectMake(0, 0, forgetPwdBtnSize.width, forgetPwdBtnSize.height)];
+    [_forgetPwdBtn setFrame:CGRectMake(0, 0, forgetPwdBtnSize.width, forgetPwdBtnSize.height)];
     
-    pwdTF = [HelloUtils ycu_customTextfieldWidgetWithLeftView:nil
-                                                rightView:forgetPwdBtn
+    self.pwdTF = [HelloUtils ycu_customTextfieldWidgetWithLeftView:nil
+                                                rightView:_forgetPwdBtn
                                               placeholder:@"请输入密码"
                                                  delegate:self];
-    pwdTF.endEditDistance = forgetPwdBtnSize.width-25;
-    [HelloUtils ycu_makeTextFieldPlaceHolderProperty:pwdTF];
-    pwdTF.returnKeyType = UIReturnKeyDone;
-    pwdTF.tag = kYCLoginPwdInputViewTag;
-    pwdTF.secureTextEntry = pwdEntity;
-    pwdTF.backgroundColor = [UIColor whiteColor];
-    pwdTF.layer.cornerRadius = 5.0f;
-    pwdTF.layer.borderWidth = 1.0f;
-    pwdTF.layer.borderColor = [UIColor colorWithHexString:kGrayHex].CGColor;
-    [mainBg addSubview:pwdTF];
-    [pwdTF mas_makeConstraints:^(MASConstraintMaker *make) {
+    _pwdTF.endEditDistance = forgetPwdBtnSize.width-25;
+    [HelloUtils ycu_makeTextFieldPlaceHolderProperty:_pwdTF];
+    _pwdTF.returnKeyType = UIReturnKeyDone;
+    _pwdTF.tag = kYCLoginPwdInputViewTag;
+    _pwdTF.secureTextEntry = pwdEntity;
+    _pwdTF.backgroundColor = [UIColor whiteColor];
+    _pwdTF.layer.cornerRadius = 5.0f;
+    _pwdTF.layer.borderWidth = 1.0f;
+    _pwdTF.layer.borderColor = [UIColor colorWithHexString:kGrayHex].CGColor;
+    [mainBg addSubview:self.pwdTF];
+    [_pwdTF mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@(mTopPadding));
         make.centerX.equalTo(@(0));
         make.width.equalTo(@(loginBtnWidthOfBgWidth*rate*curWidth));
@@ -1054,7 +1056,7 @@ static NSInteger chimaOpenTime = 3;
     [mainBg addSubview:noAccountLabel];
     [noAccountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(@(-textFieldHeightOfBgHeight/3*rate*curWidth));
-        make.left.equalTo(loginComfirmBtn.mas_left);
+        make.left.equalTo(_loginComfirmBtn.mas_left);
         make.width.equalTo(@(noAccountLabelSize.width));
         make.height.equalTo(@(noAccountLabelSize.height));
     }];
@@ -1086,7 +1088,7 @@ static NSInteger chimaOpenTime = 3;
     CGSize helpCenterBtnSize = [HelloUtils ycu_calculateSizeOfLabel:helpCenterBtn.titleLabel andWidth:1000];
     [helpCenterBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(@(-textFieldHeightOfBgHeight/3*rate*curWidth));
-        make.right.equalTo(loginComfirmBtn.mas_right);
+        make.right.equalTo(_loginComfirmBtn.mas_right);
         make.width.equalTo(@(helpCenterBtnSize.width));
         make.height.equalTo(@(helpCenterBtnSize.height));
     }];
@@ -1098,9 +1100,8 @@ static NSInteger chimaOpenTime = 3;
 #pragma mark - Btn Actions
 
 - (void)usePhoneAndCodeLogin {
-    NSString *mobileNum = [HelloUtils ycu_triString:phoneInput.text];
-    NSString *code = [HelloUtils ycu_triString:codeInput.text];
-//    if (![HelloUtils validCnMobileNumber:mobileNum]) {
+    NSString *mobileNum = [HelloUtils ycu_triString:self.phoneInput.text];
+    NSString *code = [HelloUtils ycu_triString:self.codeInput.text];
     if (mobileNum.length == 0) {
         [HelloUtils ycu_invalidPhoneToast];
         return;
@@ -1123,8 +1124,8 @@ static NSInteger chimaOpenTime = 3;
 }
 
 - (void)useAccountAndPwdLogin {
-    NSString *name = [HelloUtils ycu_triString:nameTF.text];
-    NSString *pass = [HelloUtils ycu_triString:pwdTF.text];
+    NSString *name = [HelloUtils ycu_triString:self.nameTF.text];
+    NSString *pass = [HelloUtils ycu_triString:self.pwdTF.text];
 //    if (![HelloUtils validUserName:name]) {
     if (name.length <= 0) {
         [HelloUtils ycu_invalidNameToast];
@@ -1152,8 +1153,8 @@ static NSInteger chimaOpenTime = 3;
 }
 
 - (void)useAccounAndPwdRegister {
-    NSString *name = [HelloUtils ycu_triString:nameTF.text];
-    NSString *pass = [HelloUtils ycu_triString:pwdTF.text];
+    NSString *name = [HelloUtils ycu_triString:self.nameTF.text];
+    NSString *pass = [HelloUtils ycu_triString:self.pwdTF.text];
 //    if (![HelloUtils validUserName:name]) {
     if (name.length <= 0) {
         [HelloUtils ycu_invalidNameToast];
@@ -1178,7 +1179,7 @@ static NSInteger chimaOpenTime = 3;
                                     if ([result isKindOfClass:[NSDictionary class]]) {
                                         
                                         // save a photo to user
-                                        pwdTF.secureTextEntry = NO;
+                                        self.pwdTF.secureTextEntry = NO;
                                         [HelloUtils ycu_saveNewRegAccountToPhoto:self];
                                         
                                         [YCDataUtils ycd_handelNormalUser:(NSDictionary *)result];
@@ -1191,6 +1192,10 @@ static NSInteger chimaOpenTime = 3;
 - (void)loginViewBtnAction:(UIButton *)sender
 {
     switch (sender.tag) {
+        case kYCWeinanAccoutRegBtnTag: {
+            [self viewWithTag:kYCLoginPhoneRegBtnTag].hidden?[self usePhoneAndCodeLogin]:[self useAccounAndPwdRegister];
+        }
+            break;
         case kYCLoginPhoneRegBtnTag:
         {
             [self _weinanPhoneRegMode];
@@ -1224,7 +1229,7 @@ static NSInteger chimaOpenTime = 3;
                 case YCLogin_ChangeAccount:
                 {
 //                    if (![HelloUtils validUserName:[HelloUtils ycu_triString:nameTF.text]]) {
-                    if ([HelloUtils ycu_triString:nameTF.text].length <= 0) {
+                    if ([HelloUtils ycu_triString:self.nameTF.text].length <= 0) {
                         [HelloUtils ycu_sToastWithMsg:@"请选择要登录的账号"];
                         return;
                     }
@@ -1332,10 +1337,8 @@ static NSInteger chimaOpenTime = 3;
         // 获取验证码
         case kYCLoginGetVertifyCodeTag:
         {
-            NSString *mobilePhoneNum = [HelloUtils ycu_triString:phoneInput.text];
-//            if (![HelloUtils validCnMobileNumber:mobilePhoneNum]) {
+            NSString *mobilePhoneNum = [HelloUtils ycu_triString:self.phoneInput.text];
             if (mobilePhoneNum.length == 0) {
-//                [HelloUtils ycu_invalidPhoneToast];
                 [HelloUtils ycu_sToastWithMsg:@"请输入您的手机号"];
                 return;
             }
@@ -1343,13 +1346,6 @@ static NSInteger chimaOpenTime = 3;
                                      situation:kSendCodeType_Login
                                     completion:^(id reslut){
                                         if ([reslut isKindOfClass:[NSDictionary class]]) {
-//                                            [HelloUtils ycu_counttingButton:sender
-//                                                              startTime:59.0f
-//                                                                  title:@""
-//                                                         countDownTitle:@"s"
-//                                                              mainColor:[UIColor whiteColor]
-//                                                             countColor:[UIColor lightGrayColor]];
-                                            
                                             [self counttingButton:sender
                                                                   startTime:59.0f
                                                                       title:@""
@@ -1418,12 +1414,12 @@ static NSInteger chimaOpenTime = 3;
             break;
         case kYCLoginEyeBtnTag:
         {
-            pwdTF.secureTextEntry = !pwdEntity;
+            self.pwdTF.secureTextEntry = !pwdEntity;
             pwdEntity = !pwdEntity;
             if (pwdEntity) {
-                [eyesBtn setImage:GetImage(eyeBtn_off) forState:0];
+                [self.eyesBtn setImage:GetImage(eyeBtn_off) forState:0];
             } else {
-                [eyesBtn setImage:GetImage(eyeBtn_on) forState:0];
+                [self.eyesBtn setImage:GetImage(eyeBtn_on) forState:0];
             }
         }
             break;
@@ -1489,7 +1485,7 @@ static NSInteger chimaOpenTime = 3;
     uList.layer.borderColor = [UIColor colorWithHexString:kGrayHex].CGColor;
     [userListView addSubview:uList];
     [uList mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(nameTF.mas_bottom);
+        make.top.equalTo(self.nameTF.mas_bottom);
         make.centerX.equalTo(@(0));
         make.width.equalTo(@(loginBtnWidthOfBgWidth*rate*curWidth));
         make.height.equalTo(@(100));
@@ -1521,7 +1517,7 @@ static NSInteger chimaOpenTime = 3;
 {
     [UIView animateWithDuration:tRotaTomeInterval
                      animations:^{
-                         userListBtn.transform = CGAffineTransformMakeRotation(M_PI);
+                         self.userListBtn.transform = CGAffineTransformMakeRotation(M_PI);
                      }];
 }
 
@@ -1529,7 +1525,7 @@ static NSInteger chimaOpenTime = 3;
 {
     [UIView animateWithDuration:tRotaTomeInterval
                      animations:^{
-                         userListBtn.transform = CGAffineTransformMakeRotation(-M_PI*2);
+                         self.userListBtn.transform = CGAffineTransformMakeRotation(-M_PI*2);
                      }];
 }
 
@@ -1537,7 +1533,7 @@ static NSInteger chimaOpenTime = 3;
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
-    if ([touch.view isDescendantOfView:uList] || [touch.view isDescendantOfView:userListBtn]) {
+    if ([touch.view isDescendantOfView:uList] || [touch.view isDescendantOfView:self.userListBtn]) {
         return NO;
     }
     return YES;
@@ -1579,7 +1575,7 @@ static NSInteger chimaOpenTime = 3;
     // change cur account
     
     YCUserModel *model = listModelArr[indexPath.row];
-    nameTF.text = model.nickname;
+    self.nameTF.text = model.nickname;
     
     curLoginUser = model;
     
@@ -1597,7 +1593,7 @@ static NSInteger chimaOpenTime = 3;
     [uList reloadData];
     
     if (listModelArr.count <= 0) {
-        nameTF.text = @"";
+        self.nameTF.text = @"";
         [self _userListViewClose];
     }
 }
@@ -1624,10 +1620,10 @@ static NSInteger chimaOpenTime = 3;
 
 - (void)_textFieldResignFirstResponer
 {
-    [nameTF resignFirstResponder];
-    [pwdTF resignFirstResponder];
-    [phoneInput resignFirstResponder];
-    [codeInput resignFirstResponder];
+    [self.nameTF resignFirstResponder];
+    [self.pwdTF resignFirstResponder];
+    [self.phoneInput resignFirstResponder];
+    [self.codeInput resignFirstResponder];
 }
 
 #pragma mark - UITextField Delegate
@@ -1640,26 +1636,26 @@ static NSInteger chimaOpenTime = 3;
         switch (m_mode) {
             case YCLogin_Default:
             {
-                if ([textField isEqual:phoneInput]) {
-                    [codeInput becomeFirstResponder];
+                if ([textField isEqual:self.phoneInput]) {
+                    [self.codeInput becomeFirstResponder];
                 }
             }
                 break;
             case YCLogin_Register:
             case YCLogin_Account:
             {
-                if ([textField isEqual:nameTF]) {
-                    [pwdTF becomeFirstResponder];
+                if ([textField isEqual:self.nameTF]) {
+                    [self.pwdTF becomeFirstResponder];
                 }
             }
                 break;
             case YCLogin_DirectToRegister:
             {
-                if ([textField isEqual:phoneInput]) {
-                    [codeInput becomeFirstResponder];
+                if ([textField isEqual:self.phoneInput]) {
+                    [self.codeInput becomeFirstResponder];
                 }
-                if ([textField isEqual:nameTF]) {
-                    [pwdTF becomeFirstResponder];
+                if ([textField isEqual:self.nameTF]) {
+                    [self.pwdTF becomeFirstResponder];
                 }
             }
                 break;
@@ -1674,7 +1670,7 @@ static NSInteger chimaOpenTime = 3;
     if (textField.returnKeyType == UIReturnKeyDone) {
         [textField resignFirstResponder];
         // comfirm btn down
-        [self loginViewBtnAction:loginComfirmBtn];
+        [self loginViewBtnAction:_loginComfirmBtn];
     }
     
     return YES;
@@ -1755,14 +1751,14 @@ static NSInteger chimaOpenTime = 3;
 {
     // 条款
     // 条款的勾选按钮
-    checkBoxBtn = [HelloUtils ycu_initBtnWithNormalImage:termBtn_check
+    self.checkBoxBtn = [HelloUtils ycu_initBtnWithNormalImage:termBtn_check
                                     highlightedImage:nil
                                                  tag:kYCLoginCheckBoxBtnTag
                                             selector:@selector(_changeBoxImage)
                                               target:self];
-    [baseview addSubview:checkBoxBtn];
+    [baseview addSubview:_checkBoxBtn];
     
-    [checkBoxBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    [_checkBoxBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@(0));
         make.centerY.equalTo(@(0));
         make.width.equalTo(@(20));
@@ -1809,11 +1805,9 @@ static NSInteger chimaOpenTime = 3;
     
     [baseview addSubview:labText];
     [labText mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(checkBoxBtn.mas_right);
+        make.left.equalTo(_checkBoxBtn.mas_right);
         make.centerY.equalTo(@(0));
-//        make.bottom.equalTo(baseview.mas_bottom);
         make.right.equalTo(@(0));
-//        make.height.equalTo(@(30));
     }];
 }
 
@@ -1833,9 +1827,9 @@ static NSInteger chimaOpenTime = 3;
 {
     checkboxStatus = !checkboxStatus;
     if (checkboxStatus) {
-        [checkBoxBtn setImage:GetImage(termBtn_check) forState:0];
+        [self.checkBoxBtn setImage:GetImage(termBtn_check) forState:0];
     } else {
-        [checkBoxBtn setImage:GetImage(termBtn_uncheck) forState:0];
+        [self.checkBoxBtn setImage:GetImage(termBtn_uncheck) forState:0];
     }
 }
 

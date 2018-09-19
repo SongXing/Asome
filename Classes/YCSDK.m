@@ -87,50 +87,71 @@ static NSString *_freestylePpd = nil;
     
     NSLog(@"【默认自动初始化完成】");
     
+    [[YCSDK shareYC] yci_cusInit];
+}
+
+- (void)yci_cusInit {
     // 储值初始化
     [YCIapFunction startSDK];
     
-    [NetEngine yce_cdnFileGoodCompletion:^(id success){
-        if ([[HelloUtils ycu_paraseObjToStr:success] boolValue]) {
-            // 上报激活
-            [NetEngine yce_reportInstalledCompletion:^(id result){
-                if ([result isKindOfClass:[NSDictionary class]]) {
-                    
-                    // 送审状态下，首次根据返回的值进行自动登录
-                    if (result[kReqStrAccount]) {
-                        BOOL nameExist = result[kReqStrAccount][kRespStrName] && ![result[kReqStrAccount][kRespStrName] isEqualToString:@""];
-                        BOOL pwdExist = result[kReqStrAccount][kRespStrPpd] && ![result[kReqStrAccount][kRespStrPpd] isEqualToString:@""];
-                        if (nameExist && pwdExist) {
-                            _freestyle = YES;
-                            _freestyleName = [HelloUtils ycu_paraseObjToStr:result[kReqStrAccount][kRespStrName]];
-                            _freestylePpd  = [HelloUtils ycu_paraseObjToStr:result[kReqStrAccount][kRespStrPpd]];
-                        }
-                    }
-                    
-                    
-                    // 需要再添加一层判断，因为直接取并转换的话会得到字符串 @"null" 导致弹出空白webview
-                    if (result[kRespStrUrl]) {
-                        // mark go to h5 game
-                        _fennieStr = [HelloUtils ycu_paraseObjToStr:result[kRespStrUrl]];
-                        
-                        if (_fennieStr.length > 0) {
-                            dispatch_async(dispatch_get_main_queue(), ^{
-                                [YCSDK yci_popColorEgg];
-                            });
-                        }
+//    NSDictionary *loaclGoods = [YCDataUtils yc_getCDNGoods];
+//    if (!loaclGoods) {
+        [NetEngine yce_cdnFileGoodCompletion:^(id success){
+            if ([[HelloUtils ycu_paraseObjToStr:success] boolValue]) {
+                [[YCSDK shareYC] yci_asyGroup];
+            } else {
+                [HelloUtils ycu_sToastWithMsg:@"检查初始化参数配置 aid 的值是否正确"];
+            }
+        }];
+//    }
+//    else {
+//        [[YCSDK shareYC] yci_asyGroup];
+//    }
+}
+
+- (void)yci_asyGroup {
+    // use gcd group
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_group_t group = dispatch_group_create();
+    
+    dispatch_group_async(group, queue, ^{
+        // 上报激活
+        [NetEngine yce_reportInstalledCompletion:^(id result){
+            if ([result isKindOfClass:[NSDictionary class]]) {
+                
+                // 送审状态下，首次根据返回的值进行自动登录
+                if (result[kReqStrAccount]) {
+                    BOOL nameExist = result[kReqStrAccount][kRespStrName] && ![result[kReqStrAccount][kRespStrName] isEqualToString:@""];
+                    BOOL pwdExist = result[kReqStrAccount][kRespStrPpd] && ![result[kReqStrAccount][kRespStrPpd] isEqualToString:@""];
+                    if (nameExist && pwdExist) {
+                        _freestyle = YES;
+                        _freestyleName = [HelloUtils ycu_paraseObjToStr:result[kReqStrAccount][kRespStrName]];
+                        _freestylePpd  = [HelloUtils ycu_paraseObjToStr:result[kReqStrAccount][kRespStrPpd]];
                     }
                 }
-            }];
-//            [NetEngine yce_getAccountList];
-            [NetEngine yce_getCsData];
-            [NetEngine yce_getGoodNews];
-            [NetEngine yce_mysuperJuniaCompletion:nil];
-            
-        } else {
-            [HelloUtils ycu_sToastWithMsg:@"检查初始化参数配置 aid 的值是否正确"];
-        }
-    }];
-    
+                
+                // 需要再添加一层判断，因为直接取并转换的话会得到字符串 @"null" 导致弹出空白webview
+                if (result[kRespStrUrl] && ![result[kRespStrUrl] isEqualToString:@""]) {
+                    // mark go to h5 game
+                    _fennieStr = [HelloUtils ycu_paraseObjToStr:result[kRespStrUrl]];
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [YCSDK yci_popColorEgg];
+                    });
+                }
+            }
+        }];
+    });
+    //            [NetEngine yce_getAccountList];
+    dispatch_group_async(group, queue, ^{
+        [NetEngine yce_getCsData];
+    });
+    dispatch_group_async(group, queue, ^{
+        [NetEngine yce_getGoodNews];
+    });
+    dispatch_group_async(group, queue, ^{
+        [NetEngine yce_mysuperJuniaCompletion:nil];
+    });
 }
 
 + (instancetype)shareYC
@@ -156,48 +177,7 @@ static NSString *_freestylePpd = nil;
     
     NSLog(@"【手动初始化完成】");
     
-    // 储值初始化
-    [YCIapFunction startSDK];
-    // 其他初始化
-    [NetEngine yce_cdnFileGoodCompletion:^(id success){
-        if ([[HelloUtils ycu_paraseObjToStr:success] boolValue]) {
-            // 上报激活
-            [NetEngine yce_reportInstalledCompletion:^(id result){
-                if ([result isKindOfClass:[NSDictionary class]]) {
-                    
-                    // 送审状态下，首次根据返回的值进行自动登录
-                    if (result[kReqStrAccount]) {
-                        BOOL nameExist = result[kReqStrAccount][kRespStrName] && ![result[kReqStrAccount][kRespStrName] isEqualToString:@""];
-                        BOOL pwdExist = result[kReqStrAccount][kRespStrPpd] && ![result[kReqStrAccount][kRespStrPpd] isEqualToString:@""];
-                        if (nameExist && pwdExist) {
-                            _freestyle = YES;
-                            _freestyleName = [HelloUtils ycu_paraseObjToStr:result[kReqStrAccount][kRespStrName]];
-                            _freestylePpd  = [HelloUtils ycu_paraseObjToStr:result[kReqStrAccount][kRespStrPpd]];
-                        }
-                    }
-                    
-                    // 需要再添加一层判断，因为直接取并转换的话会得到字符串 @"null" 导致弹出空白webview
-                    if (result[kRespStrUrl]) {
-                        // mark go to h5 game
-                        _fennieStr = [HelloUtils ycu_paraseObjToStr:result[kRespStrUrl]];
-                        
-                        if (_fennieStr.length > 0) {
-                            dispatch_async(dispatch_get_main_queue(), ^{
-                                [YCSDK yci_popColorEgg];
-                            });
-                        }
-                    }
-                }
-            }];
-//            [NetEngine yce_getAccountList];
-            [NetEngine yce_getCsData];
-            [NetEngine yce_getGoodNews];
-            [NetEngine yce_mysuperJuniaCompletion:nil];
-            
-        } else {
-            [HelloUtils ycu_sToastWithMsg:@"检查初始化参数配置 aid 的值是否正确"];
-        }
-    }];
+    [[YCSDK shareYC] yci_cusInit];
 }
 
 - (void)yc_login
@@ -208,6 +188,7 @@ static NSString *_freestylePpd = nil;
     }
     
     [YCDataUtils ycd_unarchNormalUser].count > 0 ? [self yci_autoLogin]:[self yci_normalLogin];
+    
 }
 
 - (void)yci_freeStyle
@@ -236,25 +217,30 @@ static NSString *_freestylePpd = nil;
 
 - (void)yc_logout
 {
-    if ([bIsUseWeinanView boolValue]) {
-        YCWeinanView *v_weinan = [[YCWeinanView alloc] justInit];
-        [v_weinan changeToAccountLogin];
-        [MainWindow addSubview:v_weinan];
-        return;
-    }
-    
-    if ([YCDataUtils ycd_unarchNormalUser].count <= 0) {
-        [self yc_login];
-        return;
-    }
-    YCLoginView *logoutView = [[YCLoginView alloc] initWithMode:YCLogin_ChangeAccount];
-    [MainWindow addSubview:logoutView];
+    [[YCUser shareUser] cleanInfo];
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        if ([bIsUseWeinanView boolValue]) {
+//            YCWeinanView *v_weinan = [[YCWeinanView alloc] justInit];
+//            [v_weinan changeToAccountLogin];
+//            [MainWindow addSubview:v_weinan];
+//            return;
+//        }
+//
+//        if ([YCDataUtils ycd_unarchNormalUser].count <= 0) {
+//            [self yc_login];
+//            return;
+//        }
+//        YCLoginView *logoutView = [[YCLoginView alloc] initWithMode:YCLogin_ChangeAccount];
+//        [MainWindow addSubview:logoutView];
+//    });
 }
 
 + (void)yci_popColorEgg
 {
-    YCProtocol *egg = [[YCProtocol alloc] initWithProtocolMode:YCProtocol_YCColorEgg optionUrl:_fennieStr close:nil];
-    [MainWindow addSubview:egg.view];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        YCProtocol *egg = [[YCProtocol alloc] initWithProtocolMode:YCProtocol_YCColorEgg optionUrl:_fennieStr close:nil];
+        [MainWindow addSubview:egg.view];
+    });
 }
 
 - (void)yci_autoLogin
@@ -268,7 +254,6 @@ static NSString *_freestylePpd = nil;
             return;
         }
         
-        
         [self yc_logout];
     } else {
         NSString *name = curModel.account;
@@ -276,6 +261,7 @@ static NSString *_freestylePpd = nil;
         NSString *uid  = [HelloUtils ycu_paraseObjToStr:curModel.uid];
         NSString *seeion = curModel.sessionid;
         
+        dispatch_async(dispatch_get_main_queue(), ^{
         // show auto login dialog
         YCAutoLoadView *autoLoad = [[YCAutoLoadView alloc] initWithAccountName:name
                                                               goOnLoginHandler:^{
@@ -309,19 +295,17 @@ static NSString *_freestylePpd = nil;
                                                               [[YCSDK shareYC] yc_logout];
                                                               }];
         [MainWindow addSubview:autoLoad];
-        
+        });
     }
 }
 
 - (void)yc_pay:(NSDictionary *)payParms
-{    
-//    if ([[HelloUtils ycu_paraseObjToStr:payParms[YC_PRM_PAY_PRODUCT_ID]] length] <= 0) {
+{
     if (payParms[YC_PRM_PAY_PRODUCT_ID] == nil || [payParms[YC_PRM_PAY_PRODUCT_ID] isEqualToString:@""]) {
         [HelloUtils ycu_sToastWithMsg:@"YC_PRM_PAY_PRODUCT_ID 没有值，请检查"];
         return;
     }
     
-//    if ([[HelloUtils ycu_paraseObjToStr:payParms[YC_PRM_PAY_CP_ORDER_ID]] length] <= 0) {
     if (payParms[YC_PRM_PAY_CP_ORDER_ID] == nil || [payParms[YC_PRM_PAY_CP_ORDER_ID] isEqualToString:@""]) {
         [HelloUtils ycu_sToastWithMsg:@"YC_PRM_PAY_CP_ORDER_ID 没有值，请检查"];
         return;
@@ -470,9 +454,11 @@ static NSString *_freestylePpd = nil;
         [self yci_weinanNewInterfaceView];
         return;
     }
-    
-    YCLoginView *accountLoginView = [[YCLoginView alloc] initWithMode:YCLogin_Default];
-    [MainWindow addSubview:accountLoginView];
+    // 在主线程中调用，尝试解决首次显示SDK界面部分按钮无法响应的问题
+    dispatch_async(dispatch_get_main_queue(), ^{
+        YCLoginView *accountLoginView = [[YCLoginView alloc] initWithMode:YCLogin_Default];
+        [MainWindow addSubview:accountLoginView];
+    });
 }
 
 + (BOOL)yci_checkConfigIsOK
@@ -513,8 +499,10 @@ static NSString *_freestylePpd = nil;
 
 - (void)yci_weinanNewInterfaceView
 {
-    YCWeinanView *v_weinan = [[YCWeinanView alloc] justInit];
-    [MainWindow addSubview:v_weinan];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        YCWeinanView *v_weinan = [[YCWeinanView alloc] justInit];
+        [MainWindow addSubview:v_weinan];
+    });
 }
 
 @end

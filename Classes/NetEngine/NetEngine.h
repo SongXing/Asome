@@ -4,7 +4,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-typedef void (^IapAppstoreCallBack)(NSString * _Nullable code, NSString * _Nullable orderID, NSDictionary * _Nullable dic, NSError * _Nullable error);
+typedef void (^IapAppstoreCallBack)(NSURLResponse *response, NSString * _Nullable code, NSString * _Nullable orderID, NSDictionary * _Nullable dic, NSError * _Nullable error);
 
 @interface NetEngine : NSObject
 
@@ -129,6 +129,15 @@ typedef void (^IapAppstoreCallBack)(NSString * _Nullable code, NSString * _Nulla
                                 userId:(NSString * _Nonnull)userId
                             serverCode:(NSString * _Nonnull)serverCode
                   andComplitionHandler:(IapAppstoreCallBack _Nullable)handler;
+// 补发
++ (void)yce_postLostDataToValiteWithOrderID:(NSString * _Nonnull)orderID
+                               currencyCode:(NSString * _Nonnull)currencyCode
+                                 localPrice:(NSString * _Nonnull)localPrice
+                              transactionId:(NSString * _Nonnull)transactionId
+                       receiptDataBase64Str:(NSString * _Nonnull)receiptDataBase64Str
+                                     userId:(NSString * _Nonnull)userId
+                                 serverCode:(NSString * _Nonnull)serverCode
+                       andComplitionHandler:(IapAppstoreCallBack _Nullable)handler;
 
 #pragma mark - 充值是否成功
 

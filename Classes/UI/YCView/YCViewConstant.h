@@ -66,6 +66,7 @@
 #define kYCLoginBindMobilePhoneBtnTag       9032
 #define kYCLoginEyeBtnTag                   9033
 #define kYCLoginChangeAccountBtnTag         9034
+#define kYCWeinanAccoutRegBtnTag       9035
 
 // protocol
 // custom service
