@@ -479,6 +479,7 @@
 {
     //倒计时时间
     __block NSInteger timeOut = timeLine;
+    __block NSString *oriBtnTitle = sender.titleLabel.text;
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_source_t _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
     //每秒执行一次
@@ -489,7 +490,8 @@
             dispatch_source_cancel(_timer);
             dispatch_async(dispatch_get_main_queue(), ^{
                 //                sender.backgroundColor = mColor;
-                [sender setTitle:@"获取验证码" forState:0];
+//                [sender setTitle:@"获取验证码" forState:0];
+                [sender setTitle:oriBtnTitle forState:0];
                 sender.enabled = YES;
             });
         } else {

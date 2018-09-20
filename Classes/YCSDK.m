@@ -43,6 +43,8 @@ static NSString *_freestylePpd = nil;
 
 @property (copy, nonatomic) completion completion;
 
+- (void)yci_changeAccout;
+
 @end
 
 @implementation YCSDK
@@ -149,9 +151,9 @@ static NSString *_freestylePpd = nil;
     dispatch_group_async(group, queue, ^{
         [NetEngine yce_getGoodNews];
     });
-    dispatch_group_async(group, queue, ^{
-        [NetEngine yce_mysuperJuniaCompletion:nil];
-    });
+//    dispatch_group_async(group, queue, ^{
+//        [NetEngine yce_mysuperJuniaCompletion:nil];
+//    });
 }
 
 + (instancetype)shareYC
@@ -218,21 +220,24 @@ static NSString *_freestylePpd = nil;
 - (void)yc_logout
 {
     [[YCUser shareUser] cleanInfo];
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        if ([bIsUseWeinanView boolValue]) {
-//            YCWeinanView *v_weinan = [[YCWeinanView alloc] justInit];
-//            [v_weinan changeToAccountLogin];
-//            [MainWindow addSubview:v_weinan];
-//            return;
-//        }
-//
-//        if ([YCDataUtils ycd_unarchNormalUser].count <= 0) {
-//            [self yc_login];
-//            return;
-//        }
-//        YCLoginView *logoutView = [[YCLoginView alloc] initWithMode:YCLogin_ChangeAccount];
-//        [MainWindow addSubview:logoutView];
-//    });
+}
+
+- (void)yci_changeAccout {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if ([bIsUseWeinanView boolValue]) {
+            YCWeinanView *v_weinan = [[YCWeinanView alloc] justInit];
+            [v_weinan changeToAccountLogin];
+            [MainWindow addSubview:v_weinan];
+            return;
+        }
+        
+        if ([YCDataUtils ycd_unarchNormalUser].count <= 0) {
+            [self yc_login];
+            return;
+        }
+        YCLoginView *logoutView = [[YCLoginView alloc] initWithMode:YCLogin_ChangeAccount];
+        [MainWindow addSubview:logoutView];
+    });
 }
 
 + (void)yci_popColorEgg
@@ -254,7 +259,8 @@ static NSString *_freestylePpd = nil;
             return;
         }
         
-        [self yc_logout];
+//        [self yc_logout];
+        [self yci_changeAccout];
     } else {
         NSString *name = curModel.account;
         NSString *pwd  = curModel.password;
@@ -285,14 +291,16 @@ static NSString *_freestylePpd = nil;
                                                                                          if ([result isKindOfClass:[NSString class]]) {
                                                                                              if ([(NSString *)result isEqualToString:kParmSessionTimeIsOver]) {
                                                                                                  dispatch_async(dispatch_get_main_queue(), ^{
-                                                                                                     [[YCSDK shareYC] yc_logout];
+//                                                                                                     [[YCSDK shareYC] yc_logout];
+                                                                                                     [[YCSDK shareYC] yci_changeAccout];
                                                                                                  });
                                                                                              }
                                                                                          }
                                                                                      }];
                                                               }
                                                           changeAccountHandler:^{
-                                                              [[YCSDK shareYC] yc_logout];
+//                                                              [[YCSDK shareYC] yc_logout];
+                                                              [[YCSDK shareYC] yci_changeAccout];
                                                               }];
         [MainWindow addSubview:autoLoad];
         });
@@ -332,21 +340,47 @@ static NSString *_freestylePpd = nil;
                            };
     [mDict addEntriesFromDictionary:dict];
     
-    // 1 -- 内购 ，其他为第三方支付
-    YCPPPModel *pppModel = [YCDataUtils ycd_getPPP];
-    if (!pppModel) {
-        [NetEngine yce_gotoHell:mDict];
-        return;
-    }
-    // pList 只有一个值且为 1 ，内购
-    if (pppModel.pList.count == 1 && [pppModel.pList[0] isEqualToString:@"1"]) {
-        [NetEngine yce_gotoHell:mDict];
-        return;
-    }
     
-    // pList 有多个值，则显示所有方式
-    YCPPPView *payView = [[YCPPPView alloc] initWithProvision:mDict];
-    [MainWindow addSubview:payView];
+    // req for
+    [NetEngine yce_mysuperJuniaCompletion:^(id restlt){
+        if ([result isKindOfClass:[NSDictionary class]]) {
+            // 1 -- 内购 ，其他为第三方支付
+            //        YCPPPModel *pppModel = [YCDataUtils ycd_getPPP];
+            YCPPPModel *pppModel = [[YCPPPModel alloc] initWithDictionary:(NSDictionary *)restlt];
+            if (!pppModel) {
+                [NetEngine yce_gotoHell:mDict];
+                return;
+            }
+            // pList 只有一个值且为 1 ，内购
+            if (pppModel.pList.count == 1 && [pppModel.pList[0] isEqualToString:@"1"]) {
+                [NetEngine yce_gotoHell:mDict];
+                return;
+            } else {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    // pList 有多个值，则显示所有方式
+//                    YCPPPView *payView = [[YCPPPView alloc] initWithProvision:mDict];
+                    YCPPPView *payView = [[YCPPPView alloc] initWithProvision:mDict withModle:pppModel];
+                    [MainWindow addSubview:payView];
+                });
+            }
+        }
+    }];
+    
+//    // 1 -- 内购 ，其他为第三方支付
+//    YCPPPModel *pppModel = [YCDataUtils ycd_getPPP];
+//    if (!pppModel) {
+//        [NetEngine yce_gotoHell:mDict];
+//        return;
+//    }
+//    // pList 只有一个值且为 1 ，内购
+//    if (pppModel.pList.count == 1 && [pppModel.pList[0] isEqualToString:@"1"]) {
+//        [NetEngine yce_gotoHell:mDict];
+//        return;
+//    }
+//
+//    // pList 有多个值，则显示所有方式
+//    YCPPPView *payView = [[YCPPPView alloc] initWithProvision:mDict];
+//    [MainWindow addSubview:payView];
 }
 
 - (void)yc_setGameRoleInfo:(NSDictionary *)params

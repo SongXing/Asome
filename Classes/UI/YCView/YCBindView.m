@@ -26,6 +26,7 @@
 #define kYCBindUserListDelBtnTag                227
 #define kYCBindUserListVeiwTag                  228
 #define kYCBindEyeBtnTag                        229
+#define kYCBindGetVertifyAgainBtnTag            230
 
 #define kBindListCellIdentifier             @"bind_list_identifier"
 
@@ -703,6 +704,15 @@
 {
     m_mode = YCBind_Forget_ResetPwd;    
     [self _makeCheckViewInVisible];
+    UIButton *sendVertifierCodeAgainBtn = (UIButton *)[self viewWithTag:kYCBindGetVertifyAgainBtnTag];
+    if (sendVertifierCodeAgainBtn) {
+        [HelloUtils ycu_counttingButton:sendVertifierCodeAgainBtn
+                              startTime:59.0f
+                                  title:@""
+                         countDownTitle:@"s"
+                              mainColor:[UIColor whiteColor]
+                             countColor:[UIColor lightGrayColor]];
+    }
  
     if ([self viewWithTag:kYCBindForgetResetTipsLabelTag]) {
         
@@ -776,8 +786,8 @@
     mTopPadding += secondGap + txtFieldHeight;
     
     // send vertify btn
-    NSString *strFetchVertifyCode = @"获取验证码";
-    NSInteger sendVertifyBtnTag = kYCBindGetVertifyBtnTag;
+    NSString *strFetchVertifyCode = @"再次获取验证码";
+    NSInteger sendVertifyBtnTag = kYCBindGetVertifyAgainBtnTag;
     UIButton *sendVertifyBtn = [HelloUtils ycu_initBtnWithType:UIButtonTypeCustom title:strFetchVertifyCode tag:sendVertifyBtnTag selector:@selector(bindViewBtnAction:) target:self];
     [sendVertifyBtn setTitle:strFetchVertifyCode forState:0];
     [sendVertifyBtn.layer setCornerRadius:0.0f];
@@ -788,6 +798,14 @@
     CGSize sendVertifyCodeBtnSize = [HelloUtils ycu_calculateSizeOfLabel:sendVertifyBtn.titleLabel andWidth:1000];
     [sendVertifyBtn setFrame:CGRectMake(0, 0, sendVertifyCodeBtnSize.width, textFieldHeightOfBgHeight*rate*curWidth
                                         )];
+    if (m_phoneNum) {
+        [HelloUtils ycu_counttingButton:sendVertifyBtn
+                              startTime:59.0f
+                                  title:@""
+                         countDownTitle:@"s"
+                              mainColor:[UIColor whiteColor]
+                             countColor:[UIColor lightGrayColor]];
+    }
     
     // input
     codeInput = [HelloUtils ycu_customTextfieldWidgetWithLeftView:nil rightView:sendVertifyBtn placeholder:@"请输入验证码" delegate:self];
@@ -1038,9 +1056,7 @@
         {
             
             NSString *mobilePhoneNum = [HelloUtils ycu_triString:phoneInput.text];
-//            if (![HelloUtils validCnMobileNumber:mobilePhoneNum]) {
             if (mobilePhoneNum.length == 0) {
-//                [HelloUtils ycu_invalidPhoneToast];
                 [HelloUtils ycu_sToastWithMsg:@"请输入您的手机号"];
                 return;
             }
@@ -1068,6 +1084,22 @@
                                     }];
         }
             break;
+        case kYCBindGetVertifyAgainBtnTag: {
+            
+            [NetEngine sendVertifyCodeToMobile:m_phoneNum
+                                     situation:kSendCodeType_Find
+                                    completion:^(id reslut){
+                                        if ([reslut isKindOfClass:[NSDictionary class]]) {
+                                            [HelloUtils ycu_counttingButton:sender
+                                                                  startTime:59.0f
+                                                                      title:@""
+                                                             countDownTitle:@"s"
+                                                                  mainColor:[UIColor whiteColor]
+                                                                 countColor:[UIColor lightGrayColor]];
+                                        }
+                                    }];
+        }
+            break;
         case kYCBindComfirmBtnTag:
         {            
             switch (m_mode) {
@@ -1078,15 +1110,12 @@
                     NSString *pwd       = [HelloUtils ycu_triString:pwdTF.text];
                     NSString *mobile    = [HelloUtils ycu_triString:phoneInput.text];
                     NSString *code      = [HelloUtils ycu_triString:codeInput.text];
-//                    if (![HelloUtils validUserName:name]) {
                     if (name.length <= 0) {
                         [HelloUtils ycu_invalidNameToast];return;
                     }
-//                    if (![HelloUtils validPassWord:pwd]) {
                     if (pwd.length <= 0) {
                         [HelloUtils ycu_invalidPwdToast];return;
                     }
-//                    if (![HelloUtils validCnMobileNumber:mobile]) {
                     if (mobile.length <= 0) {
                         [HelloUtils ycu_invalidPhoneToast];return;
                     }
@@ -1129,7 +1158,6 @@
                 case YCBind_Forget_CheckAccount:
                 {
                     NSString *name = [HelloUtils ycu_triString:nameTF.text];// 或账号，或手机号
-//                    if (![HelloUtils validUserName:name]) {
                     if (name.length <= 0) {
                         [HelloUtils ycu_invalidNameToast];
                         return;
@@ -1150,12 +1178,10 @@
                 {
                     NSString *newPwd = [HelloUtils ycu_triString:pwdTF.text];
                     NSString *code   = [HelloUtils ycu_triString:codeInput.text];
-//                    if (![HelloUtils validPassWord:newPwd]) {
                     if (newPwd.length <= 0) {
                         [HelloUtils ycu_invalidPwdToast];
                         return;
                     }
-//                    if (![HelloUtils validUserName:code]) {
                     if (code.length <= 0) {
                         [HelloUtils ycu_invalidVertifyCodeToast];
                         return;

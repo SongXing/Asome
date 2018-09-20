@@ -103,7 +103,7 @@
     NSMutableArray *mArr = [[NSMutableArray alloc] initWithArray:localAngles];
     for (NSDictionary *dict in localAngles) {
         if ([dict[@"transactionId"] isEqualToString:trs]) {
-            NSLog(@"正在清除tranid: %@",trs);
+//            NSLog(@"正在清除tranid: %@",trs);
             [mArr removeObject:dict];
         }
     }

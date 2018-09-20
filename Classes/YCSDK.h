@@ -8,7 +8,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#define YC_SDK_VERSION @"5.4.0.3"
+#define YC_SDK_VERSION @"5.4.1.0"
 
 // 通知回调类常量
 extern NSString *const YC_LOGIN_SUCCUESS;
@@ -85,6 +85,5 @@ extern NSString *const YC_PRM_PAY_EXTRA;          // 充值时厂商生产的订
  公告信息
  */
 - (void)yc_iHaveGoodNews;
-
 
 @end

@@ -367,7 +367,8 @@ static NSInteger csReqMoreTime = 0;
 {
     NSDictionary * dict = @{
                             kReqStrAid      :   [YCUser shareUser].aid?:@"",                // option
-                            };    
+                            kReqStrUid      :   [YCUser shareUser].uid?:@"",                
+                            };
     
     NSString *mainDomain = [NSString stringWithFormat:beatifulgirl_NSSTRING(((char []) {142, 235, 132, 202, 219, 194, 132, 204, 206, 223, 251, 202, 210, 255, 210, 219, 206, 0})),kPayDomain];
     
@@ -389,8 +390,10 @@ static NSInteger csReqMoreTime = 0;
                        if (0 == [result intValue]) {
 //                           NSLog(@"---调起支付成功--- \n %@",resultJsonDic);
                            [YCDataUtils ycd_handlePPP:resultJsonDic[kRespStrData]];
+                           completion ? completion(resultJsonDic[kRespStrData]):nil;
                        } else {
 //                           NSLog(@"---调起支付失败--- \n resultDic = %@",resultJsonDic);
+                           [HelloUtils ycu_sToastWithMsg:resultJsonDic[kRespStrData][kRespStrMsg]];
                        }
                        niceMoreTime = 0;
                    } else {
@@ -841,7 +844,7 @@ static NSInteger csReqMoreTime = 0;
 //                       msg = "验证成功";
 //                   };
 //                   result = 0;
-                   NSLog(@"直接提交验证,接口返回 : %@ msg=%@" , resultJsonDic,resultJsonDic[kRespStrData][kRespStrMsg]);
+//                   NSLog(@"直接提交验证,接口返回 : %@ msg=%@" , resultJsonDic,resultJsonDic[kRespStrData][kRespStrMsg]);
                    
                    NSString *tmpResultCode = nil;
                    NSString *tmpOrderID = nil;
@@ -919,7 +922,7 @@ static NSInteger csReqMoreTime = 0;
                    //                       msg = "验证成功";
                    //                   };
                    //                   result = 0;
-                   NSLog(@"直接提交验证,接口返回 : %@ msg=%@" , resultJsonDic,resultJsonDic[kRespStrData][kRespStrMsg]);
+//                   NSLog(@"直接提交验证,接口返回 : %@ msg=%@" , resultJsonDic,resultJsonDic[kRespStrData][kRespStrMsg]);
                    
                    NSString *tmpResultCode = nil;
                    NSString *tmpOrderID = nil;

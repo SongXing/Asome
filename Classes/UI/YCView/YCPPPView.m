@@ -20,6 +20,7 @@
 
 
 @interface YCPPPView () <UITableViewDelegate,UITableViewDataSource>
+@property(nonatomic, retain) YCPPPModel *pModel;
 @end
 
 @implementation YCPPPView
@@ -70,7 +71,7 @@
     UITableView *tPMethod;
     UITableView *tProduct;
     
-    YCPPPModel *pModel;
+//    YCPPPModel *pModel;
 }
 
 - (instancetype)initWithProvision:(NSDictionary *)dict
@@ -81,6 +82,21 @@
         [self _propertyInit];
 //        [self _bgViewInit];
 //        [self _ojbkInit];
+        [self _xjbBgViewInit];
+        [self _xjbInit];
+    }
+    return self;
+}
+
+- (instancetype)initWithProvision:(NSDictionary *)dict withModle:(YCPPPModel *)model
+{
+    self = [super init];
+    if (self) {
+        productInfo = dict.copy;
+        self.pModel = model;
+        [self _propertyInit];
+        //        [self _bgViewInit];
+        //        [self _ojbkInit];
         [self _xjbBgViewInit];
         [self _xjbInit];
     }
@@ -128,12 +144,10 @@
     
     pwdEntity = YES;
     
-//    pArr = [[NSArray alloc] initWithObjects:@"600钻石",@"￥6.00", nil];
-//    mArr = [[NSArray alloc] initWithObjects:@"微信",@"支付宝", nil];
+//    pModel = [YCDataUtils ycd_getPPP]; // 新方式下不需要从local获取，直接从外部获取
     
-    pModel = [YCDataUtils ycd_getPPP];
-    NSMutableArray *pDetailList = [[NSMutableArray alloc] initWithCapacity:pModel.detailList.count];
-    for (PPPDetailModel *detail in pModel.detailList) {
+    NSMutableArray *pDetailList = [[NSMutableArray alloc] initWithCapacity:_pModel.detailList.count];
+    for (PPPDetailModel *detail in _pModel.detailList) {
         [pDetailList addObject:detail];
     }
     mArr = pDetailList.copy;
@@ -319,9 +333,7 @@
     }];
     // ppp type below
     xjbTopPadding += 16;
-//    CGFloat btnw = realWidth/10.f*9;
     CGFloat btnw = realWidth-20.f;
-//    for (int i = 0; i < 2; i++) { // test
     
     // 调整顺序，mababa tx job
     NSMutableArray *tmpArr = [[NSMutableArray alloc] initWithCapacity:mArr.count];

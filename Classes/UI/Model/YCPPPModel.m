@@ -17,6 +17,7 @@
     }
     return self;
 }
+
 - (void)_handlePro:(NSDictionary *)dict
 {
     NSArray *arr = dict[@"pay_detail"];
